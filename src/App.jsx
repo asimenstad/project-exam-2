@@ -1,5 +1,4 @@
 import React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout.jsx";
 import Home from "./pages/Home/Home.jsx";
@@ -11,7 +10,6 @@ import SpecificVenue from "./pages/SpecificVenue/SpecificVenue.jsx";
 function App() {
   return (
     <div className="App">
-      <CssBaseline />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

@@ -1,9 +1,17 @@
 import React from "react";
+import Typography from "@mui/material/Typography";
+import { Container } from "@mui/material";
+import Venues from "../../components/Venues/Venues.jsx";
 
 function Home() {
   return (
     <main>
-      <h1>Homepage</h1>
+      <Container>
+        <Typography variant="h1" className="visuallyHidden">
+          Venues
+        </Typography>
+        <Venues></Venues>
+      </Container>
     </main>
   );
 }
