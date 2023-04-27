@@ -97,7 +97,14 @@ function Header() {
             </div>
           ) : (
             <div>
-              <Chip label="Login" component="a" href="#basic-chip" clickable />
+              <Chip
+                label="Login"
+                component="a"
+                href="#basic-chip"
+                clickable
+                color="primary"
+                sx={{ fontSize: "1rem", paddingInline: "1rem" }}
+              />
             </div>
           )}
         </Toolbar>

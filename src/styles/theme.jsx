@@ -33,14 +33,7 @@ export const theme = createTheme({
         },
       },
     },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          fontSize: "1rem",
-          paddingInline: "1rem",
-        },
-      },
-    },
+
     MuiContainer: {
       styleOverrides: {
         root: {
