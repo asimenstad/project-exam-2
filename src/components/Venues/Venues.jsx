@@ -18,22 +18,24 @@ function Venues() {
 
   return (
     <Grid container columns={6} rowSpacing={6} columnSpacing={3}>
-      {data.map(({ id, name, location: { city }, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
-        <Grid key={id} item xs={6} sm={3} md={2}>
-          <S.StyledLink to={id}>
-            <VenueCard
-              name={name}
-              media={media[0]}
-              location={city}
-              wifi={wifi}
-              parking={parking}
-              breakfast={breakfast}
-              pets={pets}
-              rating={rating}
-              price={price}></VenueCard>
-          </S.StyledLink>
-        </Grid>
-      ))}
+      {data.map(
+        ({ id, name: title, location: { city }, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
+          <Grid key={id} item xs={6} sm={3} md={2}>
+            <S.StyledLink to={id}>
+              <VenueCard
+                title={title}
+                media={media[0]}
+                location={city}
+                wifi={wifi}
+                parking={parking}
+                breakfast={breakfast}
+                pets={pets}
+                rating={rating}
+                price={price}></VenueCard>
+            </S.StyledLink>
+          </Grid>
+        )
+      )}
     </Grid>
   );
 }

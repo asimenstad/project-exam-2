@@ -3,18 +3,18 @@ import { Card, CardContent, Typography, CardMedia, Chip, Grid } from "@mui/mater
 import StarIcon from "@mui/icons-material/Star";
 
 function VenueCard(props) {
-  const { media, name, wifi, parking, pets, breakfast, price, rating } = props;
+  const { media, name: title, wifi, parking, pets, breakfast, price, rating } = props;
   const defaultImage = "http://lorempixels.com/1600/900/nature/";
 
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       {media !== undefined ? (
-        <CardMedia image={media} title={name} sx={{ height: 250 }} />
+        <CardMedia image={media} title={title} sx={{ height: 250 }} />
       ) : (
         <CardMedia image={defaultImage} title="Could not load image" sx={{ height: 250 }} />
       )}
       <CardContent>
-        <Typography variant="h2">{props.name}</Typography>
+        <Typography variant="h2">{props.title}</Typography>
         <Typography variant="overline">{props.location}</Typography>
         <Grid container spacing={1}>
           {wifi && (
