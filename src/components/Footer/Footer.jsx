@@ -1,7 +1,14 @@
 import React from "react";
+import { Box, Container, Typography } from "@mui/material";
 
 function Footer() {
-  return <footer>Footer</footer>;
+  return (
+    <Box component="footer" sx={{ paddingBlock: 2, marginTop: 4 }}>
+      <Container>
+        <Typography variant="body1"> &copy; 2023 Holidaze</Typography>
+      </Container>
+    </Box>
+  );
 }
 
 export default Footer;

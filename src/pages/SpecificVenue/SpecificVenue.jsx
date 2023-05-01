@@ -59,7 +59,7 @@ function SpecificVenue() {
   const rows = Math.ceil(media.length / cols);
 
   return (
-    <Container>
+    <Container component="main">
       <Typography variant="h1">{title}</Typography>
       <Typography variant="h2">{city}</Typography>
       <Typography></Typography>

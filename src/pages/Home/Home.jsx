@@ -6,7 +6,7 @@ import Venues from "../../components/Venues/Venues.jsx";
 function Home() {
   return (
     <main>
-      <Container>
+      <Container component="main">
         <Typography variant="h1">Venues</Typography>
         <Venues></Venues>
       </Container>
