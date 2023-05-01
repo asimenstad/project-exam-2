@@ -1,17 +1,32 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useApi from "../../hooks/useApi.jsx";
-import { Avatar, Box, Container, Divider, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  Container,
+  Divider,
+  Grid,
+  ImageList,
+  ImageListItem,
+  Typography,
+} from "@mui/material";
 import WifiIcon from "@mui/icons-material/Wifi";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import PetsIcon from "@mui/icons-material/Pets";
 import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
+import BedIcon from "@mui/icons-material/Bed";
+import Calendar from "../../components/Calendar/Calendar.jsx";
+import TextField from "@mui/material/TextField";
 
 function SpecificVenue() {
   const { id } = useParams();
   const { data, isLoading, isError } = useApi(
     `https://api.noroff.dev/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`
   );
+
   if (isLoading) {
     return <div>Loading</div>;
   }
@@ -30,7 +45,10 @@ function SpecificVenue() {
     updated,
     meta: { pets, parking, breakfast, wifi } = {},
     owner: { name, avatar } = {},
+    bookings,
   } = data;
+
+  console.log(maxGuests);
 
   if (!media || media.length === 0) {
     media = [
@@ -52,8 +70,8 @@ function SpecificVenue() {
           </ImageListItem>
         ))}
       </ImageList>
-      <Grid container columns={2}>
-        <Grid item xs={2} lg={1}>
+      <Grid container columns={2} spacing={4} justifyContent="space-between">
+        <Grid item xs={2} md={1}>
           <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
             <Avatar src={avatar} />
             <Typography variant="body1" sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -71,29 +89,41 @@ function SpecificVenue() {
             This place offers
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {wifi && (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <WifiIcon /> Wifi
-              </Box>
-            )}
-            {parking && (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <DirectionsCarIcon /> Parking
-              </Box>
-            )}
-            {pets && (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <PetsIcon /> Pets allowed
-              </Box>
-            )}
-            {breakfast && (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <FreeBreakfastIcon /> Breakfast
-              </Box>
-            )}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <BedIcon /> <Typography variant="body1"> {maxGuests} guest(s) allowed</Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !wifi && "line-through" }}>
+              <WifiIcon /> <Typography variant="body1">Wifi</Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !parking && "line-through" }}>
+              <DirectionsCarIcon /> <Typography variant="body1">Parking</Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !pets && "line-through" }}>
+              <PetsIcon /> <Typography variant="body1">Pets allowed</Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !breakfast && "line-through" }}>
+              <FreeBreakfastIcon /> <Typography variant="body1">Breakfast included</Typography>
+            </Box>
           </Box>
         </Grid>
-        <Grid item xs={2} lg={1}></Grid>
+        <Grid item xs={2} md="auto" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Typography variant="h2">Book your stay</Typography>
+          {bookings && <Calendar bookedDates={bookings} />}
+          <TextField
+            id="filled-number"
+            label="Guests"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            fullWidth
+            size="small"
+            inputProps={{ min: 1, max: maxGuests }}
+          />
+          <Button variant="contained" disableElevation fullWidth>
+            Book
+          </Button>
+        </Grid>
       </Grid>
     </Container>
   );
