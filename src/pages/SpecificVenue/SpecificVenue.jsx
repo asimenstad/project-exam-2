@@ -43,12 +43,11 @@ function SpecificVenue() {
     rating,
     created,
     updated,
+    location: { city, country } = {},
     meta: { pets, parking, breakfast, wifi } = {},
     owner: { name, avatar } = {},
     bookings,
   } = data;
-
-  console.log(maxGuests);
 
   if (!media || media.length === 0) {
     media = [
@@ -62,11 +61,12 @@ function SpecificVenue() {
   return (
     <Container>
       <Typography variant="h1">{title}</Typography>
+      <Typography variant="h2">{city}</Typography>
       <Typography></Typography>
       <ImageList variant="quilted" cols={cols} rows={rows}>
-        {media.map((image) => (
-          <ImageListItem key={image}>
-            <img width="100%" src={image} alt={`${name}`} />
+        {media.map((image, index) => (
+          <ImageListItem key={image + index}>
+            <img width="100%" src={image} alt={`${title}`} />
           </ImageListItem>
         ))}
       </ImageList>

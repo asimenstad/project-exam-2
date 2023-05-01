@@ -7,9 +7,7 @@ function Home() {
   return (
     <main>
       <Container>
-        <Typography variant="h1" className="visuallyHidden">
-          Venues
-        </Typography>
+        <Typography variant="h1">Venues</Typography>
         <Venues></Venues>
       </Container>
     </main>
