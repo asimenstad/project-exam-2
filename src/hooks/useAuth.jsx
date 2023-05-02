@@ -40,6 +40,7 @@ function useProvideAuth() {
         const json = await response.json();
         const user = localStorage.setItem("user", JSON.stringify(json));
         setUser(user);
+        navigate("/profile");
       } else {
         const error = await response.json();
         console.log(error);
@@ -49,7 +50,6 @@ function useProvideAuth() {
       setIsError(true);
     } finally {
       setIsLoading(false);
-      navigate("/profile");
     }
   }
 
@@ -65,8 +65,7 @@ function useProvideAuth() {
       };
       const response = await fetch(url, postData);
       if (response.ok) {
-        const user = await response.json();
-        setUser(user);
+        navigate("/login");
       } else {
         const error = await response.json();
         console.log(error);
@@ -76,12 +75,13 @@ function useProvideAuth() {
       setIsError(true);
     } finally {
       setIsLoading(false);
-      navigate("/login");
     }
   }
 
   function logout() {
-    setUser(null);
+    const logout = localStorage.removeItem("user");
+    setUser(logout);
+    navigate("/");
   }
 
   return { login, register, logout, user, isError, isLoading };
