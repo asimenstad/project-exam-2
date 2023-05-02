@@ -5,12 +5,10 @@ import Venues from "../../components/Venues/Venues.jsx";
 
 function Home() {
   return (
-    <main>
-      <Container component="main">
-        <Typography variant="h1">Venues</Typography>
-        <Venues></Venues>
-      </Container>
-    </main>
+    <Container component="main">
+      <Typography variant="h1">Venues</Typography>
+      <Venues></Venues>
+    </Container>
   );
 }
 
