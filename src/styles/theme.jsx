@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 export const theme = createTheme({
   palette: {
@@ -49,6 +50,17 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "#fff",
+        },
+      },
+    },
+    MuiLink: {
+      defaultProps: {
+        component: Link,
+      },
+      styleOverrides: {
+        root: {
+          color: "secondary",
+          textDecoration: "none",
         },
       },
     },

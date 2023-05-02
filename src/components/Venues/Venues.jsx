@@ -1,8 +1,7 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid, Link } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
-import useApi from "../../hooks/useApi.jsx";
-import * as S from "./Venues.styles.jsx";
+import { useApi } from "../../hooks/useApi.jsx";
 
 function Venues() {
   const { data, isLoading, isError } = useApi(
@@ -21,7 +20,7 @@ function Venues() {
       {data.map(
         ({ id, name: title, location: { city }, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
           <Grid key={id} item xs={6} sm={3} md={2}>
-            <S.StyledLink to={id}>
+            <Link to={id}>
               <VenueCard
                 title={title}
                 media={media[0]}
@@ -32,7 +31,7 @@ function Venues() {
                 pets={pets}
                 rating={rating}
                 price={price}></VenueCard>
-            </S.StyledLink>
+            </Link>
           </Grid>
         )
       )}

@@ -1,18 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import useApi from "../../hooks/useApi.jsx";
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Container,
-  Divider,
-  Grid,
-  ImageList,
-  ImageListItem,
-  Typography,
-} from "@mui/material";
+import { useApi } from "../../hooks/useApi.jsx";
+import { Avatar, Box, Button, Container, Divider, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
 import WifiIcon from "@mui/icons-material/Wifi";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import PetsIcon from "@mui/icons-material/Pets";

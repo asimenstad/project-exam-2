@@ -5,13 +5,16 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./styles/theme";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ProvideAuth } from "./hooks/useAuth";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <ProvideAuth>
+          <App />
+        </ProvideAuth>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>

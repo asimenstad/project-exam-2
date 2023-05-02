@@ -12,15 +12,16 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Logout from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Chip from "@mui/material/Chip";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 function Header() {
-  const [auth, setAuth] = React.useState(false);
+  const auth = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -36,8 +37,8 @@ function Header() {
             sx={{ flexGrow: 1, fontFamily: "Comfortaa", fontWeight: 700, color: "inherit", textDecoration: "none" }}>
             Holidaze
           </Typography>
-          {auth ? (
-            <div>
+          {auth.user ? (
+            <Box>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -94,18 +95,13 @@ function Header() {
                   Logout
                 </MenuItem>
               </Menu>
-            </div>
+            </Box>
           ) : (
-            <div>
-              <Chip
-                label="Login"
-                component="a"
-                href="#basic-chip"
-                clickable
-                color="primary"
-                sx={{ fontSize: "1rem", paddingInline: "1rem" }}
-              />
-            </div>
+            <Box>
+              <NavLink to="/login">
+                <Chip label="Login" clickable color="primary" sx={{ fontSize: "1rem", paddingInline: "1rem" }} />
+              </NavLink>
+            </Box>
           )}
         </Toolbar>
       </AppBar>
