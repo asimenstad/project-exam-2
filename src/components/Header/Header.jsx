@@ -14,6 +14,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Chip from "@mui/material/Chip";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { Link } from "@mui/material";
 
 function Header() {
   const auth = useAuth();
@@ -24,6 +25,9 @@ function Header() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const logout = () => {
+    auth.logout();
   };
 
   return (
@@ -81,14 +85,16 @@ function Header() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <AccountCircleIcon />
-                  </ListItemIcon>
-                  Profile
-                </MenuItem>
+                <Link to="/profile">
+                  <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+                    Profile
+                  </MenuItem>
+                </Link>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={logout}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>

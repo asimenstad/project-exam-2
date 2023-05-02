@@ -1,10 +1,30 @@
 import React from "react";
 import { Box, Container, Grid, Typography, TextField, FormControlLabel, Checkbox, Button, Link } from "@mui/material";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
-  function onLogin(e) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = useAuth();
+
+  function handleChange(e) {
+    const inputValue = e.target.value;
+    if (e.target.name === "email") {
+      setEmail(inputValue);
+    }
+    if (e.target.name === "password") {
+      setPassword(inputValue);
+    }
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target.value);
+    const data = {
+      email,
+      password,
+    };
+    auth.login(data, "https://api.noroff.dev/api/v1/holidaze/auth/login");
   }
 
   return (
@@ -37,7 +57,7 @@ function Login() {
           <Typography variant="h2" component="h1">
             Welcome back
           </Typography>
-          <Box component="form" noValidate onSubmit={onLogin}>
+          <Box component="form" onSubmit={handleSubmit}>
             <TextField
               margin="normal"
               required
@@ -48,6 +68,7 @@ function Login() {
               autoComplete="email"
               autoFocus
               size="small"
+              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -59,6 +80,7 @@ function Login() {
               id="password"
               autoComplete="current-password"
               size="small"
+              onChange={handleChange}
             />
             <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
             <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>

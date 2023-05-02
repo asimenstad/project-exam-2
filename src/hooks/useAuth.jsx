@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const authContext = createContext();
 
@@ -15,8 +16,16 @@ function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
 
-  async function login(url, data) {
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
+
+  async function login(data, url) {
     try {
       setIsLoading(true);
       const postData = {
@@ -27,17 +36,24 @@ function useProvideAuth() {
         body: JSON.stringify(data),
       };
       const response = await fetch(url, postData);
-      const json = await response.json();
-      setUser(json);
+      if (response.ok) {
+        const json = await response.json();
+        const user = localStorage.setItem("user", JSON.stringify(json));
+        setUser(user);
+      } else {
+        const error = await response.json();
+        console.log(error);
+      }
     } catch (error) {
       console.log(error);
       setIsError(true);
     } finally {
       setIsLoading(false);
+      navigate("/profile");
     }
   }
 
-  async function register(url, data) {
+  async function register(data, url) {
     try {
       setIsLoading(true);
       const postData = {
@@ -50,7 +66,7 @@ function useProvideAuth() {
       const response = await fetch(url, postData);
       if (response.ok) {
         const user = await response.json();
-        setUser(json);
+        setUser(user);
       } else {
         const error = await response.json();
         console.log(error);
@@ -60,6 +76,7 @@ function useProvideAuth() {
       setIsError(true);
     } finally {
       setIsLoading(false);
+      navigate("/login");
     }
   }
 
