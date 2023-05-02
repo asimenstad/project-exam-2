@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
+  const auth = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const auth = useAuth();
 
   function handleChange(e) {
     const inputValue = e.target.value;

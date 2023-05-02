@@ -11,11 +11,44 @@ import {
   Link,
   Divider,
 } from "@mui/material";
+import { useAuth } from "../../hooks/useAuth";
+import { useState } from "react";
 
 function Register() {
-  function onRegister(e) {
+  const auth = useAuth();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [manager, setManager] = useState("");
+
+  function handleChange(e) {
+    const inputValue = e.target.value;
+    if (e.target.name === "name") {
+      setName(inputValue);
+    }
+    if (e.target.name === "email") {
+      setEmail(inputValue);
+    }
+    if (e.target.name === "password") {
+      setPassword(inputValue);
+    }
+    if (e.target.name === "password") {
+      setPassword(inputValue);
+    }
+    if (e.target.name === "venueManager") {
+      setManager(inputValue);
+    }
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target.value);
+    const data = {
+      name,
+      email,
+      password,
+      manager,
+    };
+    auth.register(data, "https://api.noroff.dev/api/v1/holidaze/auth/register");
   }
 
   return (
@@ -48,7 +81,7 @@ function Register() {
           <Typography variant="h2" component="h1">
             Welcome
           </Typography>
-          <Box component="form" noValidate onSubmit={onRegister}>
+          <Box component="form" noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2} my={1}>
               <Grid item xs={12}>
                 <TextField
@@ -60,6 +93,7 @@ function Register() {
                   label="Name"
                   autoFocus
                   size="small"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -71,6 +105,7 @@ function Register() {
                   name="email"
                   autoComplete="email"
                   size="small"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -83,6 +118,7 @@ function Register() {
                   id="password"
                   autoComplete="new-password"
                   size="small"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} my={2}>
@@ -90,7 +126,7 @@ function Register() {
                   <Typography>Do you want to become a venue manager?</Typography>
                 </Divider>
                 <FormControlLabel
-                  control={<Checkbox value={true} color="primary" />}
+                  control={<Checkbox name="venueManager" value={true} color="primary" onChange={handleChange} />}
                   label="Yes, I want to become a venue manager."
                 />
               </Grid>
