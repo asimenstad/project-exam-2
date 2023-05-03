@@ -16,7 +16,7 @@ function Venues() {
   }
 
   return (
-    <Grid container columns={6} rowSpacing={6} columnSpacing={3}>
+    <Grid container columns={6} rowGap={6} columnSpacing={3}>
       {data.map(
         ({ id, name: title, location: { city }, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
           <Grid key={id} item xs={6} sm={3} md={2}>

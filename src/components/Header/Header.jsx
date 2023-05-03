@@ -15,9 +15,11 @@ import Chip from "@mui/material/Chip";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "@mui/material";
+import { Face } from "@mui/icons-material";
 
 function Header() {
-  const auth = useAuth();
+  const { user, logout } = useAuth();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event) => {
@@ -26,8 +28,8 @@ function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const logout = () => {
-    auth.logout();
+  const logoutUser = () => {
+    logout();
   };
 
   return (
@@ -41,7 +43,7 @@ function Header() {
             sx={{ flexGrow: 1, fontFamily: "Comfortaa", fontWeight: 700, color: "inherit", textDecoration: "none" }}>
             Holidaze
           </Typography>
-          {auth.user ? (
+          {user ? (
             <Box>
               <IconButton
                 size="large"
@@ -50,7 +52,11 @@ function Header() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit">
-                <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                {user.avatar ? (
+                  <Avatar alt={user.name} sx={{ width: 32, height: 32 }} src={user.avatar} />
+                ) : (
+                  <Avatar sx={{ width: 32, height: 32 }} />
+                )}
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -94,7 +100,7 @@ function Header() {
                   </MenuItem>
                 </Link>
                 <Divider />
-                <MenuItem onClick={logout}>
+                <MenuItem onClick={logoutUser}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>

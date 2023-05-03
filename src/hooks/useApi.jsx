@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export function useApi(url) {
+export function useApi(url, options) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -10,7 +10,7 @@ export function useApi(url) {
       try {
         setIsLoading(true);
         setIsError(false);
-        const response = await fetch(url);
+        const response = await fetch(url, options);
         const json = await response.json();
         setData(json);
       } catch (error) {
