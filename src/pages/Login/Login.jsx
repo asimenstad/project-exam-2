@@ -21,8 +21,8 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     const data = {
-      email,
-      password,
+      email: email,
+      password: password,
     };
     auth.login(data, "https://api.noroff.dev/api/v1/holidaze/auth/login");
   }

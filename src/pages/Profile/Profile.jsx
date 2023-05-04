@@ -4,6 +4,7 @@ import { useApi } from "../../hooks/useApi";
 import { Button, Container, Grid, Typography, Avatar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import VenueCard from "../../components/VenueCard/VenueCard";
+import VenueForm from "../../components/VenueForm/VenueForm";
 
 function Profile() {
   const { user } = useAuth();
@@ -13,7 +14,7 @@ function Profile() {
     },
   };
   const { data, isLoading, isError } = useApi(
-    `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}?_owner=true&_bookings=true`,
+    `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}?_venues=true&_bookings=true`,
     options
   );
 
@@ -24,14 +25,15 @@ function Profile() {
     return <div>Error</div>;
   }
 
-  const { name, email, avatar, venueManager, bookings, _count } = data;
+  const { name, email, avatar, venueManager, bookings, venues } = data;
 
   return (
     <Container component="main" sx={{ minHeight: "90vh" }}>
       {user && (
         <Grid container gap={4}>
           <Grid
-            xs={1}
+            xs={12}
+            sm={4}
             md={3}
             item
             sx={{
@@ -57,16 +59,56 @@ function Profile() {
               Edit avatar
             </Button>
           </Grid>
-          {venueManager ? (
-            <Grid item xs={1} md={9}>
-              Create venue form
+          <Grid
+            item
+            xs={12}
+            sm={7}
+            md={8}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              padding: 4,
+              bgcolor: "white",
+              borderRadius: 1,
+            }}>
+            {venueManager ? <VenueForm /> : <Typography>View bookings calendar</Typography>}
+          </Grid>
+          {venueManager && (
+            <Grid item xs={12}>
+              <Typography variant="h2">Your venues</Typography>
+              {venues &&
+                venues.map(
+                  ({
+                    id,
+                    name: title,
+                    location: { city },
+                    media,
+                    price,
+                    rating,
+                    meta: { wifi, parking, breakfast, pets },
+                  }) => (
+                    <Grid key={id} item xs={6} sm={3} md={2}>
+                      <Link to={id}>
+                        <VenueCard
+                          title={title}
+                          media={media[0]}
+                          location={city}
+                          wifi={wifi}
+                          parking={parking}
+                          breakfast={breakfast}
+                          pets={pets}
+                          rating={rating}
+                          price={price}></VenueCard>
+                      </Link>
+                    </Grid>
+                  )
+                )}
             </Grid>
-          ) : (
-            <Grid item>View bookings calendar</Grid>
           )}
           <Grid item xs={12}>
             <Typography variant="h2">Upcoming bookings</Typography>
-            {bookings.length > 0 ? (
+            {bookings &&
               bookings.map(
                 ({
                   id,
@@ -92,12 +134,7 @@ function Profile() {
                     </Link>
                   </Grid>
                 )
-              )
-            ) : (
-              <Typography variant="body1" sx={{ marginTop: 2 }}>
-                You have no upcoming bookings
-              </Typography>
-            )}
+              )}
           </Grid>
         </Grid>
       )}

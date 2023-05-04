@@ -99,12 +99,9 @@ function SpecificVenue() {
           <Typography variant="h2">Book your stay</Typography>
           {bookings && <Calendar bookedDates={bookings} />}
           <TextField
-            id="filled-number"
+            id="guests"
             label="Guests"
             type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
             fullWidth
             size="small"
             inputProps={{ min: 1, max: maxGuests }}

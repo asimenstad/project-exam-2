@@ -19,10 +19,11 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [manager, setManager] = useState("");
+  const [manager, setManager] = useState(true);
 
   function handleChange(e) {
     const inputValue = e.target.value;
+    const checkedValue = e.target.checked;
     if (e.target.name === "name") {
       setName(inputValue);
     }
@@ -36,17 +37,17 @@ function Register() {
       setPassword(inputValue);
     }
     if (e.target.name === "venueManager") {
-      setManager(inputValue);
+      setManager(checkedValue);
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     const data = {
-      name,
-      email,
-      password,
-      manager,
+      name: name,
+      email: email,
+      password: password,
+      venueManager: manager,
     };
     auth.register(data, "https://api.noroff.dev/api/v1/holidaze/auth/register");
   }
@@ -93,6 +94,7 @@ function Register() {
                   label="Name"
                   autoFocus
                   size="small"
+                  helperText="Must not contain punctuation symbols apart from underscore (_)."
                   onChange={handleChange}
                 />
               </Grid>
@@ -102,6 +104,7 @@ function Register() {
                   fullWidth
                   id="email"
                   label="Email Address"
+                  helperText="Must be a valid stud.noroff.no or noroff.no email address."
                   name="email"
                   autoComplete="email"
                   size="small"
@@ -114,10 +117,11 @@ function Register() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
                   id="password"
+                  helperText="Must be at least 8 characters."
                   autoComplete="new-password"
                   size="small"
+                  type="password"
                   onChange={handleChange}
                 />
               </Grid>
@@ -126,7 +130,7 @@ function Register() {
                   <Typography>Do you want to become a venue manager?</Typography>
                 </Divider>
                 <FormControlLabel
-                  control={<Checkbox name="venueManager" value={true} color="primary" onChange={handleChange} />}
+                  control={<Checkbox name="venueManager" color="primary" onChange={handleChange} />}
                   label="Yes, I want to become a venue manager."
                 />
               </Grid>

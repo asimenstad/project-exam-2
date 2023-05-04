@@ -15,7 +15,6 @@ import Chip from "@mui/material/Chip";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "@mui/material";
-import { Face } from "@mui/icons-material";
 
 function Header() {
   const { user, logout } = useAuth();

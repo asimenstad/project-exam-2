@@ -16,7 +16,7 @@ function VenueCard(props) {
       <CardContent>
         <Typography variant="h2">{props.title}</Typography>
         <Typography variant="overline">{props.location}</Typography>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} sx={{ marginTop: 0.5 }}>
           {wifi && (
             <Grid item>
               <Chip label="Wifi" />

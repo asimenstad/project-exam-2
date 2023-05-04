@@ -79,8 +79,8 @@ function useProvideAuth() {
   }
 
   function logout() {
-    const logout = localStorage.removeItem("user");
-    setUser(logout);
+    localStorage.removeItem("user");
+    setUser(null);
     navigate("/");
   }
 
