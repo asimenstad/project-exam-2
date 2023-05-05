@@ -84,5 +84,30 @@ function useProvideAuth() {
     navigate("/");
   }
 
+  async function createVenue() {
+    try {
+      setIsLoading(true);
+      const postData = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      const response = await fetch(url, postData);
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        const error = await response.json();
+        console.log(error);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return { login, register, logout, user, isError, isLoading };
 }

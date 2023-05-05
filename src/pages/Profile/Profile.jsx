@@ -33,7 +33,6 @@ function Profile() {
         <Grid container gap={4}>
           <Grid
             xs={12}
-            sm={4}
             md={3}
             item
             sx={{
@@ -62,7 +61,6 @@ function Profile() {
           <Grid
             item
             xs={12}
-            sm={7}
             md={8}
             sx={{
               display: "flex",

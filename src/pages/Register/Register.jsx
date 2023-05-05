@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import {
   Box,
   Container,
@@ -11,8 +12,6 @@ import {
   Link,
   Divider,
 } from "@mui/material";
-import { useAuth } from "../../hooks/useAuth";
-import { useState } from "react";
 
 function Register() {
   const auth = useAuth();
@@ -24,20 +23,17 @@ function Register() {
   function handleChange(e) {
     const inputValue = e.target.value;
     const checkedValue = e.target.checked;
-    if (e.target.name === "name") {
-      setName(inputValue);
-    }
-    if (e.target.name === "email") {
-      setEmail(inputValue);
-    }
-    if (e.target.name === "password") {
-      setPassword(inputValue);
-    }
-    if (e.target.name === "password") {
-      setPassword(inputValue);
-    }
-    if (e.target.name === "venueManager") {
-      setManager(checkedValue);
+
+    switch (e.target.name) {
+      case "name":
+        setName(inputValue);
+
+      case "email":
+        setEmail(inputValue);
+      case "password":
+        setPassword(inputValue);
+      case "venueManager":
+        setManager(checkedValue);
     }
   }
 
