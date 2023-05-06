@@ -84,13 +84,14 @@ function useProvideAuth() {
     navigate("/");
   }
 
-  async function createVenue() {
+  async function createVenue(data, url) {
     try {
       setIsLoading(true);
       const postData = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
         },
         body: JSON.stringify(data),
       };
@@ -109,5 +110,5 @@ function useProvideAuth() {
     }
   }
 
-  return { login, register, logout, user, isError, isLoading };
+  return { login, register, logout, createVenue, user, isError, isLoading };
 }

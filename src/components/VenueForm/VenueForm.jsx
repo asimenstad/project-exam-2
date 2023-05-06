@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import {
   Box,
@@ -16,7 +16,6 @@ import {
   IconButton,
   InputLabel,
   Avatar,
-  List,
 } from "@mui/material";
 import { AddPhotoAlternate, Delete } from "@mui/icons-material";
 import ImageIcon from "@mui/icons-material/Image";
@@ -26,7 +25,7 @@ function VenueForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [guests, setGuests] = useState(0);
+  const [maxGuests, setMaxGuests] = useState(0);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
@@ -39,40 +38,53 @@ function VenueForm() {
 
   const [mediaString, setMediaString] = useState("");
   const [media, setMedia] = useState([]);
+  const inputRef = useRef(null);
 
   function handleChange(e) {
     const inputValue = e.target.value;
     const checkedValue = e.target.checked;
 
-    switch (e.target.name) {
-      case "name":
-        setName(inputValue);
-      case "description":
-        setDescription(inputValue);
-      case "price":
-        setPrice(inputValue);
-      case "guests":
-        setGuests(inputValue);
-      case "media":
-        setMediaString(inputValue);
-      case "address":
-        setAddress(inputValue);
-      case "city":
-        setCity(inputValue);
-      case "country":
-        setCountry(inputValue);
-      case "continent":
-        setContinent(inputValue);
-      case "zip":
-        setZip(inputValue);
-      case "wifi":
-        setWifi(checkedValue);
-      case "parking":
-        setParking(checkedValue);
-      case "pets":
-        setPets(checkedValue);
-      case "breakfast":
-        setBreakfast(checkedValue);
+    if (e.target.name === "venueName") {
+      setName(inputValue);
+    }
+    if (e.target.name === "description") {
+      setDescription(inputValue);
+    }
+    if (e.target.name === "price") {
+      setPrice(inputValue);
+    }
+    if (e.target.name === "maxGuests") {
+      setMaxGuests(inputValue);
+    }
+    if (e.target.name === "media") {
+      setMediaString(inputValue);
+    }
+    if (e.target.name === "address") {
+      setAddress(inputValue);
+    }
+    if (e.target.name === "city") {
+      setCity(inputValue);
+    }
+    if (e.target.name === "country") {
+      setCountry(inputValue);
+    }
+    if (e.target.name === "continent") {
+      setContinent(inputValue);
+    }
+    if (e.target.name === "zip") {
+      setZip(inputValue);
+    }
+    if (e.target.name === "wifi") {
+      setWifi(checkedValue);
+    }
+    if (e.target.name === "parking") {
+      setParking(checkedValue);
+    }
+    if (e.target.name === "pets") {
+      setPets(checkedValue);
+    }
+    if (e.target.name === "breakfast") {
+      setBreakfast(checkedValue);
     }
   }
 
@@ -80,6 +92,7 @@ function VenueForm() {
     if (mediaString !== "") {
       setMedia((prevMedia) => [...prevMedia, mediaString]);
       setMediaString("");
+      inputRef.current.value = "";
     }
   }
 
@@ -87,7 +100,6 @@ function VenueForm() {
     setMedia((prevMedia) => {
       return prevMedia.filter((_, i) => i !== index);
     });
-    console.log(index);
   }
 
   function handleSubmit(e) {
@@ -95,8 +107,8 @@ function VenueForm() {
     const data = {
       name: name,
       description: description,
-      price: price,
-      guests: guests,
+      price: parseInt(price),
+      maxGuests: parseInt(maxGuests),
       media: media,
       location: {
         address: address,
@@ -113,7 +125,7 @@ function VenueForm() {
       },
     };
     console.log(data);
-    //  auth.createVenue(data, "https://api.noroff.dev/api/v1/holidaze/venues");
+    auth.createVenue(data, "https://api.noroff.dev/api/v1/holidaze/venues");
   }
   return (
     <Box component="form" onSubmit={handleSubmit}>
@@ -122,10 +134,10 @@ function VenueForm() {
         <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Box>
             <TextField
-              name="name"
+              name="venueName"
               required
               fullWidth
-              id="name"
+              id="venueName"
               label="Name of venue"
               autoFocus
               size="small"
@@ -161,9 +173,10 @@ function VenueForm() {
           </Box>
           <Box>
             <TextField
-              id="guests"
+              name="maxGuests"
+              id="maxGuests"
               required
-              label="Guests"
+              label="Max guests"
               type="number"
               fullWidth
               size="small"
@@ -185,8 +198,8 @@ function VenueForm() {
                 label="Media (URL)"
                 autoFocus
                 size="small"
-                value={mediaString}
                 onChange={handleChange}
+                inputRef={inputRef}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton edge="end" onClick={handleAddMedia}>

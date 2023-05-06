@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useApi } from "../../hooks/useApi";
-import { Button, Container, Grid, Typography, Avatar } from "@mui/material";
+import { Button, Container, Grid, Typography, Avatar, Link } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
@@ -75,33 +75,35 @@ function Profile() {
           {venueManager && (
             <Grid item xs={12}>
               <Typography variant="h2">Your venues</Typography>
-              {venues &&
-                venues.map(
-                  ({
-                    id,
-                    name: title,
-                    location: { city },
-                    media,
-                    price,
-                    rating,
-                    meta: { wifi, parking, breakfast, pets },
-                  }) => (
-                    <Grid key={id} item xs={6} sm={3} md={2}>
-                      <Link to={id}>
-                        <VenueCard
-                          title={title}
-                          media={media[0]}
-                          location={city}
-                          wifi={wifi}
-                          parking={parking}
-                          breakfast={breakfast}
-                          pets={pets}
-                          rating={rating}
-                          price={price}></VenueCard>
-                      </Link>
-                    </Grid>
-                  )
-                )}
+              <Grid container columns={6} rowGap={6} columnSpacing={3}>
+                {venues &&
+                  venues.map(
+                    ({
+                      id,
+                      name: title,
+                      location: { city },
+                      media,
+                      price,
+                      rating,
+                      meta: { wifi, parking, breakfast, pets },
+                    }) => (
+                      <Grid key={id} item xs={6} sm={3} md={2}>
+                        <Link to={id}>
+                          <VenueCard
+                            title={title}
+                            media={media[0]}
+                            location={city}
+                            wifi={wifi}
+                            parking={parking}
+                            breakfast={breakfast}
+                            pets={pets}
+                            rating={rating}
+                            price={price}></VenueCard>
+                        </Link>
+                      </Grid>
+                    )
+                  )}
+              </Grid>
             </Grid>
           )}
           <Grid item xs={12}>
