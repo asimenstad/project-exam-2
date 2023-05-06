@@ -16,8 +16,10 @@ import {
   IconButton,
   InputLabel,
   Avatar,
+  List,
 } from "@mui/material";
-import { AddPhotoAlternate } from "@mui/icons-material";
+import { AddPhotoAlternate, Delete } from "@mui/icons-material";
+import ImageIcon from "@mui/icons-material/Image";
 
 function VenueForm() {
   const auth = useAuth();
@@ -75,16 +77,17 @@ function VenueForm() {
   }
 
   function handleAddMedia() {
-    setMedia((prevMedia) => [...prevMedia, mediaString]);
-    setMediaString("");
+    if (mediaString !== "") {
+      setMedia((prevMedia) => [...prevMedia, mediaString]);
+      setMediaString("");
+    }
   }
 
-  console.log(media);
-
   function handleRemoveMedia(index) {
-    const newMedia = [...media];
-    newMedia.splice(index, 1);
-    setMedia(newMedia);
+    setMedia((prevMedia) => {
+      return prevMedia.filter((_, i) => i !== index);
+    });
+    console.log(index);
   }
 
   function handleSubmit(e) {
@@ -171,14 +174,15 @@ function VenueForm() {
           <Box>
             <FormControl variant="outlined" fullWidth>
               <InputLabel size="small" htmlFor="media">
-                Media
+                Media (URL)
               </InputLabel>
               <OutlinedInput
                 name="media"
                 type="url"
+                pattern="https://.*"
                 fullWidth
                 id="media"
-                label="Media"
+                label="Media (URL)"
                 autoFocus
                 size="small"
                 value={mediaString}
@@ -192,6 +196,29 @@ function VenueForm() {
                 }
               />
             </FormControl>
+            {media.length === 0 ? (
+              <Avatar variant="square" sx={{ marginTop: 1 }}>
+                <ImageIcon />
+              </Avatar>
+            ) : (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, marginTop: 1 }}>
+                {media.map((url, index) => (
+                  <Box key={url + index} sx={{ position: "relative" }}>
+                    <Avatar src={url} variant="square" />
+                    <IconButton
+                      onClick={() => handleRemoveMedia(index)}
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        color: "white",
+                        backgroundColor: "#00033",
+                      }}>
+                      <Delete />
+                    </IconButton>
+                  </Box>
+                ))}
+              </Box>
+            )}
           </Box>
         </Grid>
         <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
