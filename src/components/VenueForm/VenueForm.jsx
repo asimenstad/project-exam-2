@@ -21,7 +21,7 @@ import { AddPhotoAlternate, Delete } from "@mui/icons-material";
 import ImageIcon from "@mui/icons-material/Image";
 
 function VenueForm() {
-  const auth = useAuth();
+  const { authFetch } = useAuth();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -124,8 +124,7 @@ function VenueForm() {
         breakfast: breakfast,
       },
     };
-    console.log(data);
-    auth.createVenue(data, "https://api.noroff.dev/api/v1/holidaze/venues");
+    authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/venues");
   }
   return (
     <Box component="form" onSubmit={handleSubmit}>

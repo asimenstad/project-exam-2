@@ -8,11 +8,11 @@ function VenueCard(props) {
 
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      {media !== undefined ? (
-        <CardMedia image={media} title={title} sx={{ height: 250 }} />
-      ) : (
-        <CardMedia image={defaultImage} title="Could not load image" sx={{ height: 250 }} />
-      )}
+      <CardMedia
+        image={media !== undefined ? media : defaultImage}
+        title={media !== undefined ? title : "Could not load image"}
+        sx={{ height: 250 }}
+      />
       <CardContent>
         <Typography variant="h2">{props.title}</Typography>
         <Typography variant="overline">{props.location}</Typography>

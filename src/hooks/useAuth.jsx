@@ -84,11 +84,11 @@ function useProvideAuth() {
     navigate("/");
   }
 
-  async function createVenue(data, url) {
+  async function authFetch(data, method, url) {
     try {
       setIsLoading(true);
       const postData = {
-        method: "POST",
+        method: method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.accessToken}`,
@@ -97,6 +97,8 @@ function useProvideAuth() {
       };
       const response = await fetch(url, postData);
       if (response.ok) {
+        const json = await response.json();
+        console.log(json);
         navigate(0);
       } else {
         const error = await response.json();
@@ -110,5 +112,5 @@ function useProvideAuth() {
     }
   }
 
-  return { login, register, logout, createVenue, user, isError, isLoading };
+  return { login, register, logout, authFetch, user, isError, isLoading };
 }

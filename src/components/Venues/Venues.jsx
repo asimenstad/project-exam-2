@@ -5,7 +5,7 @@ import { useApi } from "../../hooks/useApi.jsx";
 
 function Venues() {
   const { data, isLoading, isError } = useApi(
-    "https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true"
+    "https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true&_sort=created&_sortOrder=desc"
   );
 
   if (isLoading) {

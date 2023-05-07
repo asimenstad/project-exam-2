@@ -1,10 +1,9 @@
 import React from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { useApi } from "../../hooks/useApi";
-import { Button, Container, Grid, Typography, Avatar, Link } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Container, Grid, Typography, Link, Breadcrumbs } from "@mui/material";
 import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
+import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 
 function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -30,32 +29,16 @@ function Profile() {
     <Container component="main" sx={{ minHeight: "90vh" }}>
       {user && (
         <Grid container gap={4}>
-          <Grid
-            xs={12}
-            md={3}
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 4,
-              bgcolor: "white",
-              borderRadius: 1,
-            }}>
-            {avatar ? (
-              <Avatar sx={{ width: 80, height: 80 }} src={avatar} />
-            ) : (
-              <Avatar sx={{ width: 80, height: 80 }}></Avatar>
-            )}
-            <Typography component="h1" variant="h2" sx={{ marginTop: 2 }}>
-              {name}
-            </Typography>
-            <Typography variant="body2">{email}</Typography>
-            {venueManager && <Typography variant="body1">Venue manager</Typography>}
-            <Button startIcon={<EditIcon />} sx={{ marginTop: 2 }}>
-              Edit avatar
-            </Button>
+          <Grid item xs={12}>
+            <Breadcrumbs aria-label="breadcrumbs">
+              <Link to="/" color="inherit">
+                Home
+              </Link>
+              <Typography color="text.primary">Profile</Typography>
+            </Breadcrumbs>
+          </Grid>
+          <Grid xs={12} md={3} item>
+            <ProfileInfo avatar={avatar} name={name} email={email} venueManager={venueManager} />
           </Grid>
           <Grid
             item

@@ -51,11 +51,7 @@ function Header() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit">
-                {user.avatar ? (
-                  <Avatar alt={user.name} sx={{ width: 32, height: 32 }} src={user.avatar} />
-                ) : (
-                  <Avatar sx={{ width: 32, height: 32 }} />
-                )}
+                <Avatar sx={{ width: 32, height: 32 }} src={user.avatar ? user.avatar : undefined} />
               </IconButton>
               <Menu
                 id="menu-appbar"

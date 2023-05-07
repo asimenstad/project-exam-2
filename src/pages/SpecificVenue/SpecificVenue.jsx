@@ -1,7 +1,19 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useApi } from "../../hooks/useApi.jsx";
-import { Avatar, Box, Button, Container, Divider, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  ImageList,
+  ImageListItem,
+  Typography,
+  Breadcrumbs,
+  Link,
+} from "@mui/material";
 import WifiIcon from "@mui/icons-material/Wifi";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import PetsIcon from "@mui/icons-material/Pets";
@@ -49,6 +61,12 @@ function SpecificVenue() {
 
   return (
     <Container component="main">
+      <Breadcrumbs aria-label="breadcrumbs">
+        <Link to="/" color="inherit">
+          Home
+        </Link>
+        <Typography color="text.primary">{title}</Typography>
+      </Breadcrumbs>
       <Typography variant="h1">{title}</Typography>
       <Typography variant="h2">{city}</Typography>
       <Typography></Typography>
