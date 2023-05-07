@@ -97,7 +97,7 @@ function useProvideAuth() {
       };
       const response = await fetch(url, postData);
       if (response.ok) {
-        window.location.reload();
+        navigate(0);
       } else {
         const error = await response.json();
         console.log(error);

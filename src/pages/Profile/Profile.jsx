@@ -7,7 +7,7 @@ import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
 
 function Profile() {
-  const { user } = useAuth();
+  const user = JSON.parse(localStorage.getItem("user"));
   const options = {
     headers: {
       Authorization: `Bearer ${user.accessToken}`,
@@ -24,7 +24,6 @@ function Profile() {
   if (isError) {
     return <div>Error</div>;
   }
-
   const { name, email, avatar, venueManager, bookings, venues } = data;
 
   return (
@@ -88,7 +87,7 @@ function Profile() {
                       meta: { wifi, parking, breakfast, pets },
                     }) => (
                       <Grid key={id} item xs={6} sm={3} md={2}>
-                        <Link to={id}>
+                        <Link to={`../${id}`}>
                           <VenueCard
                             title={title}
                             media={media[0]}
