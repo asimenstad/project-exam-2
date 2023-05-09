@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, CardContent, Typography, CardMedia, Chip, Grid } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
 import DeleteVenue from "../DeleteVenue/DeleteVenue";
 import EditVenue from "../EditVenue/EditVenue";
+import { StarRounded } from "@mui/icons-material";
 
 function VenueCard(props) {
   const { media, name: title, wifi, parking, pets, breakfast, price, rating, venueManager } = props;
@@ -48,7 +48,7 @@ function VenueCard(props) {
       </CardContent>
       <CardContent sx={{ mt: "auto", display: "flex", justifyContent: "space-between" }}>
         <Typography sx={{ display: "flex", alignItems: "center" }}>
-          <StarIcon />
+          <StarRounded />
           {rating}
         </Typography>
         <Typography variant="body1" fontWeight="600">

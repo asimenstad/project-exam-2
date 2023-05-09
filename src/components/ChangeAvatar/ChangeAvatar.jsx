@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Button, Dialog, DialogContent, DialogTitle, Avatar, Box, TextField, IconButton } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import { Close } from "@mui/icons-material";
+import { Close, EditRounded } from "@mui/icons-material";
 
 function ChangeAvatar({ avatar }) {
   const { user, authFetch } = useAuth();
@@ -41,7 +40,7 @@ function ChangeAvatar({ avatar }) {
 
   return (
     <Box>
-      <Button onClick={handleClickOpen} startIcon={<EditIcon />} sx={{ marginTop: 2 }}>
+      <Button onClick={handleClickOpen} startIcon={<EditRounded />} sx={{ marginTop: 2 }}>
         Edit avatar
       </Button>
       <Dialog open={open} onClose={handleClose}>

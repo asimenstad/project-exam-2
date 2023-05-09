@@ -14,13 +14,9 @@ import {
   Breadcrumbs,
   Link,
 } from "@mui/material";
-import WifiIcon from "@mui/icons-material/Wifi";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import PetsIcon from "@mui/icons-material/Pets";
-import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
-import BedIcon from "@mui/icons-material/Bed";
 import Calendar from "../../components/Calendar/Calendar.jsx";
 import TextField from "@mui/material/TextField";
+import { BedRounded, CoffeeRounded, DirectionsCarRounded, PetsRounded, WifiRounded } from "@mui/icons-material";
 
 function SpecificVenue() {
   const { id } = useParams();
@@ -94,19 +90,19 @@ function SpecificVenue() {
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <BedIcon /> <Typography variant="body1"> {maxGuests} guest(s) allowed</Typography>
+              <BedRounded /> <Typography variant="body1"> {maxGuests} guest(s) allowed</Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !wifi && "line-through" }}>
-              <WifiIcon /> <Typography variant="body1">Wifi</Typography>
+              <WifiRounded /> <Typography variant="body1">Wifi</Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !parking && "line-through" }}>
-              <DirectionsCarIcon /> <Typography variant="body1">Parking</Typography>
+              <DirectionsCarRounded /> <Typography variant="body1">Parking</Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !pets && "line-through" }}>
-              <PetsIcon /> <Typography variant="body1">Pets allowed</Typography>
+              <PetsRounded /> <Typography variant="body1">Pets allowed</Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !breakfast && "line-through" }}>
-              <FreeBreakfastIcon /> <Typography variant="body1">Breakfast included</Typography>
+              <CoffeeRounded /> <Typography variant="body1">Breakfast included</Typography>
             </Box>
           </Box>
         </Grid>
