@@ -1,8 +1,7 @@
 import React from "react";
-import { Card, CardContent, Typography, CardMedia, Chip, Grid } from "@mui/material";
-import DeleteVenue from "../DeleteVenue/DeleteVenue";
-import EditVenue from "../EditVenue/EditVenue";
+import { Card, CardContent, Typography, CardMedia, Chip, Grid, Box } from "@mui/material";
 import { StarRounded } from "@mui/icons-material";
+import ChangeVenue from "../ChangeVenue/ChangeVenue";
 
 function VenueCard(props) {
   const { media, name: title, wifi, parking, pets, breakfast, price, rating, venueManager } = props;
@@ -11,6 +10,7 @@ function VenueCard(props) {
   function handleImgError(e) {
     e.target.src = defaultImg;
   }
+
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardMedia
@@ -21,7 +21,9 @@ function VenueCard(props) {
         onError={handleImgError}
       />
       <CardContent>
-        <Typography variant="h2">{props.title}</Typography>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Typography variant="h2">{props.title}</Typography>
+        </Box>
         <Typography variant="overline">{props.location}</Typography>
         <Grid container spacing={1} sx={{ marginTop: 0.5 }}>
           {wifi && (
@@ -56,9 +58,8 @@ function VenueCard(props) {
         </Typography>
       </CardContent>
       {venueManager && (
-        <CardContent sx={{ mt: "auto", display: "flex", justifyContent: "space-between" }}>
-          <DeleteVenue />
-          <EditVenue />
+        <CardContent>
+          <ChangeVenue />
         </CardContent>
       )}
     </Card>

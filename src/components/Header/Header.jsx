@@ -14,6 +14,7 @@ import {
   Divider,
   Chip,
   ListItemIcon,
+  Button,
 } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -99,7 +100,7 @@ function Header() {
                 <Divider />
                 <MenuItem onClick={logoutUser}>
                   <ListItemIcon>
-                    <Logout fontSize="small" />
+                    <Logout />
                   </ListItemIcon>
                   Logout
                 </MenuItem>
@@ -108,7 +109,9 @@ function Header() {
           ) : (
             <Box>
               <NavLink to="/login">
-                <Chip label="Login" clickable color="primary" sx={{ fontSize: "1rem", paddingInline: "1rem" }} />
+                <Button variant="contained" disableElevation>
+                  Login
+                </Button>
               </NavLink>
             </Box>
           )}

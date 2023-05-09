@@ -4,7 +4,6 @@ import {
   Box,
   TextField,
   Grid,
-  Typography,
   FormControl,
   FormLabel,
   FormGroup,
@@ -128,8 +127,7 @@ function VenueForm() {
   }
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Typography variant="h2">Add venue</Typography>
-      <Grid container spacing={2} my={1}>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Box>
             <TextField
@@ -316,8 +314,8 @@ function VenueForm() {
           </Box>
         </Grid>
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button type="submit" variant="contained">
-            Add venue
+          <Button type="submit" variant="contained" disableElevation>
+            Submit
           </Button>
         </Grid>
       </Grid>

@@ -14,11 +14,13 @@ export const theme = createTheme({
   typography: {
     fontFamily: ["Source Sans Pro", "Roboto", "sans-serif"].join(","),
     h1: {
-      fontFamily: "Comfortaa",
       fontSize: "3rem",
+      fontWeight: "400",
+      textTransform: "capitalize",
     },
     h2: {
       fontSize: "1.5rem",
+      textTransform: "capitalize",
     },
   },
   components: {
