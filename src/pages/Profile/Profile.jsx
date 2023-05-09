@@ -24,7 +24,6 @@ function Profile() {
     return <div>Error</div>;
   }
   const { name, email, avatar, venueManager, bookings, venues } = data;
-
   return (
     <Container component="main" sx={{ minHeight: "90vh" }}>
       {user && (
@@ -43,7 +42,7 @@ function Profile() {
           <Grid
             item
             xs={12}
-            md={8}
+            md={8.5}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -80,7 +79,8 @@ function Profile() {
                             breakfast={breakfast}
                             pets={pets}
                             rating={rating}
-                            price={price}></VenueCard>
+                            price={price}
+                            venueManager={venueManager}></VenueCard>
                         </Link>
                       </Grid>
                     )

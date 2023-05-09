@@ -1,25 +1,27 @@
-import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Logout from "@mui/icons-material/Logout";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Chip from "@mui/material/Chip";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { Link } from "@mui/material";
+import {
+  Link,
+  Box,
+  AppBar,
+  IconButton,
+  Toolbar,
+  Typography,
+  Menu,
+  MenuItem,
+  Avatar,
+  Divider,
+  Chip,
+  ListItemIcon,
+} from "@mui/material";
+import Logout from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function Header() {
   const { user, logout } = useAuth();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);

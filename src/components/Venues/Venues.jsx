@@ -2,10 +2,12 @@ import React from "react";
 import { Grid, Link } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
+import { useAuth } from "../../hooks/useAuth";
 
 function Venues() {
+  const { user } = useAuth();
   const { data, isLoading, isError } = useApi(
-    "https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true&_sort=created&_sortOrder=desc"
+    "https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true&sort=created&sortOrder=desc"
   );
 
   if (isLoading) {

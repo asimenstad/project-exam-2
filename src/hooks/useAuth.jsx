@@ -98,6 +98,8 @@ function useProvideAuth() {
       const response = await fetch(url, postData);
       if (response.ok) {
         const json = await response.json();
+        setUser(json);
+        localStorage.setItem("user", JSON.stringify(json));
         console.log(json);
         navigate(0);
       } else {
