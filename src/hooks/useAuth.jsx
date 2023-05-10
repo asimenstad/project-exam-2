@@ -112,5 +112,29 @@ function useProvideAuth() {
     }
   }
 
-  return { login, register, logout, authFetch, user, isError, isLoading };
+  async function authDelete(url) {
+    try {
+      setIsLoading(true);
+      const postData = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      };
+      const response = await fetch(url, postData);
+      if (response.ok) {
+        navigate("/profile");
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return { login, register, logout, authFetch, authDelete, user, isError, isLoading };
 }

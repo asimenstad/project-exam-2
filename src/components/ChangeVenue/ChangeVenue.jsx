@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Box, Button, Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+} from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
@@ -22,7 +31,7 @@ function ChangeVenue({
   pets,
   breakfast,
 }) {
-  const { authFetch } = useAuth();
+  const { authFetch, authDelete } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 
@@ -84,6 +93,10 @@ function ChangeVenue({
     },
   })(VenueForm);
 
+  function handleDelete() {
+    authDelete(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
+  }
+
   return (
     <Box sx={{ display: "flex", gap: 2 }}>
       <Button id="delete" variant="outlined" color="error" onClick={handleClickOpen}>
@@ -105,16 +118,19 @@ function ChangeVenue({
       </Dialog>
       <Dialog open={openDelete} onClose={handleClose}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <DialogTitle>Delete venue</DialogTitle>
+          <DialogTitle>Delete this venue?</DialogTitle>
           <IconButton onClick={handleClose} sx={{ mr: 2, "&:hover": { backgroundColor: "inherit" } }}>
             <Close />
           </IconButton>
         </Box>
         <DialogContent sx={{ m: "auto", p: 4 }}>
-          <Button variant="contained" color="error" disableElevation>
+          <DialogContentText>This will delete the venue permanently. You cannot undo this action.</DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ mb: 2, mr: 2 }}>
+          <Button variant="contained" color="error" disableElevation onClick={handleDelete}>
             Delete
           </Button>
-        </DialogContent>
+        </DialogActions>
       </Dialog>
     </Box>
   );
