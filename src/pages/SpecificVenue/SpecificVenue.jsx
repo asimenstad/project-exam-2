@@ -17,8 +17,10 @@ import {
 import Calendar from "../../components/Calendar/Calendar.jsx";
 import TextField from "@mui/material/TextField";
 import { BedRounded, CoffeeRounded, DirectionsCarRounded, PetsRounded, WifiRounded } from "@mui/icons-material";
+import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
 
 function SpecificVenue() {
+  const user = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const { data, isLoading, isError } = useApi(
     `https://api.noroff.dev/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`
@@ -40,7 +42,7 @@ function SpecificVenue() {
     rating,
     created,
     updated,
-    location: { city, country } = {},
+    location: { city, country, address, continent, zip } = {},
     meta: { pets, parking, breakfast, wifi } = {},
     owner: { name, avatar } = {},
     bookings,
@@ -51,7 +53,6 @@ function SpecificVenue() {
   }
   const cols = media.length <= 4 ? media.length : 2;
   const rows = Math.ceil(media.length / cols);
-
   return (
     <Container component="main">
       <Breadcrumbs aria-label="breadcrumbs">
@@ -80,6 +81,28 @@ function SpecificVenue() {
                 {name}
               </Box>
             </Typography>
+            {user.name === name && (
+              <>
+                <Divider orientation="vertical" variant="middle" flexItem />
+                <ChangeVenue
+                  id={id}
+                  venueName={title}
+                  description={description}
+                  price={price}
+                  maxGuests={maxGuests}
+                  mediaArray={media}
+                  address={address}
+                  city={city}
+                  country={country}
+                  continent={continent}
+                  zip={zip}
+                  wifi={wifi}
+                  parking={parking}
+                  pets={pets}
+                  breakfast={breakfast}
+                />
+              </>
+            )}
           </Box>
           <Typography variant="body1" sx={{ marginBlock: 2 }}>
             {description}

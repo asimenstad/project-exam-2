@@ -1,32 +1,14 @@
 import React from "react";
 import { Card, CardContent, Typography, CardMedia, Chip, Grid, Box } from "@mui/material";
 import { StarRounded } from "@mui/icons-material";
-import ChangeVenue from "../ChangeVenue/ChangeVenue";
 
 function VenueCard(props) {
-  const {
-    media,
-    name: title,
-    wifi,
-    parking,
-    pets,
-    breakfast,
-    price,
-    rating,
-    venueManager,
-    description,
-    city,
-    country,
-    continent,
-    zip,
-    maxGuests,
-  } = props;
+  const { media, name: title, wifi, parking, pets, breakfast, price, rating } = props;
   const defaultImg = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg";
 
   function handleImgError(e) {
     e.target.src = defaultImg;
   }
-
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardMedia
@@ -73,11 +55,6 @@ function VenueCard(props) {
           {price} NOK
         </Typography>
       </CardContent>
-      {venueManager && (
-        <CardContent>
-          <ChangeVenue />
-        </CardContent>
-      )}
     </Card>
   );
 }

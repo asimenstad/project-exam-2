@@ -76,7 +76,7 @@ function VenueForm({ values, handleSubmit, handleChange }) {
               fullWidth
               size="small"
               inputProps={{ min: 1 }}
-              value={values.guest}
+              value={values.maxGuests}
               onChange={handleChange}
             />
           </Box>
