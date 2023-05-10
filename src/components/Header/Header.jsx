@@ -12,7 +12,6 @@ import {
   MenuItem,
   Avatar,
   Divider,
-  Chip,
   ListItemIcon,
   Button,
 } from "@mui/material";
@@ -38,13 +37,14 @@ function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="a"
-            href="/"
-            sx={{ flexGrow: 1, fontFamily: "Comfortaa", fontWeight: 700, color: "inherit", textDecoration: "none" }}>
-            Holidaze
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link
+              to="/"
+              variant="h6"
+              sx={{ fontFamily: "Comfortaa", fontWeight: 700, color: "inherit", textDecoration: "none" }}>
+              Holidaze
+            </Link>
+          </Box>
           {user ? (
             <Box>
               <IconButton

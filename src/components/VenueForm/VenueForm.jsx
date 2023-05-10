@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import {
   Box,
   TextField,
@@ -19,112 +18,7 @@ import {
 import { AddPhotoAlternate, Delete } from "@mui/icons-material";
 import ImageIcon from "@mui/icons-material/Image";
 
-function VenueForm() {
-  const { authFetch } = useAuth();
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [maxGuests, setMaxGuests] = useState(0);
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [continent, setContinent] = useState("");
-  const [zip, setZip] = useState("");
-  const [wifi, setWifi] = useState(false);
-  const [parking, setParking] = useState(false);
-  const [pets, setPets] = useState(false);
-  const [breakfast, setBreakfast] = useState(false);
-
-  const [mediaString, setMediaString] = useState("");
-  const [media, setMedia] = useState([]);
-  const inputRef = useRef(null);
-
-  function handleChange(e) {
-    const inputValue = e.target.value;
-    const checkedValue = e.target.checked;
-
-    if (e.target.name === "venueName") {
-      setName(inputValue);
-    }
-    if (e.target.name === "description") {
-      setDescription(inputValue);
-    }
-    if (e.target.name === "price") {
-      setPrice(inputValue);
-    }
-    if (e.target.name === "maxGuests") {
-      setMaxGuests(inputValue);
-    }
-    if (e.target.name === "media") {
-      setMediaString(inputValue);
-    }
-    if (e.target.name === "address") {
-      setAddress(inputValue);
-    }
-    if (e.target.name === "city") {
-      setCity(inputValue);
-    }
-    if (e.target.name === "country") {
-      setCountry(inputValue);
-    }
-    if (e.target.name === "continent") {
-      setContinent(inputValue);
-    }
-    if (e.target.name === "zip") {
-      setZip(inputValue);
-    }
-    if (e.target.name === "wifi") {
-      setWifi(checkedValue);
-    }
-    if (e.target.name === "parking") {
-      setParking(checkedValue);
-    }
-    if (e.target.name === "pets") {
-      setPets(checkedValue);
-    }
-    if (e.target.name === "breakfast") {
-      setBreakfast(checkedValue);
-    }
-  }
-
-  function handleAddMedia() {
-    if (mediaString !== "") {
-      setMedia((prevMedia) => [...prevMedia, mediaString]);
-      setMediaString("");
-      inputRef.current.value = "";
-    }
-  }
-
-  function handleRemoveMedia(index) {
-    setMedia((prevMedia) => {
-      return prevMedia.filter((_, i) => i !== index);
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const data = {
-      name: name,
-      description: description,
-      price: parseInt(price),
-      maxGuests: parseInt(maxGuests),
-      media: media,
-      location: {
-        address: address,
-        city: city,
-        country: country,
-        continent: continent,
-        zip: zip,
-      },
-      meta: {
-        wifi: wifi,
-        parking: parking,
-        pets: pets,
-        breakfast: breakfast,
-      },
-    };
-    authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/venues");
-  }
+function VenueForm({ handleSubmit, handleChange, handleAddMedia, handleRemoveMedia, inputRef, media }) {
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Grid container spacing={2}>

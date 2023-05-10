@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { Box, Button, Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import VenueForm from "../VenueForm/VenueForm";
 
 function ChangeVenue() {
   const [openEdit, setOpenEdit] = useState(false);
@@ -38,9 +36,7 @@ function ChangeVenue() {
             <Close />
           </IconButton>
         </Box>
-        <DialogContent>
-          <VenueForm />
-        </DialogContent>
+        <DialogContent></DialogContent>
       </Dialog>
       <Dialog open={openDelete} onClose={handleClose}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>

@@ -4,7 +4,23 @@ import { StarRounded } from "@mui/icons-material";
 import ChangeVenue from "../ChangeVenue/ChangeVenue";
 
 function VenueCard(props) {
-  const { media, name: title, wifi, parking, pets, breakfast, price, rating, venueManager } = props;
+  const {
+    media,
+    name: title,
+    wifi,
+    parking,
+    pets,
+    breakfast,
+    price,
+    rating,
+    venueManager,
+    description,
+    city,
+    country,
+    continent,
+    zip,
+    maxGuests,
+  } = props;
   const defaultImg = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg";
 
   function handleImgError(e) {
