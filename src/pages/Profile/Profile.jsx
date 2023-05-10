@@ -1,12 +1,14 @@
 import React, { useState, useRef } from "react";
 import { useApi } from "../../hooks/useApi";
-import { useAuth } from "../../hooks/useAuth";
 import { Container, Grid, Typography, Link, Breadcrumbs } from "@mui/material";
 import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
+import { withFormik } from "formik";
+import { useAuth } from "../../hooks/useAuth";
 
 function Profile() {
+  const { authFetch } = useAuth();
   const user = JSON.parse(localStorage.getItem("user"));
   const options = {
     headers: {
@@ -17,111 +19,6 @@ function Profile() {
     `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}?_venues=true&_bookings=true`,
     options
   );
-  const { authFetch } = useAuth();
-  const [venueName, setVenueName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [maxGuests, setMaxGuests] = useState(0);
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [continent, setContinent] = useState("");
-  const [zip, setZip] = useState("");
-  const [wifi, setWifi] = useState(false);
-  const [parking, setParking] = useState(false);
-  const [pets, setPets] = useState(false);
-  const [breakfast, setBreakfast] = useState(false);
-
-  const [mediaString, setMediaString] = useState("");
-  const [media, setMedia] = useState([]);
-  const inputRef = useRef(null);
-
-  function handleChange(e) {
-    const inputValue = e.target.value;
-    const checkedValue = e.target.checked;
-
-    if (e.target.name === "venueName") {
-      setVenueName(inputValue);
-    }
-    if (e.target.name === "description") {
-      setDescription(inputValue);
-    }
-    if (e.target.name === "price") {
-      setPrice(inputValue);
-    }
-    if (e.target.name === "maxGuests") {
-      setMaxGuests(inputValue);
-    }
-    if (e.target.name === "media") {
-      setMediaString(inputValue);
-    }
-    if (e.target.name === "address") {
-      setAddress(inputValue);
-    }
-    if (e.target.name === "city") {
-      setCity(inputValue);
-    }
-    if (e.target.name === "country") {
-      setCountry(inputValue);
-    }
-    if (e.target.name === "continent") {
-      setContinent(inputValue);
-    }
-    if (e.target.name === "zip") {
-      setZip(inputValue);
-    }
-    if (e.target.name === "wifi") {
-      setWifi(checkedValue);
-    }
-    if (e.target.name === "parking") {
-      setParking(checkedValue);
-    }
-    if (e.target.name === "pets") {
-      setPets(checkedValue);
-    }
-    if (e.target.name === "breakfast") {
-      setBreakfast(checkedValue);
-    }
-  }
-
-  function handleAddMedia() {
-    if (mediaString !== "") {
-      setMedia((prevMedia) => [...prevMedia, mediaString]);
-      setMediaString("");
-      inputRef.current.value = "";
-    }
-  }
-
-  function handleRemoveMedia(index) {
-    setMedia((prevMedia) => {
-      return prevMedia.filter((_, i) => i !== index);
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const data = {
-      name: venueName,
-      description: description,
-      price: parseInt(price),
-      maxGuests: parseInt(maxGuests),
-      media: media,
-      location: {
-        address: address,
-        city: city,
-        country: country,
-        continent: continent,
-        zip: zip,
-      },
-      meta: {
-        wifi: wifi,
-        parking: parking,
-        pets: pets,
-        breakfast: breakfast,
-      },
-    };
-    authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/venues");
-  }
 
   if (isLoading) {
     return <div>Loading</div>;
@@ -130,6 +27,51 @@ function Profile() {
     return <div>Error</div>;
   }
   const { name, email, avatar, venueManager, bookings, venues } = data;
+
+  const AddVenueForm = withFormik({
+    mapPropsToValues: () => ({
+      venueName: "",
+      description: "",
+      price: 0,
+      maxGuests: 0,
+      mediaArray: [],
+      mediaString: "",
+      address: "",
+      city: "",
+      country: "",
+      continent: "",
+      zip: "",
+      wifi: false,
+      parking: false,
+      pets: false,
+      breakfast: false,
+    }),
+    handleSubmit: (values, { setSubmitting }) => {
+      const data = {
+        name: values.venueName,
+        description: values.description,
+        price: parseInt(values.price),
+        maxGuests: parseInt(values.maxGuests),
+        media: values.mediaArray,
+        location: {
+          address: values.address,
+          city: values.city,
+          country: values.country,
+          continent: values.continent,
+          zip: values.zip,
+        },
+        meta: {
+          wifi: values.wifi,
+          parking: values.parking,
+          pets: values.pets,
+          breakfast: values.breakfast,
+        },
+      };
+
+      authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/venues");
+    },
+  })(VenueForm);
+
   return (
     <Container component="main" sx={{ minHeight: "90vh" }}>
       {user && (
@@ -157,18 +99,7 @@ function Profile() {
               bgcolor: "white",
               borderRadius: 1,
             }}>
-            {venueManager ? (
-              <VenueForm
-                handleSubmit={handleSubmit}
-                handleChange={handleChange}
-                handleAddMedia={handleAddMedia}
-                handleRemoveMedia={handleRemoveMedia}
-                inputRef={inputRef}
-                media={media}
-              />
-            ) : (
-              <Typography>View bookings calendar</Typography>
-            )}
+            {venueManager ? <AddVenueForm /> : <Typography>View bookings calendar</Typography>}
           </Grid>
           {venueManager && (
             <Grid item xs={12}>
