@@ -18,6 +18,7 @@ import Calendar from "../../components/Calendar/Calendar.jsx";
 import TextField from "@mui/material/TextField";
 import { BedRounded, CoffeeRounded, DirectionsCarRounded, PetsRounded, WifiRounded } from "@mui/icons-material";
 import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
+import BookingForm from "../../components/BookingForm/BookingForm.jsx";
 
 function SpecificVenue() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -64,7 +65,7 @@ function SpecificVenue() {
       <Typography variant="h1">{title}</Typography>
       <Typography variant="h2">{city}</Typography>
       <Typography></Typography>
-      <ImageList variant="quilted" cols={cols} rows={rows}>
+      <ImageList variant="quilted" cols={cols} rows={rows} rowHeight={600}>
         {media.map((image, index) => (
           <ImageListItem key={image + index}>
             <img width="100%" src={image} alt={`${title}`} />
@@ -129,20 +130,8 @@ function SpecificVenue() {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={2} md="auto" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <Typography variant="h2">Book your stay</Typography>
-          {bookings && <Calendar bookedDates={bookings} />}
-          <TextField
-            id="guests"
-            label="Guests"
-            type="number"
-            fullWidth
-            size="small"
-            inputProps={{ min: 1, max: maxGuests }}
-          />
-          <Button variant="contained" disableElevation fullWidth>
-            Book
-          </Button>
+        <Grid item xs={12} md="auto" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <BookingForm price={price} bookings={bookings} maxGuests={maxGuests} />
         </Grid>
       </Grid>
     </Container>

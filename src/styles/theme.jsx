@@ -22,6 +22,9 @@ export const theme = createTheme({
       fontSize: "1.5rem",
       textTransform: "capitalize",
     },
+    h3: {
+      fontSize: "1.1rem",
+    },
   },
   components: {
     MuiAppBar: {
