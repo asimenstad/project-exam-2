@@ -1,18 +1,43 @@
-import React from "react";
-import { Typography, TextField, Button, Box, Divider } from "@mui/material";
-import Calendar from "../Calendar/Calendar";
+import React, { useState } from "react";
+import { Typography, TextField, Button, Box, Divider, Grid } from "@mui/material";
+import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
+import { useAuth } from "../../hooks/useAuth";
 
-function BookingForm({ bookings, maxGuests, price }) {
+function BookingForm({ bookings, maxGuests, price, id }) {
+  const { authFetch } = useAuth();
+  const [bookingDates, setBookingDates] = useState({});
+  const [guests, setGuests] = useState(1);
+  const handleCalendarChange = (ranges) => {
+    setBookingDates(ranges);
+  };
+
+  const handleGuestChange = (e) => {
+    setGuests(e.target.value);
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const data = {
+      dateFrom: new Date(bookingDates.startDate),
+      dateTo: new Date(bookingDates.endDate),
+      guests: parseInt(guests),
+      venueId: id,
+    };
+    console.log(data);
+    authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
+  }
   return (
-    <>
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <Typography variant="h2">Book your stay</Typography>
-
+      {bookings && <BookingCalendar onChange={handleCalendarChange} bookings={bookings} />}
       <TextField
         id="guests"
         label="Guests"
         type="number"
         fullWidth
         size="small"
+        onChange={handleGuestChange}
+        value={guests}
         inputProps={{ min: 1, max: maxGuests }}
       />
       <Box>
@@ -26,10 +51,10 @@ function BookingForm({ bookings, maxGuests, price }) {
           <Typography sx={{ fontWeight: 600 }}>Total</Typography>
         </Box>
       </Box>
-      <Button variant="contained" disableElevation fullWidth>
+      <Button type="submit" variant="contained" disableElevation fullWidth>
         Book
       </Button>
-    </>
+    </Box>
   );
 }
 

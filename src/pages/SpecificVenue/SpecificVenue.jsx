@@ -47,6 +47,7 @@ function SpecificVenue() {
     meta: { pets, parking, breakfast, wifi } = {},
     owner: { name, avatar } = {},
     bookings,
+    id: venueId,
   } = data;
 
   if (!media || media.length === 0) {
@@ -130,8 +131,8 @@ function SpecificVenue() {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md="auto" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <BookingForm price={price} bookings={bookings} maxGuests={maxGuests} />
+        <Grid item md="auto" xs={12}>
+          <BookingForm price={price} id={venueId} bookings={bookings} maxGuests={maxGuests} />
         </Grid>
       </Grid>
     </Container>
