@@ -4,7 +4,7 @@ import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
 import { useAuth } from "../../hooks/useAuth";
 
-function Venues() {
+function Venues({ searchInput }) {
   const { user } = useAuth();
   const { data, isLoading, isError } = useApi(
     "https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true&sort=created&sortOrder=desc"
@@ -17,17 +17,24 @@ function Venues() {
     return <div>Error</div>;
   }
 
+  const filteredProducts = [...data].filter((venue) => {
+    return searchInput === ""
+      ? venue
+      : venue.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          (venue.location.city && venue.location.city.toLowerCase().includes(searchInput.toLowerCase()));
+  });
+
   return (
     <Grid container columns={6} rowGap={6} columnSpacing={3}>
-      {data.map(
-        ({ id, name: title, location: { city }, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
+      {filteredProducts.map(
+        ({ id, name: title, location, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
           <Grid key={id} item xs={6} sm={3} md={2}>
             <Link to={id}>
               <VenueCard
                 title={title}
                 media={media[0]}
-                location={city}
                 wifi={wifi}
+                location={location}
                 parking={parking}
                 breakfast={breakfast}
                 pets={pets}

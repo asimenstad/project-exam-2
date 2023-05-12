@@ -107,22 +107,14 @@ function Profile() {
               <Grid container columns={6} rowGap={6} columnSpacing={3}>
                 {venues &&
                   venues.map(
-                    ({
-                      id,
-                      name: title,
-                      location: { city },
-                      media,
-                      price,
-                      rating,
-                      meta: { wifi, parking, breakfast, pets },
-                    }) => (
+                    ({ id, name: title, location, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
                       <Grid key={id} item xs={6} sm={3} md={2}>
                         <Link to={`../${id}`}>
                           <VenueCard
                             title={title}
                             media={media[0]}
-                            location={city}
                             wifi={wifi}
+                            location={location}
                             parking={parking}
                             breakfast={breakfast}
                             pets={pets}
@@ -136,17 +128,19 @@ function Profile() {
               </Grid>
             </Grid>
           )}
-          <Grid item xs={12}>
-            <Typography variant="h2">Upcoming bookings</Typography>
-            {bookings &&
-              bookings.map(({ id }) => (
-                <Grid key={id} item xs={6} sm={3} md={2}>
-                  <Link to={id}>
-                    <VenueCard></VenueCard>
-                  </Link>
-                </Grid>
-              ))}
-          </Grid>
+          {!venueManager && (
+            <Grid item xs={12}>
+              <Typography variant="h2">Upcoming bookings</Typography>
+              {bookings &&
+                bookings.map(({ id }) => (
+                  <Grid key={id} item xs={6} sm={3} md={2}>
+                    <Link to={id}>
+                      <VenueCard></VenueCard>
+                    </Link>
+                  </Grid>
+                ))}
+            </Grid>
+          )}
         </Grid>
       )}
     </Container>
