@@ -8,7 +8,7 @@ function BookingCalendar({ onChange, bookings }) {
   const [state, setState] = useState([
     {
       startDate: subDays(new Date(), 0),
-      endDate: addDays(new Date(), 0),
+      endDate: addDays(new Date(), 1),
       key: "selection",
       color: "#000",
     },
@@ -42,8 +42,6 @@ function BookingCalendar({ onChange, bookings }) {
     setDisabledDates(bookedDates);
   }, [bookings]);
 
-  return (
-    <DateRange onChange={handleChange} moveRangeOnFirstSelection={false} ranges={state} disabledDates={disabledDates} />
-  );
+  return <DateRange onChange={handleChange} ranges={state} disabledDates={disabledDates} minDate={new Date()} />;
 }
 export default BookingCalendar;

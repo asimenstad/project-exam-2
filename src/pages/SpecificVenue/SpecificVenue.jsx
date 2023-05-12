@@ -73,8 +73,8 @@ function SpecificVenue() {
           </ImageListItem>
         ))}
       </ImageList>
-      <Grid container columns={2} spacing={4} justifyContent="space-between">
-        <Grid item xs={2} md={1}>
+      <Grid container spacing={4} justifyContent="space-between">
+        <Grid item xs={12} sm={7}>
           <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
             <Avatar src={avatar} />
             <Typography variant="body1" sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -131,7 +131,7 @@ function SpecificVenue() {
             </Box>
           </Box>
         </Grid>
-        <Grid item md="auto" xs={12}>
+        <Grid item xs="auto">
           <BookingForm price={price} id={venueId} bookings={bookings} maxGuests={maxGuests} />
         </Grid>
       </Grid>
