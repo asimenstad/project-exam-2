@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, Typography, CardMedia, Chip, Grid, Box } from "@mui/material";
-import { PlaceOutlined, PlaceRounded, StarRounded } from "@mui/icons-material";
+import { PlaceRounded, StarRounded } from "@mui/icons-material";
 
 function VenueCard(props) {
   const {

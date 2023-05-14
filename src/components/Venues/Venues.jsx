@@ -1,18 +1,13 @@
 import React from "react";
-import { Grid, Link } from "@mui/material";
+import { Grid, Link, Skeleton, LinearProgress } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
-import { useAuth } from "../../hooks/useAuth";
 
 function Venues({ searchInput }) {
-  const { user } = useAuth();
   const { data, isLoading, isError } = useApi(
     "https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true&sort=created&sortOrder=desc"
   );
 
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
   if (isError) {
     return <div>Error</div>;
   }
@@ -29,18 +24,22 @@ function Venues({ searchInput }) {
       {filteredProducts.map(
         ({ id, name: title, location, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (
           <Grid key={id} item xs={6} sm={3} md={2}>
-            <Link to={id}>
-              <VenueCard
-                title={title}
-                media={media[0]}
-                wifi={wifi}
-                location={location}
-                parking={parking}
-                breakfast={breakfast}
-                pets={pets}
-                rating={rating}
-                price={price}></VenueCard>
-            </Link>
+            {isLoading ? (
+              <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 1, bgcolor: "#fff" }} />
+            ) : (
+              <Link to={id}>
+                <VenueCard
+                  title={title}
+                  media={media[0]}
+                  wifi={wifi}
+                  location={location}
+                  parking={parking}
+                  breakfast={breakfast}
+                  pets={pets}
+                  rating={rating}
+                  price={price}></VenueCard>
+              </Link>
+            )}
           </Grid>
         )
       )}

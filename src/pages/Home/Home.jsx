@@ -38,7 +38,8 @@ function Home() {
           backgroundRepeat: "no-repeat",
           borderRadius: 1,
           mb: 5,
-        }}></Box>
+        }}
+      />
       <Search handleChange={handleChange} searchInput={searchInput} />
       <Venues searchInput={searchInput} />
     </Container>

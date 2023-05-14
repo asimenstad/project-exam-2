@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { useApi } from "../../hooks/useApi";
-import { Container, Grid, Typography, Link, Breadcrumbs } from "@mui/material";
+import { Container, Grid, Typography, Link, Breadcrumbs, Skeleton, CircularProgress } from "@mui/material";
 import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
@@ -21,13 +21,10 @@ function Profile() {
     options
   );
 
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
   if (isError) {
     return <div>Error</div>;
   }
-  const { name, email, avatar, venueManager, bookings, venues } = data;
+  const { name, email, avatar, venueManager, venues } = data;
 
   const AddVenueForm = withFormik({
     mapPropsToValues: () => ({
@@ -47,7 +44,7 @@ function Profile() {
       pets: false,
       breakfast: false,
     }),
-    handleSubmit: (values, { setSubmitting }) => {
+    handleSubmit: (values) => {
       const data = {
         name: values.venueName,
         description: values.description,
@@ -73,7 +70,13 @@ function Profile() {
     },
   })(VenueForm);
 
-  return (
+  return isLoading ? (
+    <Container
+      component="main"
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
+      <CircularProgress />
+    </Container>
+  ) : (
     <Container component="main" sx={{ minHeight: "90vh" }}>
       {user && (
         <Grid container gap={4}>
@@ -86,7 +89,11 @@ function Profile() {
             </Breadcrumbs>
           </Grid>
           <Grid xs={12} md={3} item>
-            <ProfileInfo avatar={avatar} name={name} email={email} venueManager={venueManager} />
+            {isLoading ? (
+              <Skeleton variant="rectangular" height={300} sx={{ bgcolor: "#fff" }} />
+            ) : (
+              <ProfileInfo avatar={avatar} name={name} email={email} venueManager={venueManager} />
+            )}
           </Grid>
           {venueManager && (
             <Grid

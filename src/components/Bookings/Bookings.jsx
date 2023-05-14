@@ -1,7 +1,7 @@
 import React from "react";
 import { useApi } from "../../hooks/useApi";
 import VenueCard from "../VenueCard/VenueCard";
-import { Grid, Link, Typography } from "@mui/material";
+import { Grid, Link, Typography, Skeleton, Stack } from "@mui/material";
 import { format } from "date-fns";
 import { DateRangeRounded } from "@mui/icons-material";
 
@@ -17,18 +17,12 @@ function Bookings() {
     options
   );
 
-  console.log(data);
-
-  // const {
-  //  venue: { name: title, location: { city, country, continent } = {}, media, rating, price },
-  // } = data;
   return (
     <Grid container columns={6} rowGap={6} columnSpacing={3}>
       {data.map(
         ({
           dateFrom,
           dateTo,
-          guests,
           venue: {
             id,
             name: title,
@@ -40,22 +34,29 @@ function Bookings() {
           },
         }) => (
           <Grid key={id} item xs={6} sm={3} md={2}>
-            <Link to={`../${id}`}>
-              <Typography variant="body1" sx={{ display: "flex", alignItems: "center", my: 1 }}>
-                <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}{" "}
-              </Typography>
-              <VenueCard
-                title={title}
-                media={media[0]}
-                wifi={wifi}
-                location={location}
-                parking={parking}
-                breakfast={breakfast}
-                pets={pets}
-                rating={rating}
-                price={price}
-              />
-            </Link>
+            {isLoading ? (
+              <Stack spacing={1}>
+                <Skeleton variant="text" sx={{ bgcolor: "#fff" }} />
+                <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 1, bgcolor: "#fff" }} />
+              </Stack>
+            ) : (
+              <Link to={`../${id}`}>
+                <Typography variant="body1" sx={{ display: "flex", alignItems: "center", my: 1 }}>
+                  <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}{" "}
+                </Typography>
+                <VenueCard
+                  title={title}
+                  media={media[0]}
+                  wifi={wifi}
+                  location={location}
+                  parking={parking}
+                  breakfast={breakfast}
+                  pets={pets}
+                  rating={rating}
+                  price={price}
+                />
+              </Link>
+            )}
           </Grid>
         )
       )}

@@ -12,6 +12,7 @@ import {
   Typography,
   Breadcrumbs,
   Link,
+  CircularProgress,
 } from "@mui/material";
 import {
   BedRounded,
@@ -31,9 +32,6 @@ function SpecificVenue() {
     `https://api.noroff.dev/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`
   );
 
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
   if (isError) {
     return <div>Error</div>;
   }
@@ -58,7 +56,13 @@ function SpecificVenue() {
   }
   const cols = media.length <= 4 ? media.length : 2;
   const rows = Math.ceil(media.length / cols);
-  return (
+  return isLoading ? (
+    <Container
+      component="main"
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
+      <CircularProgress />
+    </Container>
+  ) : (
     <Container component="main">
       <Breadcrumbs aria-label="breadcrumbs">
         <Link to="/" color="inherit">
@@ -70,7 +74,6 @@ function SpecificVenue() {
       <Typography variant="h2" sx={{ display: "flex", alignItems: "center" }}>
         <PlaceRounded /> {city ? city : country ? country : continent ? continent : "unknown"}
       </Typography>
-      <Typography></Typography>
       <ImageList variant="quilted" cols={cols} rows={rows} rowHeight={600}>
         {media.map((image, index) => (
           <ImageListItem key={image + index}>
