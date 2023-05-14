@@ -4,7 +4,6 @@ import { useApi } from "../../hooks/useApi.jsx";
 import {
   Avatar,
   Box,
-  Button,
   Container,
   Divider,
   Grid,
@@ -14,9 +13,14 @@ import {
   Breadcrumbs,
   Link,
 } from "@mui/material";
-import Calendar from "../../components/Calendar/Calendar.jsx";
-import TextField from "@mui/material/TextField";
-import { BedRounded, CoffeeRounded, DirectionsCarRounded, PetsRounded, WifiRounded } from "@mui/icons-material";
+import {
+  BedRounded,
+  CoffeeRounded,
+  DirectionsCarRounded,
+  PetsRounded,
+  PlaceRounded,
+  WifiRounded,
+} from "@mui/icons-material";
 import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
 import BookingForm from "../../components/BookingForm/BookingForm.jsx";
 
@@ -41,8 +45,7 @@ function SpecificVenue() {
     price,
     maxGuests,
     rating,
-    created,
-    updated,
+
     location: { city, country, address, continent, zip } = {},
     meta: { pets, parking, breakfast, wifi } = {},
     owner: { name, avatar } = {},
@@ -64,7 +67,9 @@ function SpecificVenue() {
         <Typography color="text.primary">{title}</Typography>
       </Breadcrumbs>
       <Typography variant="h1">{title}</Typography>
-      <Typography variant="h2">{city}</Typography>
+      <Typography variant="h2" sx={{ display: "flex", alignItems: "center" }}>
+        <PlaceRounded /> {city ? city : country ? country : continent ? continent : "unknown"}
+      </Typography>
       <Typography></Typography>
       <ImageList variant="quilted" cols={cols} rows={rows} rowHeight={600}>
         {media.map((image, index) => (
@@ -83,7 +88,7 @@ function SpecificVenue() {
                 {name}
               </Box>
             </Typography>
-            {user.name === name && (
+            {user && user.name === name && (
               <>
                 <Divider orientation="vertical" variant="middle" flexItem />
                 <ChangeVenue

@@ -6,6 +6,7 @@ import VenueForm from "../../components/VenueForm/VenueForm";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
+import Bookings from "../../components/Bookings/Bookings";
 
 function Profile() {
   const { authFetch } = useAuth();
@@ -87,23 +88,27 @@ function Profile() {
           <Grid xs={12} md={3} item>
             <ProfileInfo avatar={avatar} name={name} email={email} venueManager={venueManager} />
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={8.5}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              padding: 4,
-              bgcolor: "white",
-              borderRadius: 1,
-            }}>
-            {venueManager ? <AddVenueForm /> : <Typography>View bookings calendar</Typography>}
-          </Grid>
+          {venueManager && (
+            <Grid
+              item
+              xs={12}
+              md={8.5}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: 4,
+                bgcolor: "white",
+                borderRadius: 1,
+              }}>
+              <AddVenueForm />
+            </Grid>
+          )}
           {venueManager && (
             <Grid item xs={12}>
-              <Typography variant="h2">Your venues</Typography>
+              <Typography variant="h2" sx={{ mb: 1 }}>
+                Your venues
+              </Typography>
               <Grid container columns={6} rowGap={6} columnSpacing={3}>
                 {venues &&
                   venues.map(
@@ -120,7 +125,7 @@ function Profile() {
                             pets={pets}
                             rating={rating}
                             price={price}
-                            venueManager={venueManager}></VenueCard>
+                          />
                         </Link>
                       </Grid>
                     )
@@ -128,19 +133,12 @@ function Profile() {
               </Grid>
             </Grid>
           )}
-          {!venueManager && (
-            <Grid item xs={12}>
-              <Typography variant="h2">Upcoming bookings</Typography>
-              {bookings &&
-                bookings.map(({ id }) => (
-                  <Grid key={id} item xs={6} sm={3} md={2}>
-                    <Link to={id}>
-                      <VenueCard></VenueCard>
-                    </Link>
-                  </Grid>
-                ))}
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Typography variant="h2" sx={{ mb: 1 }}>
+              Your upcoming bookings
+            </Typography>
+            <Bookings />
+          </Grid>
         </Grid>
       )}
     </Container>

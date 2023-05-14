@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, Typography, CardMedia, Chip, Grid, Box } from "@mui/material";
-import { StarRounded } from "@mui/icons-material";
+import { PlaceOutlined, PlaceRounded, StarRounded } from "@mui/icons-material";
 
 function VenueCard(props) {
   const {
@@ -32,8 +32,8 @@ function VenueCard(props) {
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="h2">{props.title}</Typography>
         </Box>
-        <Typography variant="overline">
-          {city ? city : country ? country : continent ? continent : "unknown"}
+        <Typography variant="overline" sx={{ display: "flex", alignItems: "center" }}>
+          <PlaceRounded fontSize="small" /> {city ? city : country ? country : continent ? continent : "unknown"}
         </Typography>
         <Grid container spacing={1} sx={{ marginTop: 0.5 }}>
           {wifi && (

@@ -15,7 +15,6 @@ export const theme = createTheme({
     fontFamily: ["Source Sans Pro", "Roboto", "sans-serif"].join(","),
     h1: {
       fontSize: "3rem",
-      fontWeight: "400",
       textTransform: "capitalize",
     },
     h2: {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Typography, TextField, Button, Box, Divider, Grid } from "@mui/material";
+import { Typography, TextField, Button, Box, Divider, Grid, Link } from "@mui/material";
 import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
 import { useAuth } from "../../hooks/useAuth";
 import { differenceInDays } from "date-fns";
 
 function BookingForm({ bookings, maxGuests, price, id }) {
-  const { authFetch } = useAuth();
+  const { authFetch, user } = useAuth();
   const [bookingDates, setBookingDates] = useState({});
   const [guests, setGuests] = useState(1);
   const [nights, setNights] = useState(1);
@@ -61,9 +61,25 @@ function BookingForm({ bookings, maxGuests, price, id }) {
           <Typography sx={{ fontWeight: 600 }}>{totalPrice} KR</Typography>
         </Box>
       </Box>
-      <Button type="submit" variant="contained" disableElevation fullWidth>
-        Book
-      </Button>
+      {user ? (
+        <Button type="submit" variant="contained" disableElevation fullWidth>
+          Book
+        </Button>
+      ) : (
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
+          <Link to="/login">
+            <Button fullWidth variant="contained" disableElevation>
+              Login
+            </Button>
+          </Link>
+          or
+          <Link to="/register">
+            <Button fullWidth variant="contained" disableElevation>
+              Sign up
+            </Button>
+          </Link>
+        </Box>
+      )}
     </Box>
   );
 }
