@@ -63,10 +63,10 @@ function ChangeAvatar({ avatar }) {
               onChange={handleChange}
             />
             <Box sx={{ display: "flex", justifyContent: "space-between", gap: 1, mt: 4 }}>
-              <Button variant="outlined" color="error" onClick={handleDelete}>
+              <Button variant="contained" disableElevation color="error" onClick={handleDelete}>
                 Delete
               </Button>
-              <Button type="submit" variant="outlined">
+              <Button type="submit" variant="contained" disableElevation>
                 confirm
               </Button>
             </Box>
