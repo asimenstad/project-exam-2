@@ -4,6 +4,7 @@ import VenueCard from "../VenueCard/VenueCard";
 import { Grid, Link, Typography, Skeleton, Stack, Box } from "@mui/material";
 import { format } from "date-fns";
 import { DateRangeRounded } from "@mui/icons-material";
+import ChangeBooking from "../ChangeBooking/ChangeBooking";
 
 function Bookings() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -20,20 +21,23 @@ function Bookings() {
   return (
     <Grid container columns={6} rowGap={6} columnSpacing={3}>
       {data.map(
-        ({
-          dateFrom,
-          dateTo,
-          venue: {
-            id,
-            name: title,
-            price,
-            rating,
-            location,
-            meta: { wifi, parking, breakfast, pets },
-            media,
+        (
+          {
+            dateFrom,
+            dateTo,
+            venue: {
+              id,
+              name: title,
+              price,
+              rating,
+              location,
+              meta: { wifi, parking, breakfast, pets },
+              media,
+            },
           },
-        }) => (
-          <Grid key={id} item xs={6} sm={3} md={2}>
+          index
+        ) => (
+          <Grid key={id + index} item xs={6} sm={3} md={2}>
             {isLoading ? (
               <Stack spacing={1}>
                 <Skeleton variant="text" sx={{ bgcolor: "#fff" }} />
@@ -41,9 +45,12 @@ function Bookings() {
               </Stack>
             ) : (
               <>
-                <Typography variant="body1" sx={{ display: "flex", alignItems: "center", my: 1 }}>
-                  <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}{" "}
-                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                  <Typography variant="body1" sx={{ display: "flex", alignItems: "center", my: 1 }}>
+                    <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}{" "}
+                  </Typography>
+                  <ChangeBooking />
+                </Box>
                 <Link to={`../${id}`}>
                   <VenueCard
                     title={title}
