@@ -1,7 +1,7 @@
 import React from "react";
 import { useApi } from "../../hooks/useApi";
 import VenueCard from "../VenueCard/VenueCard";
-import { Grid, Link, Typography, Skeleton, Stack } from "@mui/material";
+import { Grid, Link, Typography, Skeleton, Stack, Box } from "@mui/material";
 import { format } from "date-fns";
 import { DateRangeRounded } from "@mui/icons-material";
 
@@ -40,22 +40,24 @@ function Bookings() {
                 <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 1, bgcolor: "#fff" }} />
               </Stack>
             ) : (
-              <Link to={`../${id}`}>
+              <>
                 <Typography variant="body1" sx={{ display: "flex", alignItems: "center", my: 1 }}>
                   <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}{" "}
                 </Typography>
-                <VenueCard
-                  title={title}
-                  media={media[0]}
-                  wifi={wifi}
-                  location={location}
-                  parking={parking}
-                  breakfast={breakfast}
-                  pets={pets}
-                  rating={rating}
-                  price={price}
-                />
-              </Link>
+                <Link to={`../${id}`}>
+                  <VenueCard
+                    title={title}
+                    media={media[0]}
+                    wifi={wifi}
+                    location={location}
+                    parking={parking}
+                    breakfast={breakfast}
+                    pets={pets}
+                    rating={rating}
+                    price={price}
+                  />
+                </Link>
+              </>
             )}
           </Grid>
         )
