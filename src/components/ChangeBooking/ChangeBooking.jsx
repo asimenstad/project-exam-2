@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import { Delete, EditRounded, MoreHorizRounded, Close } from "@mui/icons-material";
-import { Box, Button, Dialog, DialogTitle, Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 
 function ChangeBooking() {
   const [openEdit, setOpenEdit] = useState(false);
@@ -27,6 +40,8 @@ function ChangeBooking() {
     setOpenDelete(false);
   };
 
+  function handleDelete() {}
+
   return (
     <Box>
       <IconButton
@@ -48,11 +63,11 @@ function ChangeBooking() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         open={open}
         onClose={handleClose}>
-        <MenuItem id="edit" onClick={handleModalClick} sx={{ textTransform: "uppercase" }}>
+        <MenuItem id="edit" onClick={handleModalClick}>
           <ListItemIcon>
             <EditRounded />
           </ListItemIcon>
-          Edit booking
+          Change booking
           <Dialog open={openEdit} onClose={handleClose}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <DialogTitle>Change booking</DialogTitle>
@@ -60,21 +75,31 @@ function ChangeBooking() {
                 <Close />
               </IconButton>
             </Box>
+            <DialogContent></DialogContent>
+            <DialogActions></DialogActions>
           </Dialog>
         </MenuItem>
         <Divider />
-        <MenuItem id="delete" onClick={handleModalClick} sx={{ textTransform: "uppercase" }}>
+        <MenuItem id="delete" onClick={handleModalClick}>
           <ListItemIcon>
             <Delete />
           </ListItemIcon>
           Cancel booking
           <Dialog open={openDelete} onClose={handleClose}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <DialogTitle>Cancel </DialogTitle>
+              <DialogTitle>Cancel this booking?</DialogTitle>
               <IconButton onClick={handleClose} sx={{ mr: 2, "&:hover": { backgroundColor: "inherit" } }}>
                 <Close />
               </IconButton>
             </Box>
+            <DialogContent sx={{ m: "auto", p: 4 }}>
+              <DialogContentText>This will delete the booking. You cannot undo this action.</DialogContentText>
+            </DialogContent>
+            <DialogActions sx={{ mb: 2, mr: 2 }}>
+              <Button variant="contained" color="error" disableElevation onClick={handleDelete}>
+                Delete
+              </Button>
+            </DialogActions>
           </Dialog>
         </MenuItem>
       </Menu>

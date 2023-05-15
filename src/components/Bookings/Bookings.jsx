@@ -19,7 +19,7 @@ function Bookings() {
   );
 
   return (
-    <Grid container columns={6} rowGap={6} columnSpacing={3}>
+    <Grid container columns={6} rowGap={8} columnSpacing={3}>
       {data.map(
         (
           {
@@ -45,7 +45,7 @@ function Bookings() {
               </Stack>
             ) : (
               <>
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <Typography variant="body1" sx={{ display: "flex", alignItems: "center", my: 1 }}>
                     <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}{" "}
                   </Typography>

@@ -128,7 +128,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
         </DialogActions>
       </Dialog>
       {isLoading && (
-        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}>
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
