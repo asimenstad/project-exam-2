@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Link, Skeleton, LinearProgress } from "@mui/material";
+import { Grid, Link, Skeleton, CircularProgress, Box } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
 
@@ -19,7 +19,11 @@ function Venues({ searchInput }) {
           (venue.location.city && venue.location.city.toLowerCase().includes(searchInput.toLowerCase()));
   });
 
-  return (
+  return isLoading ? (
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
+      <CircularProgress />
+    </Box>
+  ) : (
     <Grid container columns={6} rowGap={6} columnSpacing={3}>
       {filteredProducts.map(
         ({ id, name: title, location, media, price, rating, meta: { wifi, parking, breakfast, pets } }) => (

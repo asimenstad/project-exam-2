@@ -99,7 +99,6 @@ function useProvideAuth() {
       if (response.ok) {
         const json = await response.json();
         console.log(json);
-        navigate(0);
       } else {
         const error = await response.json();
         console.log(error);

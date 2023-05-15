@@ -1,15 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Typography, TextField, Button, Box, Divider, Grid, Link } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Divider,
+  Link,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+  Backdrop,
+  CircularProgress,
+} from "@mui/material";
+import { CheckCircleOutlineRounded, Close, ErrorOutlineRounded } from "@mui/icons-material";
 import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
 import { useAuth } from "../../hooks/useAuth";
 import { differenceInDays } from "date-fns";
 
 function BookingForm({ bookings, maxGuests, price, id }) {
-  const { authFetch, user } = useAuth();
+  const { authFetch, user, isLoading, isError } = useAuth();
   const [bookingDates, setBookingDates] = useState({});
   const [guests, setGuests] = useState(1);
   const [nights, setNights] = useState(1);
   const [totalPrice, setTotalPrice] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleCalendarChange = (ranges) => {
     setBookingDates(ranges);
@@ -24,6 +40,10 @@ function BookingForm({ bookings, maxGuests, price, id }) {
     setGuests(e.target.value);
   };
 
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
     const data = {
@@ -34,6 +54,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
     };
     console.log(data);
     authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
+    setOpenModal(true);
   }
 
   return (
@@ -79,6 +100,37 @@ function BookingForm({ bookings, maxGuests, price, id }) {
             </Button>
           </Link>
         </Box>
+      )}
+      <Dialog open={openModal} onClose={handleClose}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            {isError ? (
+              <>
+                <ErrorOutlineRounded /> Error
+              </>
+            ) : (
+              <>
+                <CheckCircleOutlineRounded /> Booking Confirmed!
+              </>
+            )}
+          </DialogTitle>
+          <IconButton onClick={handleClose} sx={{ mr: 2, "&:hover": { backgroundColor: "inherit" } }}>
+            <Close />
+          </IconButton>
+        </Box>
+        <DialogContent>
+          {isError ? <>An error occurred.</> : <>Check your email for a booking confirmation. Have a nice stay!</>}
+        </DialogContent>
+        <DialogActions sx={{ mb: 2, mr: 2 }}>
+          <Button variant="contained" disableElevation onClick={handleClose}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {isLoading && (
+        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
       )}
     </Box>
   );

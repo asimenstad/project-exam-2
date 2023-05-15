@@ -13,7 +13,7 @@ function Bookings() {
     },
   };
   const { data, isLoading, isError } = useApi(
-    `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/bookings?_customer=true&_venue=true`,
+    `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/bookings?_customer=true&_venue=true&sort=dateFrom&sortOrder=asc`,
     options
   );
 

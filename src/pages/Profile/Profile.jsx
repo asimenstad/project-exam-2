@@ -140,12 +140,14 @@ function Profile() {
               </Grid>
             </Grid>
           )}
-          <Grid item xs={12}>
-            <Typography variant="h2" sx={{ mb: 1 }}>
-              Your upcoming bookings
-            </Typography>
-            <Bookings />
-          </Grid>
+          {!venueManager && (
+            <Grid item xs={12}>
+              <Typography variant="h2" sx={{ mb: 1 }}>
+                Your upcoming bookings
+              </Typography>
+              <Bookings />
+            </Grid>
+          )}
         </Grid>
       )}
     </Container>
