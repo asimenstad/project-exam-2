@@ -18,6 +18,7 @@ import { CheckCircleOutlineRounded, Close, ErrorOutlineRounded } from "@mui/icon
 import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
 import { useAuth } from "../../hooks/useAuth";
 import { differenceInDays } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 function BookingForm({ bookings, maxGuests, price, id }) {
   const { authFetch, user, isLoading, isError } = useAuth();
@@ -26,6 +27,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
   const [nights, setNights] = useState(1);
   const [totalPrice, setTotalPrice] = useState(1);
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleCalendarChange = (ranges) => {
     setBookingDates(ranges);
@@ -42,6 +44,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
 
   const handleClose = () => {
     setOpenModal(false);
+    navigate(0);
   };
 
   function handleSubmit(e) {
@@ -128,7 +131,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
         </DialogActions>
       </Dialog>
       {isLoading && (
-        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
           <CircularProgress color="inherit" />
         </Backdrop>
       )}

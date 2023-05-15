@@ -23,10 +23,7 @@ function BookingCalendar({ onChange, bookings }) {
 
   const handleChange = (ranges) => {
     const { selection } = ranges;
-    if (selection.startDate !== state[0].startDate) {
-      selection.endDate = addDays(selection.startDate, 1);
-    }
-    if (selection.endDate <= state[0].startDate) {
+    if (selection.startDate !== state[0].startDate || selection.endDate <= state[0].startDate) {
       selection.endDate = addDays(selection.startDate, 1);
     }
     onChange(selection);
