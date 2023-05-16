@@ -14,30 +14,30 @@ function Bookings() {
     },
   };
   const { data, isLoading, isError } = useApi(
-    `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/bookings?_customer=true&_venue=true&sort=dateFrom&sortOrder=asc`,
+    `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/bookings?_customer=true&_venue=true&_bookings=true&sort=dateFrom&sortOrder=asc`,
     options
   );
 
   return (
     <Grid container columns={6} rowGap={8} columnSpacing={3}>
       {data.map(
-        (
-          {
-            dateFrom,
-            dateTo,
-            venue: {
-              id,
-              name: title,
-              price,
-              rating,
-              location,
-              meta: { wifi, parking, breakfast, pets },
-              media,
-            },
+        ({
+          id,
+          dateFrom,
+          dateTo,
+          venue: {
+            id: venueId,
+            name: title,
+            price,
+            rating,
+            location,
+            meta: { wifi, parking, breakfast, pets },
+            media,
+            maxGuests,
+            bookings,
           },
-          index
-        ) => (
-          <Grid key={id + index} item xs={6} sm={3} md={2}>
+        }) => (
+          <Grid key={id} item xs={6} sm={3} md={2}>
             {isLoading ? (
               <Stack spacing={1}>
                 <Skeleton variant="text" sx={{ bgcolor: "#fff" }} />
@@ -47,11 +47,18 @@ function Bookings() {
               <>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <Typography variant="body1" sx={{ display: "flex", alignItems: "center", my: 1 }}>
-                    <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}{" "}
+                    <DateRangeRounded /> {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}
                   </Typography>
-                  <ChangeBooking />
+                  <ChangeBooking
+                    title={title}
+                    dateFrom={dateFrom}
+                    dateTo={dateTo}
+                    id={id}
+                    maxGuests={maxGuests}
+                    bookings={bookings}
+                  />
                 </Box>
-                <Link to={`../${id}`}>
+                <Link to={`../${venueId}`}>
                   <VenueCard
                     title={title}
                     media={media[0]}

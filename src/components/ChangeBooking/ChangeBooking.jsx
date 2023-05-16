@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Delete, EditRounded, MoreHorizRounded, Close } from "@mui/icons-material";
+import { Delete, MoreHorizRounded, Close } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -13,34 +13,36 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
+  TextField,
 } from "@mui/material";
+import { format } from "date-fns";
+import { useAuth } from "../../hooks/useAuth";
 
-function ChangeBooking() {
-  const [openEdit, setOpenEdit] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
+function ChangeBooking({ id, title, dateFrom, dateTo }) {
+  const [openCancel, setOpenCancel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const { authDelete, isLoading, isError } = useAuth();
+
   const open = Boolean(anchorEl);
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleModalClick = (e) => {
-    if (e.target.id === "edit") {
-      setOpenEdit(true);
-    }
-    if (e.target.id === "delete") {
-      setOpenDelete(true);
-    }
+  const handleModalClick = () => {
+    setOpenCancel(true);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    setOpenEdit(false);
-    setOpenDelete(false);
+    setOpenCancel(false);
   };
 
-  function handleDelete() {}
+  function handleCancel(e) {
+    authDelete(`https://api.noroff.dev/api/v1/holidaze/bookings/${id}`);
+    setAnchorEl(null);
+    setOpenCancel(false);
+  }
 
   return (
     <Box>
@@ -63,29 +65,12 @@ function ChangeBooking() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         open={open}
         onClose={handleClose}>
-        <MenuItem id="edit" onClick={handleModalClick}>
-          <ListItemIcon>
-            <EditRounded />
-          </ListItemIcon>
-          Change booking
-          <Dialog open={openEdit} onClose={handleClose}>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <DialogTitle>Change booking</DialogTitle>
-              <IconButton onClick={handleClose} sx={{ mr: 2, "&:hover": { backgroundColor: "inherit" } }}>
-                <Close />
-              </IconButton>
-            </Box>
-            <DialogContent></DialogContent>
-            <DialogActions></DialogActions>
-          </Dialog>
-        </MenuItem>
-        <Divider />
-        <MenuItem id="delete" onClick={handleModalClick}>
+        <MenuItem id="cancel" onClick={handleModalClick}>
           <ListItemIcon>
             <Delete />
           </ListItemIcon>
           Cancel booking
-          <Dialog open={openDelete} onClose={handleClose}>
+          <Dialog open={openCancel} onClose={handleClose}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <DialogTitle>Cancel this booking?</DialogTitle>
               <IconButton onClick={handleClose} sx={{ mr: 2, "&:hover": { backgroundColor: "inherit" } }}>
@@ -93,11 +78,14 @@ function ChangeBooking() {
               </IconButton>
             </Box>
             <DialogContent sx={{ m: "auto", p: 4 }}>
-              <DialogContentText>This will delete the booking. You cannot undo this action.</DialogContentText>
+              <DialogContentText mb={2}>
+                {title}, {format(new Date(dateFrom), "PP")} - {format(new Date(dateTo), "PP")}
+              </DialogContentText>
+              <DialogContentText>This will cancel the booking. You cannot undo this action.</DialogContentText>
             </DialogContent>
             <DialogActions sx={{ mb: 2, mr: 2 }}>
-              <Button variant="contained" color="error" disableElevation onClick={handleDelete}>
-                Delete
+              <Button variant="contained" color="error" disableElevation onClick={handleCancel}>
+                Cancel
               </Button>
             </DialogActions>
           </Dialog>

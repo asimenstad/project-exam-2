@@ -42,8 +42,6 @@ function SpecificVenue() {
     media,
     price,
     maxGuests,
-    rating,
-
     location: { city, country, address, continent, zip } = {},
     meta: { pets, parking, breakfast, wifi } = {},
     owner: { name, avatar } = {},
@@ -56,6 +54,7 @@ function SpecificVenue() {
   }
   const cols = media.length <= 4 ? media.length : 2;
   const rows = Math.ceil(media.length / cols);
+
   return isLoading ? (
     <Container
       component="main"
