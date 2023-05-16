@@ -6,7 +6,7 @@ import VenueForm from "../../components/VenueForm/VenueForm";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
-import Bookings from "../../components/Bookings/Bookings";
+import BookingsProfile from "../../components/BookingsProfile/BookingsProfile";
 
 function Profile() {
   const { authFetch } = useAuth();
@@ -145,7 +145,7 @@ function Profile() {
               <Typography variant="h2" sx={{ mb: 1 }}>
                 Your upcoming bookings
               </Typography>
-              <Bookings />
+              <BookingsProfile />
             </Grid>
           )}
         </Grid>

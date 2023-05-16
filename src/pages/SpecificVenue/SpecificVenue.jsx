@@ -24,6 +24,7 @@ import {
 } from "@mui/icons-material";
 import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
 import BookingForm from "../../components/BookingForm/BookingForm.jsx";
+import BookingsVenue from "../../components/BookingsVenue/BookingsVenue.jsx";
 
 function SpecificVenue() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -139,7 +140,11 @@ function SpecificVenue() {
           </Box>
         </Grid>
         <Grid item xs="auto">
-          <BookingForm price={price} id={venueId} bookings={bookings} maxGuests={maxGuests} />
+          {user && user.name === name ? (
+            <BookingsVenue bookings={bookings} />
+          ) : (
+            <BookingForm price={price} id={venueId} bookings={bookings} maxGuests={maxGuests} />
+          )}
         </Grid>
       </Grid>
     </Container>

@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { DateRangeRounded } from "@mui/icons-material";
 import ChangeBooking from "../ChangeBooking/ChangeBooking";
 
-function Bookings() {
+function BookingsProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
   const options = {
     headers: {
@@ -80,4 +80,4 @@ function Bookings() {
   );
 }
 
-export default Bookings;
+export default BookingsProfile;
