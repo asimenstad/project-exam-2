@@ -1,14 +1,15 @@
 import React from "react";
-import { Navigate, Route, Routes, redirect } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Register from "./pages/Register/Register.jsx";
 import SpecificVenue from "./pages/SpecificVenue/SpecificVenue.jsx";
+import { useAuth } from "./hooks/useAuth.jsx";
 
 function App() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useAuth();
 
   return (
     <div className="App">
