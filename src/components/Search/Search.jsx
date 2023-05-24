@@ -1,5 +1,5 @@
-import { SearchOffRounded, SearchRounded } from "@mui/icons-material";
-import { TextField, InputAdornment, FormControl, InputLabel, Input } from "@mui/material";
+import { SearchRounded } from "@mui/icons-material";
+import { InputAdornment, FormControl, InputLabel, Input } from "@mui/material";
 import React from "react";
 
 function Search({ handleChange, searchInput }) {
@@ -9,9 +9,7 @@ function Search({ handleChange, searchInput }) {
       <Input
         type="search"
         size="small"
-        variant="standard"
         label="Search"
-        end
         endAdornment={
           <InputAdornment position="end">
             <SearchRounded fontSize="small" />

@@ -13,6 +13,7 @@ import {
   IconButton,
   Backdrop,
   CircularProgress,
+  DialogContentText,
 } from "@mui/material";
 import { CheckCircleOutlineRounded, Close, ErrorOutlineRounded } from "@mui/icons-material";
 import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
@@ -25,7 +26,8 @@ function BookingForm({ bookings, maxGuests, price, id }) {
   const [guests, setGuests] = useState(1);
   const [nights, setNights] = useState(1);
   const [totalPrice, setTotalPrice] = useState(1);
-  const [openModal, setOpenModal] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const handleCalendarChange = (ranges) => {
     setBookingDates(ranges);
@@ -41,7 +43,8 @@ function BookingForm({ bookings, maxGuests, price, id }) {
   };
 
   const handleClose = () => {
-    setOpenModal(false);
+    setOpenSuccess(false);
+    setOpenError(false);
   };
 
   function handleSubmit(e) {
@@ -52,9 +55,21 @@ function BookingForm({ bookings, maxGuests, price, id }) {
       guests: parseInt(guests),
       venueId: id,
     };
-    console.log(data);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+      body: JSON.stringify(data),
+    };
     authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
-    setOpenModal(true);
+    if (isError) {
+      setOpenError(true);
+    }
+    if (!isError) {
+      setOpenSuccess(true);
+    }
   }
 
   return (
@@ -73,10 +88,14 @@ function BookingForm({ bookings, maxGuests, price, id }) {
       />
       <Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>{nights} night(s)</Typography>
+          <Typography>Per night</Typography>
           <Typography>{price} KR</Typography>
         </Box>
-        <Divider />
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography>{nights} night(s)</Typography>
+          <Typography>{totalPrice} KR</Typography>
+        </Box>
+        <Divider sx={{ my: 1 }} />
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography sx={{ fontWeight: 600 }}>Total</Typography>
           <Typography sx={{ fontWeight: 600 }}>{totalPrice} KR</Typography>
@@ -101,25 +120,35 @@ function BookingForm({ bookings, maxGuests, price, id }) {
           </Link>
         </Box>
       )}
-      <Dialog open={openModal} onClose={handleClose}>
+      <Dialog open={openSuccess} onClose={handleClose}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            {isError ? (
-              <>
-                <ErrorOutlineRounded /> Error
-              </>
-            ) : (
-              <>
-                <CheckCircleOutlineRounded /> Booking Confirmed!
-              </>
-            )}
+            <CheckCircleOutlineRounded /> Booking Confirmed!
           </DialogTitle>
           <IconButton onClick={handleClose} sx={{ mr: 2, "&:hover": { backgroundColor: "inherit" } }}>
             <Close />
           </IconButton>
         </Box>
         <DialogContent>
-          {isError ? <>An error occurred.</> : <>Check your email for a booking confirmation. Have a nice stay!</>}
+          <DialogContentText>Check your email for a booking confirmation. Have a nice stay!</DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ mb: 2, mr: 2 }}>
+          <Button variant="contained" disableElevation onClick={handleClose}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openError} onClose={handleClose}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <ErrorOutlineRounded /> Unable to complete booking
+          </DialogTitle>
+          <IconButton onClick={handleClose} sx={{ mr: 2, "&:hover": { backgroundColor: "inherit" } }}>
+            <Close />
+          </IconButton>
+        </Box>
+        <DialogContent>
+          <DialogContentText>We could not complete your booking. Please try again.</DialogContentText>
         </DialogContent>
         <DialogActions sx={{ mb: 2, mr: 2 }}>
           <Button variant="contained" disableElevation onClick={handleClose}>

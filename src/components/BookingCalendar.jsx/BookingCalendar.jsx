@@ -26,6 +26,7 @@ function BookingCalendar({ onChange, bookings }) {
     if (selection.startDate !== state[0].startDate || selection.endDate <= state[0].startDate) {
       selection.endDate = addDays(selection.startDate, 1);
     }
+
     onChange(selection);
     setState([selection]);
   };

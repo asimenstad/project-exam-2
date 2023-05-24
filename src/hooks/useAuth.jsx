@@ -102,6 +102,7 @@ function useProvideAuth() {
       } else {
         const error = await response.json();
         console.log(error);
+        setIsError(true);
       }
     } catch (error) {
       console.log(error);
