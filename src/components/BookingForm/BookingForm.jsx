@@ -55,15 +55,9 @@ function BookingForm({ bookings, maxGuests, price, id }) {
       guests: parseInt(guests),
       venueId: id,
     };
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.accessToken}`,
-      },
-      body: JSON.stringify(data),
-    };
+
     authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
+
     if (isError) {
       setOpenError(true);
     }
@@ -106,19 +100,11 @@ function BookingForm({ bookings, maxGuests, price, id }) {
           Book
         </Button>
       ) : (
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
-          <Link to="/login">
-            <Button fullWidth variant="contained" disableElevation>
-              Login
-            </Button>
-          </Link>
-          or
-          <Link to="/register">
-            <Button fullWidth variant="contained" disableElevation>
-              Sign up
-            </Button>
-          </Link>
-        </Box>
+        <Link to="/login">
+          <Button fullWidth variant="contained" disableElevation>
+            Login to book
+          </Button>
+        </Link>
       )}
       <Dialog open={openSuccess} onClose={handleClose}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>

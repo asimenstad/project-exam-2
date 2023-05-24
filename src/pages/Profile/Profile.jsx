@@ -11,6 +11,7 @@ import BookingsProfile from "../../components/BookingsProfile/BookingsProfile";
 function Profile() {
   const { authFetch } = useAuth();
   const user = JSON.parse(localStorage.getItem("user"));
+
   const options = {
     headers: {
       Authorization: `Bearer ${user.accessToken}`,

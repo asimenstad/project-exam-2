@@ -31,7 +31,7 @@ function BookingCalendar({ onChange, bookings }) {
     setState([selection]);
   };
 
-  const dates = (startDate, endDate) => {
+  const findBookedDates = (startDate, endDate) => {
     const dates = [];
     let currentDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
     while (currentDate <= endDate) {
@@ -42,7 +42,9 @@ function BookingCalendar({ onChange, bookings }) {
   };
 
   useEffect(() => {
-    const bookedDates = bookings.flatMap((booking) => dates(new Date(booking.dateFrom), new Date(booking.dateTo)));
+    const bookedDates = bookings.flatMap((booking) =>
+      findBookedDates(new Date(booking.dateFrom), new Date(booking.dateTo))
+    );
     setDisabledDates(bookedDates);
   }, [bookings]);
 
