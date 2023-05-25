@@ -133,7 +133,7 @@ function Register() {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" disableElevation sx={{ mt: 3, mb: 2 }}>
+            <Button id="submit" type="submit" fullWidth variant="contained" disableElevation sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

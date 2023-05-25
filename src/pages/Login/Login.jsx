@@ -81,7 +81,7 @@ function Login() {
               size="small"
               onChange={handleChange}
             />
-            <Button type="submit" variant="contained" fullWidth disableElevation sx={{ mt: 3, mb: 2 }}>
+            <Button id="submit" type="submit" variant="contained" fullWidth disableElevation sx={{ mt: 3, mb: 2 }}>
               Log In
             </Button>
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
