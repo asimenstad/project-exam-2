@@ -18,7 +18,7 @@ import {
 import { CheckCircleOutlineRounded, Close, ErrorOutlineRounded } from "@mui/icons-material";
 import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
 import { useAuth } from "../../hooks/useAuth";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, isValid } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 function BookingForm({ bookings, maxGuests, price, id }) {
@@ -60,8 +60,12 @@ function BookingForm({ bookings, maxGuests, price, id }) {
       guests: parseInt(guests),
       venueId: id,
     };
-    if (data.dateFrom === null || data.dateTo === null) {
-      console.log(data);
+    if (
+      data.dateFrom === null ||
+      data.dateTo === null ||
+      isValid(data.dateFrom) === false ||
+      isValid(data.dateTo) === false
+    ) {
       setDateError("Please select available dates.");
     } else {
       authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
@@ -74,7 +78,6 @@ function BookingForm({ bookings, maxGuests, price, id }) {
       }
     }
   }
-
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <Typography variant="h2">Book your stay</Typography>

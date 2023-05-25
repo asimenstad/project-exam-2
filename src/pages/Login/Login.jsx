@@ -82,18 +82,15 @@ function Login() {
               size="small"
               onChange={handleChange}
             />
-            <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
-            <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" variant="contained" fullWidth disableElevation sx={{ mt: 3, mb: 2 }}>
               Log In
             </Button>
-          </Box>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               <Link to="/register" variant="body2">
                 Don't have an account? Sign up
               </Link>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Grid>
       </Grid>
     </Container>
