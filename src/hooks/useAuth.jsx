@@ -84,7 +84,7 @@ function useProvideAuth() {
     navigate("/");
   }
 
-  async function authFetch(data, method, url) {
+  async function authFetch(data, method, url, actions) {
     try {
       setIsLoading(true);
       const postData = {
@@ -101,7 +101,6 @@ function useProvideAuth() {
       if (response.ok) {
         setIsError(false);
         console.log(json);
-        navigate(0);
       } else {
         setIsError(true);
         console.log(json);
