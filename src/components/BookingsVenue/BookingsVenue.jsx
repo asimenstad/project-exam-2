@@ -6,8 +6,8 @@ function BookingsVenue({ bookings }) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <Typography variant="h2">Bookings ({bookings.length})</Typography>
-      {bookings.map(({ created, dateFrom, dateTo, guests }) => (
-        <Box sx={{ bgcolor: "#fff", display: "flex", flexDirection: "column", p: 3, borderRadius: 1 }}>
+      {bookings.map(({ created, dateFrom, dateTo, guests, id }) => (
+        <Box key={id} sx={{ bgcolor: "#fff", display: "flex", flexDirection: "column", p: 3, borderRadius: 1 }}>
           <Typography variant="overline">{format(new Date(created), "PP")}</Typography>
           <Divider />
           <Typography>{guests} guests</Typography>

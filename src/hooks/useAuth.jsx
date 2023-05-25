@@ -101,6 +101,7 @@ function useProvideAuth() {
       if (response.ok) {
         setIsError(false);
         console.log(json);
+        navigate(0);
       } else {
         setIsError(true);
         console.log(json);
@@ -128,6 +129,7 @@ function useProvideAuth() {
         navigate("/profile");
       } else {
         console.log(response);
+        setIsError(true);
       }
     } catch (error) {
       console.log(error);
