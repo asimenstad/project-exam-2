@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import {
   Box,
@@ -27,11 +27,13 @@ function Register() {
     switch (e.target.name) {
       case "name":
         setName(inputValue);
-
+        break;
       case "email":
         setEmail(inputValue);
+        break;
       case "password":
         setPassword(inputValue);
+        break;
       case "venueManager":
         setManager(checkedValue);
     }

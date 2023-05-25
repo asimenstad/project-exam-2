@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import { format } from "date-fns";
 

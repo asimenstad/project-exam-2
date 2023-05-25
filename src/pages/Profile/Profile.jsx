@@ -1,4 +1,3 @@
-import React from "react";
 import { useApi } from "../../hooks/useApi";
 import { Container, Grid, Typography, Link, Breadcrumbs, Skeleton, CircularProgress } from "@mui/material";
 import VenueCard from "../../components/VenueCard/VenueCard";
@@ -17,7 +16,7 @@ function Profile() {
       Authorization: `Bearer ${user.accessToken}`,
     },
   };
-  const { data, isLoading, isError } = useApi(
+  const { data, isLoading } = useApi(
     `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}?_venues=true&_bookings=true`,
     options
   );
@@ -138,14 +137,12 @@ function Profile() {
               </Grid>
             </Grid>
           )}
-          {!venueManager && (
-            <Grid item xs={12}>
-              <Typography variant="h2" sx={{ mb: 1 }}>
-                Your upcoming bookings
-              </Typography>
-              <BookingsProfile />
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Typography variant="h2" sx={{ mb: 1 }}>
+              Your upcoming bookings
+            </Typography>
+            <BookingsProfile />
+          </Grid>
         </Grid>
       )}
     </Container>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -13,7 +13,6 @@ import { Close } from "@mui/icons-material";
 import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
 import VenueForm from "../VenueForm/VenueForm";
-import { useNavigate } from "react-router-dom";
 
 function ChangeVenue({
   id,
@@ -35,7 +34,6 @@ function ChangeVenue({
   const { authFetch, authDelete } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const navigate = useNavigate();
 
   const handleClickOpen = (e) => {
     if (e.target.id === "edit") {
@@ -46,7 +44,7 @@ function ChangeVenue({
     }
   };
 
-  const handleClose = (e) => {
+  const handleClose = () => {
     setOpenEdit(false);
     setOpenDelete(false);
   };
@@ -69,7 +67,7 @@ function ChangeVenue({
       pets: pets,
       breakfast: breakfast,
     }),
-    handleSubmit: (values, { setSubmitting }) => {
+    handleSubmit: (values) => {
       const data = {
         name: values.venueName,
         description: values.description,
