@@ -96,14 +96,14 @@ function useProvideAuth() {
         body: JSON.stringify(data),
       };
       const response = await fetch(url, postData);
+      const json = await response.json();
+
       if (response.ok) {
         setIsError(false);
-        const json = await response.json();
         console.log(json);
       } else {
         setIsError(true);
-        const error = await response.json();
-        console.log(error);
+        console.log(json);
       }
     } catch (error) {
       console.log(error);

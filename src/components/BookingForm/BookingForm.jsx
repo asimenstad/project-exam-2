@@ -19,6 +19,7 @@ import { CheckCircleOutlineRounded, Close, ErrorOutlineRounded } from "@mui/icon
 import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
 import { useAuth } from "../../hooks/useAuth";
 import { differenceInDays } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 function BookingForm({ bookings, maxGuests, price, id }) {
   const { authFetch, user, isLoading, isError } = useAuth();
@@ -28,10 +29,13 @@ function BookingForm({ bookings, maxGuests, price, id }) {
   const [totalPrice, setTotalPrice] = useState(1);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const [dateError, setDateError] = useState("");
+  const navigate = useNavigate();
 
   const handleCalendarChange = (ranges) => {
     setBookingDates(ranges);
     setNights(differenceInDays(ranges.endDate, ranges.startDate));
+    setDateError("");
   };
 
   useEffect(() => {
@@ -45,6 +49,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
   const handleClose = () => {
     setOpenSuccess(false);
     setOpenError(false);
+    navigate(0);
   };
 
   function handleSubmit(e) {
@@ -55,14 +60,18 @@ function BookingForm({ bookings, maxGuests, price, id }) {
       guests: parseInt(guests),
       venueId: id,
     };
-
-    authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
-
-    if (isError) {
-      setOpenError(true);
-    }
-    if (!isError) {
-      setOpenSuccess(true);
+    if (data.dateFrom === null || data.dateTo === null) {
+      console.log(data);
+      setDateError("Please select available dates.");
+    } else {
+      authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
+      if (isError) {
+        setOpenError(true);
+        setOpenSuccess(false);
+      } else {
+        setOpenSuccess(true);
+        setOpenError(false);
+      }
     }
   }
 
@@ -70,6 +79,9 @@ function BookingForm({ bookings, maxGuests, price, id }) {
     <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <Typography variant="h2">Book your stay</Typography>
       {bookings && <BookingCalendar onChange={handleCalendarChange} bookings={bookings} />}
+      <Typography variant="body1" color="error">
+        {dateError}
+      </Typography>
       <TextField
         id="guests"
         label="Guests"
