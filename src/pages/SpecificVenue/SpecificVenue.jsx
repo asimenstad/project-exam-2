@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useApi } from "../../hooks/useApi.jsx";
 import {
   Avatar,
@@ -33,10 +33,6 @@ function SpecificVenue() {
     `https://api.noroff.dev/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`
   );
 
-  if (isError) {
-    return <div>Error</div>;
-  }
-
   let {
     name: title,
     description,
@@ -62,6 +58,8 @@ function SpecificVenue() {
       sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
       <CircularProgress />
     </Container>
+  ) : isError ? (
+    <Navigate replace to={"/"} />
   ) : (
     <Container component="main">
       <Breadcrumbs aria-label="breadcrumbs">

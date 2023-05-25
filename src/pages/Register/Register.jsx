@@ -131,16 +131,14 @@ function Register() {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" disableElevation sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link to="/login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <Link to="/login" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Box>
           </Box>
         </Grid>
       </Grid>

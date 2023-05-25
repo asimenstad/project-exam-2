@@ -84,7 +84,7 @@ function useProvideAuth() {
     navigate("/");
   }
 
-  async function authFetch(data, method, url) {
+  async function authFetch(data, method, url, actions) {
     try {
       setIsLoading(true);
       const postData = {
@@ -96,12 +96,14 @@ function useProvideAuth() {
         body: JSON.stringify(data),
       };
       const response = await fetch(url, postData);
+      const json = await response.json();
+
       if (response.ok) {
-        const json = await response.json();
+        setIsError(false);
         console.log(json);
       } else {
-        const error = await response.json();
-        console.log(error);
+        setIsError(true);
+        console.log(json);
       }
     } catch (error) {
       console.log(error);
@@ -126,6 +128,7 @@ function useProvideAuth() {
         navigate("/profile");
       } else {
         console.log(response);
+        setIsError(true);
       }
     } catch (error) {
       console.log(error);

@@ -53,7 +53,7 @@ function VenueCard(props) {
           )}
           {breakfast && (
             <Grid item>
-              <Chip label="Breakfast" />
+              <Chip label="Breakfast included" />
             </Grid>
           )}
         </Grid>

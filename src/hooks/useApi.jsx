@@ -12,7 +12,11 @@ export function useApi(url, options) {
         setIsError(false);
         const response = await fetch(url, options);
         const json = await response.json();
-        setData(json);
+        if (response.ok) {
+          setData(json);
+        } else {
+          setIsError(true);
+        }
       } catch (error) {
         console.log(error);
         setIsError(true);

@@ -13,6 +13,7 @@ import { Close } from "@mui/icons-material";
 import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
 import VenueForm from "../VenueForm/VenueForm";
+import { useNavigate } from "react-router-dom";
 
 function ChangeVenue({
   id,
@@ -34,6 +35,7 @@ function ChangeVenue({
   const { authFetch, authDelete } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const navigate = useNavigate();
 
   const handleClickOpen = (e) => {
     if (e.target.id === "edit") {
