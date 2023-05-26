@@ -69,6 +69,7 @@ function Profile() {
 
   return isLoading ? (
     <Container
+      id="loader"
       component="main"
       sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
       <CircularProgress />

@@ -28,7 +28,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
               name="venueName"
               required
               fullWidth
-              autoFocus
               id="venueName"
               label="Name of venue"
               size="small"
@@ -110,7 +109,7 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                   />
                 </FormControl>
                 {values.mediaArray && values.mediaArray.length > 0 ? (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                  <Box id="imageArray" sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                     {values.mediaArray.map((url, index) => (
                       <Box key={url + index} sx={{ position: "relative" }}>
                         <Avatar src={url} variant="square" />
