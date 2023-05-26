@@ -15,6 +15,6 @@ jobs:
       - name: run cypress tests with electron
         uses: cypress-io/github-action@v4
         with:
-          start: npm run dev
-          wait-on: "http://localhost:5173/project-exam-2/"
+          wait-on: "http://localhost:5173/"
+          start: npx vite --host
           browser: electron
