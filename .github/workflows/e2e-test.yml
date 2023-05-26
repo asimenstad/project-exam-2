@@ -16,5 +16,5 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           start: npm run dev
-          wait-on: "http://localhost:5173/"
+          wait-on: "http://localhost:5173/project-exam-2/"
           browser: electron
