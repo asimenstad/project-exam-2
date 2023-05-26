@@ -1,6 +1,5 @@
 import { SearchRounded } from "@mui/icons-material";
 import { InputAdornment, FormControl, InputLabel, Input } from "@mui/material";
-import React from "react";
 
 function Search({ handleChange, searchInput }) {
   return (

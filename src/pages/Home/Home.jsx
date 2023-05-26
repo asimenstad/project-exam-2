@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Container } from "@mui/material";
 import Venues from "../../components/Venues/Venues.jsx";

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   TextField,
@@ -21,7 +20,7 @@ import { FieldArray } from "formik";
 
 function VenueForm({ values, handleSubmit, handleChange }) {
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box id="venueForm" component="form" onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Box>
@@ -31,7 +30,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
               fullWidth
               id="venueName"
               label="Name of venue"
-              autoFocus
               size="small"
               value={values.venueName}
               onChange={handleChange}
@@ -46,7 +44,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
               rows={3}
               id="description"
               label="Description"
-              autoFocus
               size="small"
               value={values.description}
               onChange={handleChange}
@@ -60,7 +57,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
               fullWidth
               id="price"
               label="Price"
-              autoFocus
               size="small"
               value={values.price}
               onChange={handleChange}
@@ -94,13 +90,13 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                     fullWidth
                     id="mediaArray"
                     label="Media (URL)"
-                    autoFocus
                     size="small"
                     value={values.mediaString}
                     onChange={handleChange}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
+                          id="addMedia"
                           edge="end"
                           onClick={() => {
                             push(values.mediaString);
@@ -113,7 +109,7 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                   />
                 </FormControl>
                 {values.mediaArray && values.mediaArray.length > 0 ? (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                  <Box id="imageArray" sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                     {values.mediaArray.map((url, index) => (
                       <Box key={url + index} sx={{ position: "relative" }}>
                         <Avatar src={url} variant="square" />
@@ -149,7 +145,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                     name="address"
                     id="address"
                     label="Address"
-                    autoFocus
                     size="small"
                     value={values.address}
                     onChange={handleChange}
@@ -161,7 +156,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                     name="city"
                     id="city"
                     label="City"
-                    autoFocus
                     size="small"
                     value={values.city}
                     onChange={handleChange}
@@ -173,7 +167,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                     name="country"
                     id="country"
                     label="Country"
-                    autoFocus
                     size="small"
                     value={values.country}
                     onChange={handleChange}
@@ -185,7 +178,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                     name="continent"
                     id="continent"
                     label="Continent"
-                    autoFocus
                     size="small"
                     value={values.continent}
                     onChange={handleChange}
@@ -197,7 +189,6 @@ function VenueForm({ values, handleSubmit, handleChange }) {
                     name="zip"
                     id="zip"
                     label="Zip"
-                    autoFocus
                     size="small"
                     value={values.zip}
                     onChange={handleChange}
@@ -239,7 +230,7 @@ function VenueForm({ values, handleSubmit, handleChange }) {
           </Box>
         </Grid>
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button type="submit" variant="contained" disableElevation>
+          <Button id="submit" type="submit" variant="contained" disableElevation>
             Submit
           </Button>
         </Grid>

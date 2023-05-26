@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Container, Grid, Typography, TextField, FormControlLabel, Checkbox, Button, Link } from "@mui/material";
+import { Box, Container, Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -82,12 +81,12 @@ function Login() {
               size="small"
               onChange={handleChange}
             />
-            <Button type="submit" variant="contained" fullWidth disableElevation sx={{ mt: 3, mb: 2 }}>
+            <Button id="submit" type="submit" variant="contained" fullWidth disableElevation sx={{ mt: 3, mb: 2 }}>
               Log In
             </Button>
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               <Link to="/register" variant="body2">
-                Don't have an account? Sign up
+                {"Don't have an account? Sign up"}
               </Link>
             </Box>
           </Box>

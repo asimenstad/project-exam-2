@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent, Typography, CardMedia, Chip, Grid, Box } from "@mui/material";
 import { PlaceRounded, StarRounded } from "@mui/icons-material";
 
