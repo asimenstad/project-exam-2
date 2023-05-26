@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Button, Dialog, DialogContent, DialogTitle, Avatar, Box, TextField, IconButton } from "@mui/material";
 import { Close, EditRounded } from "@mui/icons-material";
 
+/**
+ * Changes or deletes user avatar.
+ * @param {string} avatar - The URL of the profile avatar.
+ * @returns Modal with form.
+ */
 function ChangeAvatar({ avatar }) {
   const { user, authFetch } = useAuth();
   const [newAvatar, setNewAvatar] = useState(avatar);

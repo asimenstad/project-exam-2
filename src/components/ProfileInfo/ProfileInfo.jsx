@@ -1,7 +1,15 @@
-import React from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import ChangeAvatar from "../ChangeAvatar/ChangeAvatar";
 
+/**
+ * Profile of user.
+ * @param {Object} data - The user data.
+ * @param {string} data.avatar - The URL of the profile avatar.
+ * @param {string} data.name - The name of the user.
+ * @param {string} data.email - The email of the user.
+ * @param {boolean} data.venueManager - Whether the user is a venue manager or not.
+ * @returns Profile info card.
+ */
 function ProfileInfo({ avatar, name, email, venueManager }) {
   return (
     <Box

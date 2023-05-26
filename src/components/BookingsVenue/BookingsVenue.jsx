@@ -1,7 +1,11 @@
-import React from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import { format } from "date-fns";
 
+/**
+ * Displays all bookings on a venue.
+ * @param {array} bookings - All bookings on venue.
+ * @returns - Cards with booking dates.
+ */
 function BookingsVenue({ bookings }) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

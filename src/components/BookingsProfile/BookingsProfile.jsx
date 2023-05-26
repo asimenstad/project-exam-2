@@ -1,4 +1,3 @@
-import React from "react";
 import { useApi } from "../../hooks/useApi";
 import VenueCard from "../VenueCard/VenueCard";
 import { Grid, Link, Typography, Skeleton, Stack, Box } from "@mui/material";
@@ -6,6 +5,10 @@ import { format } from "date-fns";
 import { DateRangeRounded } from "@mui/icons-material";
 import ChangeBooking from "../ChangeBooking/ChangeBooking";
 
+/**
+ * Displays all bookings by user on their profile.
+ * @returns Grid with venues.
+ */
 function BookingsProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
   const options = {
@@ -13,7 +16,7 @@ function BookingsProfile() {
       Authorization: `Bearer ${user.accessToken}`,
     },
   };
-  const { data, isLoading, isError } = useApi(
+  const { data, isLoading } = useApi(
     `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/bookings?_customer=true&_venue=true&_bookings=true&sort=dateFrom&sortOrder=asc`,
     options
   );

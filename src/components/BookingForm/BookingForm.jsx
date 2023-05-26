@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography,
   TextField,
@@ -21,6 +21,14 @@ import { useAuth } from "../../hooks/useAuth";
 import { differenceInDays, isValid } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
+/**
+ *
+ * @param {array} bookings - All booked dates on venue.
+ * @param {number} maxGuests - The maximum number of guests.
+ * @param {number} price - The price of the venue.
+ * @param {string} id - The unique id of the venue.
+ * @returns Booking form.
+ */
 function BookingForm({ bookings, maxGuests, price, id }) {
   const { authFetch, user, isLoading, isError } = useAuth();
   const [bookingDates, setBookingDates] = useState({});

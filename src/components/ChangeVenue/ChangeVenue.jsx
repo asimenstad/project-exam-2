@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -13,8 +13,20 @@ import { Close } from "@mui/icons-material";
 import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
 import VenueForm from "../VenueForm/VenueForm";
-import { useNavigate } from "react-router-dom";
 
+/**
+ * Changing and updating the venue.
+ * @param {Object} data - The venue data.
+ * @param {string} data.id - The unique id of the venue.
+ * @param {string} data.venueName - The name of the venue.
+ * @param {string} data.description - The description of the venue.
+ * @param {number} data.price - The price of the venue.
+ * @param {number} data.maxGuests - The maximum number of guests.
+ * @param {array} data.mediaArray - The images of the venue.
+ * @param {Object} data.location - A JSON object containing the location of the venue. The object contains `address`, `city`, `zip`, `country`, `continent`.
+ * @param {Object} data.meta - A JSON object containing meta data about the venue. The object contains a boolean value for each of `wifi`, `parking`, `breakfast`, and `pets`.
+ * @returns Change venue modal.
+ */
 function ChangeVenue({
   id,
   venueName,
@@ -35,7 +47,6 @@ function ChangeVenue({
   const { authFetch, authDelete } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const navigate = useNavigate();
 
   const handleClickOpen = (e) => {
     if (e.target.id === "edit") {
@@ -46,7 +57,7 @@ function ChangeVenue({
     }
   };
 
-  const handleClose = (e) => {
+  const handleClose = () => {
     setOpenEdit(false);
     setOpenDelete(false);
   };
@@ -69,7 +80,7 @@ function ChangeVenue({
       pets: pets,
       breakfast: breakfast,
     }),
-    handleSubmit: (values, { setSubmitting }) => {
+    handleSubmit: (values) => {
       const data = {
         name: values.venueName,
         description: values.description,

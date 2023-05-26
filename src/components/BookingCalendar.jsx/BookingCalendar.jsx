@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { addDays, subDays } from "date-fns";
 
+/**
+ *
+ * @param {function} onChange - Sets new booking date range onChange.
+ * @param {array} bookings - All booked dates on venue.
+ * @returns Date range calendar.
+ */
 function BookingCalendar({ onChange, bookings }) {
   const [selectedDates, setSelectedDates] = useState([
     {

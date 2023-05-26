@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Delete, MoreHorizRounded, Close } from "@mui/icons-material";
 import {
   Box,
@@ -8,20 +8,26 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Divider,
   IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
-  TextField,
 } from "@mui/material";
 import { format } from "date-fns";
 import { useAuth } from "../../hooks/useAuth";
 
+/**
+ * Cancel booking.
+ * @param {string} id - The unique id of the booking.
+ * @param {string} title - The title of the booked venue.
+ * @param {string} dateFrom - The date the booking starts.
+ * @param {string} dateTo - The date the booking ends.
+ * @returns Menu with cancel booking modal.
+ */
 function ChangeBooking({ id, title, dateFrom, dateTo }) {
   const [openCancel, setOpenCancel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { authDelete, isLoading, isError } = useAuth();
+  const { authDelete } = useAuth();
 
   const open = Boolean(anchorEl);
 
@@ -38,7 +44,7 @@ function ChangeBooking({ id, title, dateFrom, dateTo }) {
     setOpenCancel(false);
   };
 
-  function handleCancel(e) {
+  function handleCancel() {
     authDelete(`https://api.noroff.dev/api/v1/holidaze/bookings/${id}`);
     setAnchorEl(null);
     setOpenCancel(false);
