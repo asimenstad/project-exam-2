@@ -1,4 +1,8 @@
-const credentials = { name: "Test1234512345", email: "test1234512345@stud.noroff.no", password: "Asdfghjkl12345" };
+const credentials = {
+  name: `Test${Math.floor(Math.random() * 1000)}`,
+  email: `test${Math.floor(Math.random() * 1000)}@stud.noroff.no`,
+  password: `Asdfghj${Math.floor(Math.random() * 1000)}`,
+};
 
 describe("Register", () => {
   it("can register user", () => {
