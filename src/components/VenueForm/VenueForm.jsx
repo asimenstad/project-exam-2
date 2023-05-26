@@ -18,6 +18,13 @@ import { AddPhotoAlternate, Delete } from "@mui/icons-material";
 import ImageIcon from "@mui/icons-material/Image";
 import { FieldArray } from "formik";
 
+/**
+ * Venue form using Formik.
+ * @param {Object} values - Initial input values.
+ * @param {function} handleSubmit - OnSubmit function.
+ * @param {function} handleChange - OnChange function.
+ * @returns Form.
+ */
 function VenueForm({ values, handleSubmit, handleChange }) {
   return (
     <Box id="venueForm" component="form" onSubmit={handleSubmit}>

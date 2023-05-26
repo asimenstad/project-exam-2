@@ -5,6 +5,10 @@ import { format } from "date-fns";
 import { DateRangeRounded } from "@mui/icons-material";
 import ChangeBooking from "../ChangeBooking/ChangeBooking";
 
+/**
+ * Displays all bookings by user on their profile.
+ * @returns Grid with venues.
+ */
 function BookingsProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
   const options = {

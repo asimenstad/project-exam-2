@@ -2,6 +2,11 @@ import { Grid, Link, Skeleton, CircularProgress, Box } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
 
+/**
+ * Displays venues.
+ * @param {string} searchInput - The search input value.
+ * @returns Grid with venue cards.
+ */
 function Venues({ searchInput }) {
   const { data, isLoading, isError } = useApi(
     "https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true&sort=created&sortOrder=desc"

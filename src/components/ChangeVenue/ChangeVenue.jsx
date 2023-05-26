@@ -14,6 +14,19 @@ import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
 import VenueForm from "../VenueForm/VenueForm";
 
+/**
+ * Changing and updating the venue.
+ * @param {Object} data - The venue data.
+ * @param {string} data.id - The unique id of the venue.
+ * @param {string} data.venueName - The name of the venue.
+ * @param {string} data.description - The description of the venue.
+ * @param {number} data.price - The price of the venue.
+ * @param {number} data.maxGuests - The maximum number of guests.
+ * @param {array} data.mediaArray - The images of the venue.
+ * @param {Object} data.location - A JSON object containing the location of the venue. The object contains `address`, `city`, `zip`, `country`, `continent`.
+ * @param {Object} data.meta - A JSON object containing meta data about the venue. The object contains a boolean value for each of `wifi`, `parking`, `breakfast`, and `pets`.
+ * @returns Change venue modal.
+ */
 function ChangeVenue({
   id,
   venueName,

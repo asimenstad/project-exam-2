@@ -53,7 +53,5 @@ describe("Create venue", () => {
     cy.get("#venueForm").find("input[name='breakfast']").check({ delay: 100 });
 
     cy.get("#venueForm").find("#submit").click();
-
-    cy.reload();
   });
 });

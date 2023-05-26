@@ -16,6 +16,14 @@ import {
 import { format } from "date-fns";
 import { useAuth } from "../../hooks/useAuth";
 
+/**
+ * Cancel booking.
+ * @param {string} id - The unique id of the booking.
+ * @param {string} title - The title of the booked venue.
+ * @param {string} dateFrom - The date the booking starts.
+ * @param {string} dateTo - The date the booking ends.
+ * @returns Menu with cancel booking modal.
+ */
 function ChangeBooking({ id, title, dateFrom, dateTo }) {
   const [openCancel, setOpenCancel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
