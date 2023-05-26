@@ -1,4 +1,3 @@
-import React from "react";
 import { useApi } from "../../hooks/useApi";
 import VenueCard from "../VenueCard/VenueCard";
 import { Grid, Link, Typography, Skeleton, Stack, Box } from "@mui/material";
@@ -13,7 +12,7 @@ function BookingsProfile() {
       Authorization: `Bearer ${user.accessToken}`,
     },
   };
-  const { data, isLoading, isError } = useApi(
+  const { data, isLoading } = useApi(
     `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/bookings?_customer=true&_venue=true&_bookings=true&sort=dateFrom&sortOrder=asc`,
     options
   );

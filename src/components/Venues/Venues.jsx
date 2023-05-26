@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid, Link, Skeleton, CircularProgress, Box } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
