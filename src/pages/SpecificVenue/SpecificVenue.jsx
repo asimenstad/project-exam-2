@@ -1,29 +1,18 @@
 import { Navigate, useParams } from "react-router-dom";
 import { useApi } from "../../hooks/useApi.jsx";
+import { Avatar, Box, Container, Divider, Grid, Typography, Breadcrumbs, Link, CircularProgress } from "@mui/material";
 import {
-  Avatar,
-  Box,
-  Container,
-  Divider,
-  Grid,
-  ImageList,
-  ImageListItem,
-  Typography,
-  Breadcrumbs,
-  Link,
-  CircularProgress,
-} from "@mui/material";
-import {
-  BedRounded,
   CoffeeRounded,
   DirectionsCarRounded,
   PetsRounded,
   PlaceRounded,
+  StarRounded,
   WifiRounded,
 } from "@mui/icons-material";
 import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
 import BookingForm from "../../components/BookingForm/BookingForm.jsx";
 import BookingsVenue from "../../components/BookingsVenue/BookingsVenue.jsx";
+import MediaCarousel from "../../components/MediaCarousel/MediaCarousel.jsx";
 
 function SpecificVenue() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -43,13 +32,12 @@ function SpecificVenue() {
     owner: { name, avatar } = {},
     bookings,
     id: venueId,
+    rating,
   } = data;
 
   if (!media || media.length === 0) {
     media = ["https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"];
   }
-  const cols = media.length <= 4 ? media.length : 2;
-  const rows = Math.ceil(media.length / cols);
 
   return isLoading ? (
     <Container
@@ -71,18 +59,12 @@ function SpecificVenue() {
       <Typography variant="h2" sx={{ display: "flex", alignItems: "center" }}>
         <PlaceRounded /> {city ? city : country ? country : continent ? continent : "unknown"}
       </Typography>
-      <ImageList variant="quilted" cols={cols} rows={rows} rowHeight={600}>
-        {media.map((image, index) => (
-          <ImageListItem key={image + index}>
-            <img width="100%" src={image} alt={`${title}`} />
-          </ImageListItem>
-        ))}
-      </ImageList>
+      <MediaCarousel media={media} />
       <Grid container spacing={4} justifyContent="space-between">
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12} sm={6}>
           <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
             <Avatar src={avatar} />
-            <Typography variant="body1" sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            <Typography sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
               Owner
               <Box component="span" sx={{ fontWeight: "600" }}>
                 {name}
@@ -111,32 +93,65 @@ function SpecificVenue() {
               </>
             )}
           </Box>
-          <Typography variant="body1" sx={{ marginBlock: 2 }}>
-            {description}
-          </Typography>
+          <Box sx={{ marginBlock: 2 }}>
+            <Typography sx={{ fontWeight: 600, display: "flex", gap: 1 }}>
+              <Box component="span"> {price} KR night</Box> &#183; <Box component="span">{maxGuests} guest(s)</Box>{" "}
+              &#183;
+              <Box component="span" sx={{ display: "flex", alignItems: "center" }}>
+                <StarRounded />
+                {rating}
+              </Box>
+            </Typography>
+            <Typography mt={1}>{description}</Typography>
+          </Box>
           <Divider />
           <Typography variant="h2" sx={{ marginBlock: 2 }}>
             This place offers
           </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <BedRounded /> <Typography variant="body1"> {maxGuests} guest(s) allowed</Typography>
+          <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                textDecoration: !wifi && "line-through",
+                color: !wifi && "gray",
+              }}>
+              <WifiRounded sx={{ color: !wifi && "gray" }} /> <Typography>Wifi</Typography>
             </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !wifi && "line-through" }}>
-              <WifiRounded /> <Typography variant="body1">Wifi</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                textDecoration: !parking && "line-through",
+                color: !parking && "gray",
+              }}>
+              <DirectionsCarRounded sx={{ color: !parking && "gray" }} /> <Typography>Parking</Typography>
             </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !parking && "line-through" }}>
-              <DirectionsCarRounded /> <Typography variant="body1">Parking</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                textDecoration: !pets && "line-through",
+                color: !pets && "gray",
+              }}>
+              <PetsRounded sx={{ color: !pets && "gray" }} /> <Typography>Pets allowed</Typography>
             </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !pets && "line-through" }}>
-              <PetsRounded /> <Typography variant="body1">Pets allowed</Typography>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2, textDecoration: !breakfast && "line-through" }}>
-              <CoffeeRounded /> <Typography variant="body1">Breakfast included</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                textDecoration: !breakfast && "line-through",
+                color: !breakfast && "gray",
+              }}>
+              <CoffeeRounded sx={{ color: !breakfast && "gray" }} /> <Typography>Breakfast included</Typography>
             </Box>
           </Box>
         </Grid>
-        <Grid item xs="auto">
+        <Grid item xs="auto" sx={{ mx: { xs: "auto", sm: 0 } }}>
           {user && user.name === name ? (
             <BookingsVenue bookings={bookings} />
           ) : (

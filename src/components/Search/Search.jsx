@@ -1,5 +1,5 @@
 import { SearchRounded } from "@mui/icons-material";
-import { InputAdornment, FormControl, InputLabel, Input } from "@mui/material";
+import { InputAdornment, FormControl, TextField, Box } from "@mui/material";
 
 /**
  * Search for venue.
@@ -9,22 +9,25 @@ import { InputAdornment, FormControl, InputLabel, Input } from "@mui/material";
  */
 function Search({ handleChange, searchInput }) {
   return (
-    <FormControl variant="standard">
-      <InputLabel htmlFor="search">Search</InputLabel>
-      <Input
-        type="search"
-        size="small"
-        label="Search"
-        endAdornment={
-          <InputAdornment position="end">
-            <SearchRounded fontSize="small" />
-          </InputAdornment>
-        }
-        sx={{ mb: 2 }}
-        onChange={handleChange}
-        value={searchInput}
-      />
-    </FormControl>
+    <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <FormControl variant="outlined" size="small">
+        <TextField
+          id="search"
+          label="Search"
+          size="small"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchRounded fontSize="small" />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ mb: 2 }}
+          onChange={handleChange}
+          value={searchInput}
+        />
+      </FormControl>
+    </Box>
   );
 }
 

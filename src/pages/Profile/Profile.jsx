@@ -10,7 +10,6 @@ import BookingsProfile from "../../components/BookingsProfile/BookingsProfile";
 function Profile() {
   const { authFetch } = useAuth();
   const user = JSON.parse(localStorage.getItem("user"));
-
   const options = {
     headers: {
       Authorization: `Bearer ${user.accessToken}`,
@@ -20,7 +19,6 @@ function Profile() {
     `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}?_venues=true&_bookings=true`,
     options
   );
-
   const { name, email, avatar, venueManager, venues } = data;
 
   const AddVenueForm = withFormik({
