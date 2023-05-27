@@ -50,7 +50,7 @@ function MediaCarousel({ media }) {
   };
 
   return (
-    <Box>
+    <Box my={2}>
       <Box
         sx={{
           backgroundImage: `url(${selectedMedia && selectedMedia})`,
@@ -77,16 +77,16 @@ function MediaCarousel({ media }) {
                   height: "150px",
                   width: "100%",
                   cursor: "pointer",
-                  opacity: selectedIndex === index && { opacity: 0.5 },
+                  opacity: selectedIndex !== index && 0.7,
                 }}
                 ref={(el) => (carouselRef.current[index] = el)}
               />
             ))}
         </Box>
-        <IconButton onClick={handleLeftClick}>
+        <IconButton onClick={handleLeftClick} sx={{ position: "absolute", zIndex: 100, top: "40%", left: 1 }}>
           <ArrowBackIosNewRounded />
         </IconButton>
-        <IconButton onClick={handleRightClick}>
+        <IconButton onClick={handleRightClick} sx={{ position: "absolute", zIndex: 100, top: "40%", right: 1 }}>
           <ArrowForwardIosRounded />
         </IconButton>
       </Box>
