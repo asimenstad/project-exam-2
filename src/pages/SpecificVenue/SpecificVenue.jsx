@@ -1,18 +1,6 @@
 import { Navigate, useParams } from "react-router-dom";
 import { useApi } from "../../hooks/useApi.jsx";
-import {
-  Avatar,
-  Box,
-  Container,
-  Divider,
-  Grid,
-  ImageList,
-  ImageListItem,
-  Typography,
-  Breadcrumbs,
-  Link,
-  CircularProgress,
-} from "@mui/material";
+import { Avatar, Box, Container, Divider, Grid, Typography, Breadcrumbs, Link, CircularProgress } from "@mui/material";
 import {
   BedRounded,
   CoffeeRounded,
@@ -24,6 +12,7 @@ import {
 import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
 import BookingForm from "../../components/BookingForm/BookingForm.jsx";
 import BookingsVenue from "../../components/BookingsVenue/BookingsVenue.jsx";
+import MediaCarousel from "../../components/MediaCarousel/MediaCarousel.jsx";
 
 function SpecificVenue() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -48,8 +37,10 @@ function SpecificVenue() {
   if (!media || media.length === 0) {
     media = ["https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"];
   }
+  /*
   const cols = media.length <= 4 ? media.length : 2;
   const rows = Math.ceil(media.length / cols);
+*/
 
   return isLoading ? (
     <Container
@@ -71,13 +62,7 @@ function SpecificVenue() {
       <Typography variant="h2" sx={{ display: "flex", alignItems: "center" }}>
         <PlaceRounded /> {city ? city : country ? country : continent ? continent : "unknown"}
       </Typography>
-      <ImageList variant="quilted" cols={cols} rows={rows} rowHeight={600}>
-        {media.map((image, index) => (
-          <ImageListItem key={image + index}>
-            <img width="100%" src={image} alt={`${title}`} />
-          </ImageListItem>
-        ))}
-      </ImageList>
+      <MediaCarousel media={media} />
       <Grid container spacing={4} justifyContent="space-between">
         <Grid item xs={12} sm={7}>
           <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
