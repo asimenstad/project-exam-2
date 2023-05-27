@@ -7,6 +7,7 @@ import {
   DirectionsCarRounded,
   PetsRounded,
   PlaceRounded,
+  StarRounded,
   WifiRounded,
 } from "@mui/icons-material";
 import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
@@ -32,6 +33,7 @@ function SpecificVenue() {
     owner: { name, avatar } = {},
     bookings,
     id: venueId,
+    rating,
   } = data;
 
   if (!media || media.length === 0) {
@@ -96,9 +98,18 @@ function SpecificVenue() {
               </>
             )}
           </Box>
-          <Typography variant="body1" sx={{ marginBlock: 2 }}>
-            {description}
-          </Typography>
+          <Box sx={{ marginBlock: 2 }}>
+            <Typography variant="body1" sx={{ fontWeight: 600, display: "flex", gap: 1 }}>
+              <Box> {price} KR night</Box> &#183; <Box>{maxGuests} guest(s)</Box> &#183;
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <StarRounded />
+                {rating}
+              </Box>
+            </Typography>
+            <Typography mt={1} variant="body1">
+              {description}
+            </Typography>
+          </Box>
           <Divider />
           <Typography variant="h2" sx={{ marginBlock: 2 }}>
             This place offers
