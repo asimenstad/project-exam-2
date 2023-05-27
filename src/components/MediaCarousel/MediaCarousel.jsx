@@ -62,34 +62,40 @@ function MediaCarousel({ media }) {
           mb: 1,
         }}
       />
-      <Box sx={{ position: "relative" }}>
-        <Box sx={{ display: "flex", gap: 1, maxWidth: "100%", overflowX: "hidden" }}>
-          {media &&
-            media.map((image, index) => (
-              <Box
-                key={media + index}
-                onClick={() => handleSelectChange(index)}
-                sx={{
-                  backgroundImage: `url(${image})`,
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  height: "150px",
-                  width: "100%",
-                  cursor: "pointer",
-                  opacity: selectedIndex !== index && 0.7,
-                }}
-                ref={(el) => (carouselRef.current[index] = el)}
-              />
-            ))}
+      {media && media.length > 1 && (
+        <Box sx={{ position: "relative" }}>
+          <Box sx={{ display: "flex", gap: 1, maxWidth: "100%", overflowX: "hidden" }}>
+            {media &&
+              media.map((image, index) => (
+                <Box
+                  key={media + index}
+                  onClick={() => handleSelectChange(index)}
+                  sx={{
+                    backgroundImage: `url(${image})`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    height: "200px",
+                    width: "100%",
+                    cursor: "pointer",
+                    opacity: selectedIndex === index && 0.7,
+                  }}
+                  ref={(el) => (carouselRef.current[index] = el)}
+                />
+              ))}
+          </Box>
+          <IconButton
+            onClick={handleLeftClick}
+            sx={{ position: "absolute", zIndex: 100, top: "40%", left: 1, color: "#000" }}>
+            <ArrowBackIosNewRounded />
+          </IconButton>
+          <IconButton
+            onClick={handleRightClick}
+            sx={{ position: "absolute", zIndex: 100, top: "40%", right: 1, color: "#000" }}>
+            <ArrowForwardIosRounded />
+          </IconButton>
         </Box>
-        <IconButton onClick={handleLeftClick} sx={{ position: "absolute", zIndex: 100, top: "40%", left: 1 }}>
-          <ArrowBackIosNewRounded />
-        </IconButton>
-        <IconButton onClick={handleRightClick} sx={{ position: "absolute", zIndex: 100, top: "40%", right: 1 }}>
-          <ArrowForwardIosRounded />
-        </IconButton>
-      </Box>
+      )}
     </Box>
   );
 }
