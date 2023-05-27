@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { HolidayVillageRounded } from "@mui/icons-material";
 
 function Header() {
   const { user, logout } = useAuth();
@@ -40,8 +41,17 @@ function Header() {
             <Link
               to="/"
               variant="h6"
-              sx={{ fontFamily: "Comfortaa", fontWeight: 700, color: "inherit", textDecoration: "none" }}>
-              Holidaze
+              component="body1"
+              sx={{
+                fontFamily: "Comfortaa",
+                fontWeight: 700,
+                color: "inherit",
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}>
+              <HolidayVillageRounded /> Holidaze
             </Link>
           </Box>
           {user ? (

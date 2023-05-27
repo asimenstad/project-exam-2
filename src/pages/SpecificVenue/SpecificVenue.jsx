@@ -2,7 +2,6 @@ import { Navigate, useParams } from "react-router-dom";
 import { useApi } from "../../hooks/useApi.jsx";
 import { Avatar, Box, Container, Divider, Grid, Typography, Breadcrumbs, Link, CircularProgress } from "@mui/material";
 import {
-  BedRounded,
   CoffeeRounded,
   DirectionsCarRounded,
   PetsRounded,
@@ -115,9 +114,6 @@ function SpecificVenue() {
             This place offers
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 3 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <BedRounded /> <Typography variant="body1"> {maxGuests} guest(s) allowed</Typography>
-            </Box>
             <Box
               sx={{
                 display: "flex",
