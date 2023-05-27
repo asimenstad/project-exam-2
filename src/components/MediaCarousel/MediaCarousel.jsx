@@ -58,7 +58,7 @@ function MediaCarousel({ media }) {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           width: "100%",
-          height: "500px",
+          height: "600px",
           mb: 1,
         }}
       />
