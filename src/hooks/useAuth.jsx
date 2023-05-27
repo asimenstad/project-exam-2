@@ -100,7 +100,7 @@ function useProvideAuth() {
 
       if (response.ok) {
         setIsError(false);
-        console.log(json);
+        navigate(0);
       } else {
         setIsError(true);
         console.log(json);

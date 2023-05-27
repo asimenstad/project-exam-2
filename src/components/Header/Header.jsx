@@ -41,7 +41,6 @@ function Header() {
             <Link
               to="/"
               variant="h6"
-              component="body1"
               sx={{
                 fontFamily: "Comfortaa",
                 fontWeight: 700,
