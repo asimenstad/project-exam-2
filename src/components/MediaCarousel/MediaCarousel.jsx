@@ -58,7 +58,7 @@ function MediaCarousel({ media }) {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           width: "100%",
-          height: "600px",
+          height: { xs: "400px", sm: "500px", md: "600px" },
           mb: 1,
         }}
       />
@@ -75,7 +75,7 @@ function MediaCarousel({ media }) {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
-                    height: "200px",
+                    height: { xs: "150px", sm: "200px" },
                     width: "100%",
                     cursor: "pointer",
                     opacity: selectedIndex === index && 0.7,
