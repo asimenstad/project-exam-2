@@ -13,6 +13,7 @@ import { Close } from "@mui/icons-material";
 import { withFormik } from "formik";
 import { useAuth } from "../../hooks/useAuth";
 import VenueForm from "../VenueForm/VenueForm";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Changing and updating the venue.
@@ -44,9 +45,13 @@ function ChangeVenue({
   pets,
   breakfast,
 }) {
-  const { authFetch, authDelete } = useAuth();
+  // const { authFetch, authDelete } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [isFormError, setIsFormError] = useState(false);
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleClickOpen = (e) => {
     if (e.target.id === "edit") {
@@ -80,7 +85,7 @@ function ChangeVenue({
       pets: pets,
       breakfast: breakfast,
     }),
-    handleSubmit: (values) => {
+    handleSubmit: async (values) => {
       const data = {
         name: values.venueName,
         description: values.description,
@@ -101,13 +106,60 @@ function ChangeVenue({
           breakfast: values.breakfast,
         },
       };
-      console.log(data);
-      authFetch(data, "PUT", `https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
+      try {
+        setIsFormLoading(true);
+        const postData = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+          body: JSON.stringify(data),
+        };
+        const response = await fetch(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`, postData);
+        const json = await response.json();
+
+        if (response.ok) {
+          console.log(json);
+          setIsFormError(false);
+        } else {
+          console.log(response);
+          setIsFormError(true);
+        }
+      } catch (error) {
+        console.log(error);
+        setIsFormError(true);
+      } finally {
+        setIsFormLoading(false);
+      }
+      //  authFetch(data, "PUT", `https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
     },
   })(VenueForm);
 
-  function handleDelete() {
-    authDelete(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
+  async function handleDelete() {
+    try {
+      setIsFormLoading(true);
+      const postData = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      };
+      const response = await fetch(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`, postData);
+      if (response.ok) {
+        navigate("/profile");
+      } else {
+        console.log(response);
+        setIsFormError(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsFormError(true);
+    } finally {
+      setIsFormLoading(false);
+    }
+    //  authDelete(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
   }
 
   return (
