@@ -8,6 +8,7 @@ import BookingsProfile from "../../components/BookingsProfile/BookingsProfile";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Loader from "../../components/Loader/Loader";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const { user } = useAuth();
@@ -24,6 +25,7 @@ function Profile() {
   const { name, email, avatar, venueManager, venues } = data;
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [isFormError, setIsFormError] = useState(false);
+  const navigate = useNavigate();
 
   const AddVenueForm = withFormik({
     mapPropsToValues: () => ({
@@ -80,6 +82,7 @@ function Profile() {
         if (response.ok) {
           console.log(json);
           setIsFormError(false);
+          navigate(0);
         } else {
           console.log(response);
           setIsFormError(true);
