@@ -1,5 +1,5 @@
 import { useApi } from "../../hooks/useApi";
-import { Container, Grid, Typography, Link, Breadcrumbs, Skeleton, CircularProgress, Backdrop } from "@mui/material";
+import { Container, Grid, Typography, Link, Breadcrumbs, Skeleton } from "@mui/material";
 import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";

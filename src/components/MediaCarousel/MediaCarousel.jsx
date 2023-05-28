@@ -1,5 +1,4 @@
-import { ArrowBackIosNewRounded, ArrowForwardIosRounded } from "@mui/icons-material";
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -34,28 +33,8 @@ function MediaCarousel({ media }) {
     }
   };
 
-  const handleRightClick = () => {
-    if (media && media.length > 0) {
-      let newIndex = selectedIndex + 1;
-      if (newIndex >= media.length) {
-        newIndex = 0;
-      }
-      handleSelectChange(newIndex);
-    }
-  };
-
-  const handleLeftClick = () => {
-    if (media && media.length > 0) {
-      let newIndex = selectedIndex - 1;
-      if (newIndex < 0) {
-        newIndex = media.length - 1;
-      }
-      handleSelectChange(newIndex);
-    }
-  };
-
   return (
-    <Box my={2}>
+    <Box my={2} sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 1 }}>
       <Box
         sx={{
           backgroundImage: `url(${selectedMedia && selectedMedia})`,
@@ -63,13 +42,20 @@ function MediaCarousel({ media }) {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           width: "100%",
-          height: { xs: "400px", sm: "500px", md: "600px" },
-          mb: 1,
+          height: { xs: "400px", md: "500px", lg: "600px" },
         }}
       />
       {media && media.length > 1 && (
-        <Box sx={{ position: "relative" }}>
-          <Box sx={{ display: "flex", gap: 1, maxWidth: "100%", overflowX: "hidden" }}>
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { md: "column" },
+              gap: 1,
+              maxWidth: "100%",
+              height: "100%",
+              overflowX: "hidden",
+            }}>
             {media &&
               media.map((image, index) => (
                 <Box
@@ -80,25 +66,17 @@ function MediaCarousel({ media }) {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
-                    height: { xs: "150px", sm: "200px" },
+                    flex: 1,
+                    height: { xs: "100px", sm: "150px", md: "100%" },
                     width: "100%",
+                    minWidth: { md: "200px", lg: "250px" },
                     cursor: "pointer",
-                    opacity: selectedIndex === index && 0.7,
+                    opacity: selectedIndex === index && 0.5,
                   }}
                   ref={(el) => (carouselRef.current[index] = el)}
                 />
               ))}
           </Box>
-          <IconButton
-            onClick={handleLeftClick}
-            sx={{ position: "absolute", zIndex: 100, top: "40%", left: 1, color: "#000" }}>
-            <ArrowBackIosNewRounded />
-          </IconButton>
-          <IconButton
-            onClick={handleRightClick}
-            sx={{ position: "absolute", zIndex: 100, top: "40%", right: 1, color: "#000" }}>
-            <ArrowForwardIosRounded />
-          </IconButton>
         </Box>
       )}
     </Box>
