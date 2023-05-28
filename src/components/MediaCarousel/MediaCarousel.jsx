@@ -2,6 +2,11 @@ import { ArrowBackIosNewRounded, ArrowForwardIosRounded } from "@mui/icons-mater
 import { Box, IconButton } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * Carousel with venue images.
+ * @param {Array} media - The URLs for the venue media.
+ * @returns Carousel.
+ */
 function MediaCarousel({ media }) {
   const [selectedMedia, setSelectedMedia] = useState();
   const [selectedIndex, setSelectedIndex] = useState(0);
