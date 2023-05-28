@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 function Register() {
-  const { register } = useAuth();
+  const { register, error } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -133,6 +133,9 @@ function Register() {
                 />
               </Grid>
             </Grid>
+            <Typography variant="body1" color="error">
+              {error}
+            </Typography>
             <Button id="submit" type="submit" fullWidth variant="contained" disableElevation sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>

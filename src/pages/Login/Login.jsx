@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
-  const { login } = useAuth();
+  const { login, error } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -81,6 +81,9 @@ function Login() {
               size="small"
               onChange={handleChange}
             />
+            <Typography variant="body1" color="error">
+              {error}
+            </Typography>
             <Button id="submit" type="submit" variant="contained" fullWidth disableElevation sx={{ mt: 3, mb: 2 }}>
               Log In
             </Button>

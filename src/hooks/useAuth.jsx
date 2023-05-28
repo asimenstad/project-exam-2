@@ -19,6 +19,7 @@ function useProvideAuth() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   async function login(data, url) {
@@ -38,8 +39,8 @@ function useProvideAuth() {
         setUser(json);
         navigate("/profile");
       } else {
-        const error = await response.json();
-        console.log(error);
+        const { errors } = await response.json();
+        setError(errors[0].message);
       }
     } catch (error) {
       console.log(error);
@@ -63,8 +64,8 @@ function useProvideAuth() {
       if (response.ok) {
         navigate("/login");
       } else {
-        const error = await response.json();
-        console.log(error);
+        const { errors } = await response.json();
+        setError(errors[0].message);
       }
     } catch (error) {
       console.log(error);
@@ -80,5 +81,5 @@ function useProvideAuth() {
     navigate("/");
   }
 
-  return { login, register, logout, user, isError, isLoading };
+  return { login, register, logout, user, error, isError, isLoading };
 }
