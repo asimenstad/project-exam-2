@@ -1,15 +1,17 @@
 import { useApi } from "../../hooks/useApi";
-import { Container, Grid, Typography, Link, Breadcrumbs, Skeleton, CircularProgress } from "@mui/material";
+import { Container, Grid, Typography, Link, Breadcrumbs, Skeleton } from "@mui/material";
 import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import { withFormik } from "formik";
-import { useAuth } from "../../hooks/useAuth";
 import BookingsProfile from "../../components/BookingsProfile/BookingsProfile";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import Loader from "../../components/Loader/Loader";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
-  const { authFetch } = useAuth();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useAuth();
   const options = {
     headers: {
       Authorization: `Bearer ${user.accessToken}`,
@@ -19,7 +21,11 @@ function Profile() {
     `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}?_venues=true&_bookings=true`,
     options
   );
+
   const { name, email, avatar, venueManager, venues } = data;
+  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [isFormError, setIsFormError] = useState(false);
+  const navigate = useNavigate();
 
   const AddVenueForm = withFormik({
     mapPropsToValues: () => ({
@@ -39,7 +45,7 @@ function Profile() {
       pets: false,
       breakfast: false,
     }),
-    handleSubmit: (values) => {
+    handleSubmit: async (values) => {
       const data = {
         name: values.venueName,
         description: values.description,
@@ -60,18 +66,38 @@ function Profile() {
           breakfast: values.breakfast,
         },
       };
+      try {
+        setIsFormLoading(true);
+        const postData = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+          body: JSON.stringify(data),
+        };
+        const response = await fetch("https://api.noroff.dev/api/v1/holidaze/venues", postData);
+        const json = await response.json();
 
-      authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/venues");
+        if (response.ok) {
+          console.log(json);
+          setIsFormError(false);
+          navigate(0);
+        } else {
+          console.log(response);
+          setIsFormError(true);
+        }
+      } catch (error) {
+        console.log(error);
+        setIsFormError(true);
+      } finally {
+        setIsFormLoading(false);
+      }
     },
   })(VenueForm);
 
   return isLoading ? (
-    <Container
-      id="loader"
-      component="main"
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
-      <CircularProgress />
-    </Container>
+    <Loader />
   ) : (
     <Container component="main" sx={{ minHeight: "90vh" }}>
       {user && (
@@ -99,12 +125,13 @@ function Profile() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
+                alignItems: "center",
                 justifyContent: "center",
                 padding: 4,
                 bgcolor: "white",
                 borderRadius: 1,
               }}>
-              <AddVenueForm />
+              <AddVenueForm isLoading={isFormLoading} />
             </Grid>
           )}
           {venueManager && (

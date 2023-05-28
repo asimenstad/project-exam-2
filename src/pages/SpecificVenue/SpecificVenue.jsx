@@ -13,9 +13,10 @@ import ChangeVenue from "../../components/ChangeVenue/ChangeVenue.jsx";
 import BookingForm from "../../components/BookingForm/BookingForm.jsx";
 import BookingsVenue from "../../components/BookingsVenue/BookingsVenue.jsx";
 import MediaCarousel from "../../components/MediaCarousel/MediaCarousel.jsx";
+import { useAuth } from "../../hooks/useAuth.jsx";
 
 function SpecificVenue() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useAuth();
   const { id } = useParams();
   const { data, isLoading, isError } = useApi(
     `https://api.noroff.dev/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`

@@ -13,17 +13,24 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-    }
-  }, []);
+    const removeError = setTimeout(() => {
+      setError("");
+    }, 5000);
+
+    return () => {
+      clearTimeout(removeError);
+    };
+  }, [error]);
 
   async function login(data, url) {
     try {
@@ -42,8 +49,8 @@ function useProvideAuth() {
         setUser(json);
         navigate("/profile");
       } else {
-        const error = await response.json();
-        console.log(error);
+        const { errors } = await response.json();
+        setError(errors[0].message);
       }
     } catch (error) {
       console.log(error);
@@ -67,8 +74,8 @@ function useProvideAuth() {
       if (response.ok) {
         navigate("/login");
       } else {
-        const error = await response.json();
-        console.log(error);
+        const { errors } = await response.json();
+        setError(errors[0].message);
       }
     } catch (error) {
       console.log(error);
@@ -84,59 +91,5 @@ function useProvideAuth() {
     navigate("/");
   }
 
-  async function authFetch(data, method, url) {
-    try {
-      setIsLoading(true);
-      const postData = {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-        body: JSON.stringify(data),
-      };
-      const response = await fetch(url, postData);
-      const json = await response.json();
-
-      if (response.ok) {
-        setIsError(false);
-        navigate(0);
-      } else {
-        setIsError(true);
-        console.log(json);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function authDelete(url) {
-    try {
-      setIsLoading(true);
-      const postData = {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      };
-      const response = await fetch(url, postData);
-      if (response.ok) {
-        navigate("/profile");
-      } else {
-        console.log(response);
-        setIsError(true);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  return { login, register, logout, authFetch, authDelete, user, isError, isLoading };
+  return { login, register, logout, user, error, isError, isLoading };
 }
