@@ -11,8 +11,9 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { withFormik } from "formik";
-import { useAuth } from "../../hooks/useAuth";
 import VenueForm from "../VenueForm/VenueForm";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 /**
  * Changing and updating the venue.
@@ -44,9 +45,12 @@ function ChangeVenue({
   pets,
   breakfast,
 }) {
-  const { authFetch, authDelete } = useAuth();
+  const { user } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [isFormError, setIsFormError] = useState(false);
+  const navigate = useNavigate();
 
   const handleClickOpen = (e) => {
     if (e.target.id === "edit") {
@@ -80,7 +84,7 @@ function ChangeVenue({
       pets: pets,
       breakfast: breakfast,
     }),
-    handleSubmit: (values) => {
+    handleSubmit: async (values) => {
       const data = {
         name: values.venueName,
         description: values.description,
@@ -101,13 +105,57 @@ function ChangeVenue({
           breakfast: values.breakfast,
         },
       };
-      console.log(data);
-      authFetch(data, "PUT", `https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
+      try {
+        setIsFormLoading(true);
+        const postData = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+          body: JSON.stringify(data),
+        };
+        const response = await fetch(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`, postData);
+
+        if (response.ok) {
+          setIsFormError(false);
+          navigate(0);
+        } else {
+          console.log(response);
+          setIsFormError(true);
+        }
+      } catch (error) {
+        console.log(error);
+        setIsFormError(true);
+      } finally {
+        setIsFormLoading(false);
+      }
     },
   })(VenueForm);
 
-  function handleDelete() {
-    authDelete(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
+  async function handleDelete() {
+    try {
+      setIsFormLoading(true);
+      const postData = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      };
+      const response = await fetch(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`, postData);
+      if (response.ok) {
+        navigate("/profile");
+      } else {
+        console.log(response);
+        setIsFormError(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsFormError(true);
+    } finally {
+      setIsFormLoading(false);
+    }
   }
 
   return (
@@ -126,7 +174,7 @@ function ChangeVenue({
           </IconButton>
         </Box>
         <DialogContent>
-          <EditVenue />
+          <EditVenue isLoading={isFormLoading} />
         </DialogContent>
       </Dialog>
       <Dialog open={openDelete} onClose={handleClose}>

@@ -17,6 +17,7 @@ import {
 import { AddPhotoAlternate, Delete } from "@mui/icons-material";
 import ImageIcon from "@mui/icons-material/Image";
 import { FieldArray } from "formik";
+import Loader from "../Loader/Loader";
 
 /**
  * Venue form using Formik.
@@ -25,9 +26,9 @@ import { FieldArray } from "formik";
  * @param {function} handleChange - OnChange function.
  * @returns Form.
  */
-function VenueForm({ values, handleSubmit, handleChange }) {
+function VenueForm({ values, handleSubmit, handleChange, isLoading }) {
   return (
-    <Box id="venueForm" component="form" onSubmit={handleSubmit}>
+    <Box sx={{ position: "relative" }} id="venueForm" component="form" onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Box>
@@ -242,6 +243,7 @@ function VenueForm({ values, handleSubmit, handleChange }) {
           </Button>
         </Grid>
       </Grid>
+      {isLoading && <Loader />}
     </Box>
   );
 }

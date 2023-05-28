@@ -20,11 +20,11 @@ import { HolidayVillageRounded } from "@mui/icons-material";
 
 function Header() {
   const { user, logout } = useAuth();
-
   const [anchorEl, setAnchorEl] = useState(null);
+  const avatarLetter = user && user.name ? user.name.charAt(0).toUpperCase() : "";
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenu = (e) => {
+    setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -62,7 +62,9 @@ function Header() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit">
-                <Avatar sx={{ width: 32, height: 32 }} src={user.avatar ? user.avatar : undefined} />
+                <Avatar sx={{ width: 32, height: 32, bgcolor: "#000" }} alt={user?.name}>
+                  {avatarLetter}
+                </Avatar>
               </IconButton>
               <Menu
                 id="menu-appbar"

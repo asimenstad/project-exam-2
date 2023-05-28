@@ -11,8 +11,6 @@ import {
   DialogContent,
   DialogActions,
   IconButton,
-  Backdrop,
-  CircularProgress,
   DialogContentText,
 } from "@mui/material";
 import { CheckCircleOutlineRounded, Close, ErrorOutlineRounded } from "@mui/icons-material";
@@ -20,6 +18,7 @@ import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
 import { useAuth } from "../../hooks/useAuth";
 import { differenceInDays, isValid } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 /**
  *
@@ -30,7 +29,7 @@ import { useNavigate } from "react-router-dom";
  * @returns Booking form.
  */
 function BookingForm({ bookings, maxGuests, price, id }) {
-  const { authFetch, user, isLoading, isError } = useAuth();
+  const { user } = useAuth();
   const [bookingDates, setBookingDates] = useState({});
   const [guests, setGuests] = useState(1);
   const [nights, setNights] = useState(1);
@@ -39,6 +38,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
   const [openError, setOpenError] = useState(false);
   const [dateError, setDateError] = useState("");
   const navigate = useNavigate();
+  const [isFormLoading, setIsFormLoading] = useState(false);
 
   const handleCalendarChange = (ranges) => {
     setBookingDates(ranges);
@@ -60,7 +60,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
     navigate(0);
   };
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const data = {
       dateFrom: new Date(bookingDates.startDate),
@@ -76,59 +76,82 @@ function BookingForm({ bookings, maxGuests, price, id }) {
     ) {
       setDateError("Please select available dates.");
     } else {
-      authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
-      if (isError) {
+      try {
+        setIsFormLoading(true);
+        const postData = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+          body: JSON.stringify(data),
+        };
+        const response = await fetch("https://api.noroff.dev/api/v1/holidaze/bookings", postData);
+        const json = await response.json();
+        if (response.ok) {
+          console.log(json);
+          setOpenSuccess(true);
+        } else {
+          console.log(response);
+          setOpenError(true);
+        }
+      } catch (error) {
+        console.log(error);
         setOpenError(true);
-        setOpenSuccess(false);
-      } else {
-        setOpenSuccess(true);
-        setOpenError(false);
+      } finally {
+        setIsFormLoading(false);
       }
     }
   }
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h2">Book your stay</Typography>
-      {bookings && <BookingCalendar onChange={handleCalendarChange} bookings={bookings} />}
-      <Typography variant="body1" color="error">
-        {dateError}
-      </Typography>
-      <TextField
-        id="guests"
-        label="Guests"
-        type="number"
-        fullWidth
-        size="small"
-        onChange={handleGuestChange}
-        value={guests}
-        inputProps={{ min: 1, max: maxGuests }}
-      />
-      <Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>Per night</Typography>
-          <Typography>{price} KR</Typography>
+    <>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", flexDirection: "column", gap: 2, position: "relative" }}>
+        <Typography variant="h2">Book your stay</Typography>
+        {bookings && <BookingCalendar onChange={handleCalendarChange} bookings={bookings} />}
+        <Typography variant="body1" color="error">
+          {dateError}
+        </Typography>
+        <TextField
+          id="guests"
+          label="Guests"
+          type="number"
+          fullWidth
+          size="small"
+          onChange={handleGuestChange}
+          value={guests}
+          inputProps={{ min: 1, max: maxGuests }}
+        />
+        <Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography>Per night</Typography>
+            <Typography>{price} KR</Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography>{nights} night(s)</Typography>
+            <Typography>{totalPrice} KR</Typography>
+          </Box>
+          <Divider sx={{ my: 1 }} />
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography sx={{ fontWeight: 600 }}>Total</Typography>
+            <Typography sx={{ fontWeight: 600 }}>{totalPrice} KR</Typography>
+          </Box>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>{nights} night(s)</Typography>
-          <Typography>{totalPrice} KR</Typography>
-        </Box>
-        <Divider sx={{ my: 1 }} />
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography sx={{ fontWeight: 600 }}>Total</Typography>
-          <Typography sx={{ fontWeight: 600 }}>{totalPrice} KR</Typography>
-        </Box>
-      </Box>
-      {user ? (
-        <Button type="submit" variant="contained" disableElevation fullWidth>
-          Book
-        </Button>
-      ) : (
-        <Link to="/login">
-          <Button fullWidth variant="contained" disableElevation>
-            Login to book
+        {user ? (
+          <Button type="submit" variant="contained" disableElevation fullWidth>
+            Book
           </Button>
-        </Link>
-      )}
+        ) : (
+          <Link to="/login">
+            <Button fullWidth variant="contained" disableElevation>
+              Login to book
+            </Button>
+          </Link>
+        )}
+        {isFormLoading && <Loader />}
+      </Box>
       <Dialog open={openSuccess} onClose={handleClose}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -165,12 +188,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
           </Button>
         </DialogActions>
       </Dialog>
-      {isLoading && (
-        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )}
-    </Box>
+    </>
   );
 }
 
