@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const authContext = createContext();
@@ -21,6 +21,16 @@ function useProvideAuth() {
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const removeError = setTimeout(() => {
+      setError("");
+    }, 5000);
+
+    return () => {
+      clearTimeout(removeError);
+    };
+  }, [error]);
 
   async function login(data, url) {
     try {
