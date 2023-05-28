@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 function Register() {
-  const auth = useAuth();
+  const { register } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +47,7 @@ function Register() {
       password: password,
       venueManager: manager,
     };
-    auth.register(data, "https://api.noroff.dev/api/v1/holidaze/auth/register");
+    register(data, "https://api.noroff.dev/api/v1/holidaze/auth/register");
   }
 
   return (

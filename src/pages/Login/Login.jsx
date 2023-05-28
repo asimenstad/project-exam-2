@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
-  const auth = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,7 +23,7 @@ function Login() {
       email: email,
       password: password,
     };
-    auth.login(data, "https://api.noroff.dev/api/v1/holidaze/auth/login");
+    login(data, "https://api.noroff.dev/api/v1/holidaze/auth/login");
   }
 
   return (

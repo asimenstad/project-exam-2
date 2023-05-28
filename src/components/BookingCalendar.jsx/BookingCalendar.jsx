@@ -55,7 +55,14 @@ function BookingCalendar({ onChange, bookings }) {
   }, [bookings]);
 
   return (
-    <DateRange onChange={handleChange} ranges={selectedDates} disabledDates={disabledDates} minDate={new Date()} />
+    <DateRange
+      onChange={handleChange}
+      ranges={selectedDates}
+      disabledDates={disabledDates}
+      minDate={new Date()}
+      dragSelectionEnabled={true}
+      moveRangeOnFirstSelection={true}
+    />
   );
 }
 export default BookingCalendar;

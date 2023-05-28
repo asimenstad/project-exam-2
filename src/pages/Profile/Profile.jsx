@@ -4,13 +4,12 @@ import VenueCard from "../../components/VenueCard/VenueCard";
 import VenueForm from "../../components/VenueForm/VenueForm";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import { withFormik } from "formik";
-import { useAuth } from "../../hooks/useAuth";
 import BookingsProfile from "../../components/BookingsProfile/BookingsProfile";
 import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 function Profile() {
-  // const { authFetch } = useAuth();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useAuth();
   const options = {
     headers: {
       Authorization: `Bearer ${user.accessToken}`,
@@ -20,6 +19,7 @@ function Profile() {
     `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}?_venues=true&_bookings=true`,
     options
   );
+
   const { name, email, avatar, venueManager, venues } = data;
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [isFormError, setIsFormError] = useState(false);
@@ -89,8 +89,6 @@ function Profile() {
       } finally {
         setIsFormLoading(false);
       }
-
-      //  authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/venues");
     },
   })(VenueForm);
 

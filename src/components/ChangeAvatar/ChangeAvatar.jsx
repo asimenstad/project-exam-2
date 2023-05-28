@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Button, Dialog, DialogContent, DialogTitle, Avatar, Box, TextField, IconButton } from "@mui/material";
 import { Close, EditRounded } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Changes or deletes user avatar.
@@ -9,9 +10,12 @@ import { Close, EditRounded } from "@mui/icons-material";
  * @returns Modal with form.
  */
 function ChangeAvatar({ avatar }) {
-  const { user, authFetch } = useAuth();
+  const { user } = useAuth();
   const [newAvatar, setNewAvatar] = useState(avatar);
   const [open, setOpen] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(true);
+  const [isFormError, setIsFormError] = useState(false);
+  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,21 +30,36 @@ function ChangeAvatar({ avatar }) {
     setNewAvatar(inputValue);
   }
 
-  function handleDelete() {
-    const data = {
-      avatar: null,
-    };
-    authFetch(data, "PUT", `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/media`);
-    setOpen(false);
-  }
-
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const data = {
       avatar: newAvatar,
     };
-    authFetch(data, "PUT", `https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/media`);
-    setOpen(false);
+    try {
+      setIsFormLoading(true);
+      const postData = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+        body: JSON.stringify(data),
+      };
+      const response = await fetch(`https://api.noroff.dev/api/v1/holidaze/profiles/${user.name}/media`, postData);
+      if (response.ok) {
+        setIsFormError(false);
+        setOpen(false);
+        navigate(0);
+      } else {
+        console.log(response);
+        setIsFormError(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsFormError(true);
+    } finally {
+      setIsFormLoading(false);
+    }
   }
 
   return (
@@ -67,10 +86,7 @@ function ChangeAvatar({ avatar }) {
               size="small"
               onChange={handleChange}
             />
-            <Box sx={{ display: "flex", justifyContent: "space-between", gap: 1, mt: 4 }}>
-              <Button variant="contained" disableElevation color="error" onClick={handleDelete}>
-                Delete
-              </Button>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
               <Button type="submit" variant="contained" disableElevation>
                 confirm
               </Button>

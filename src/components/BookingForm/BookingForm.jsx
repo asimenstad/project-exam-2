@@ -39,6 +39,8 @@ function BookingForm({ bookings, maxGuests, price, id }) {
   const [openError, setOpenError] = useState(false);
   const [dateError, setDateError] = useState("");
   const navigate = useNavigate();
+  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [isFormError, setIsFormError] = useState(false);
 
   const handleCalendarChange = (ranges) => {
     setBookingDates(ranges);
@@ -60,7 +62,7 @@ function BookingForm({ bookings, maxGuests, price, id }) {
     navigate(0);
   };
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const data = {
       dateFrom: new Date(bookingDates.startDate),
@@ -76,13 +78,32 @@ function BookingForm({ bookings, maxGuests, price, id }) {
     ) {
       setDateError("Please select available dates.");
     } else {
-      authFetch(data, "POST", "https://api.noroff.dev/api/v1/holidaze/bookings");
-      if (isError) {
-        setOpenError(true);
-        setOpenSuccess(false);
-      } else {
-        setOpenSuccess(true);
-        setOpenError(false);
+      try {
+        setIsFormLoading(true);
+        const postData = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+          body: JSON.stringify(data),
+        };
+        const response = await fetch("https://api.noroff.dev/api/v1/holidaze/bookings", postData);
+        const json = await response.json();
+        if (response.ok) {
+          console.log(json);
+          setIsFormError(false);
+          setOpenSuccess(true);
+        } else {
+          console.log(response);
+          setIsFormError(true);
+          setOpenError(true);
+        }
+      } catch (error) {
+        console.log(error);
+        setIsFormError(true);
+      } finally {
+        setIsFormLoading(false);
       }
     }
   }

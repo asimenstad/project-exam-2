@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { withFormik } from "formik";
-import { useAuth } from "../../hooks/useAuth";
 import VenueForm from "../VenueForm/VenueForm";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 /**
  * Changing and updating the venue.
@@ -45,13 +45,12 @@ function ChangeVenue({
   pets,
   breakfast,
 }) {
-  // const { authFetch, authDelete } = useAuth();
+  const { user } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(true);
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleClickOpen = (e) => {
     if (e.target.id === "edit") {
@@ -117,11 +116,10 @@ function ChangeVenue({
           body: JSON.stringify(data),
         };
         const response = await fetch(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`, postData);
-        const json = await response.json();
 
         if (response.ok) {
-          console.log(json);
           setIsFormError(false);
+          navigate(0);
         } else {
           console.log(response);
           setIsFormError(true);
@@ -132,7 +130,6 @@ function ChangeVenue({
       } finally {
         setIsFormLoading(false);
       }
-      //  authFetch(data, "PUT", `https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
     },
   })(VenueForm);
 
@@ -159,7 +156,6 @@ function ChangeVenue({
     } finally {
       setIsFormLoading(false);
     }
-    //  authDelete(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
   }
 
   return (

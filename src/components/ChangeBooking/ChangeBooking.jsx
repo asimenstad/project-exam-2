@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { format } from "date-fns";
 import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Cancel booking.
@@ -27,7 +28,10 @@ import { useAuth } from "../../hooks/useAuth";
 function ChangeBooking({ id, title, dateFrom, dateTo }) {
   const [openCancel, setOpenCancel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { authDelete } = useAuth();
+  const [isFormLoading, setIsFormLoading] = useState(true);
+  const [isFormError, setIsFormError] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const open = Boolean(anchorEl);
 
@@ -44,10 +48,31 @@ function ChangeBooking({ id, title, dateFrom, dateTo }) {
     setOpenCancel(false);
   };
 
-  function handleCancel() {
-    authDelete(`https://api.noroff.dev/api/v1/holidaze/bookings/${id}`);
-    setAnchorEl(null);
-    setOpenCancel(false);
+  async function handleDelete() {
+    try {
+      setIsFormLoading(true);
+      const data = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      };
+      const response = await fetch(`https://api.noroff.dev/api/v1/holidaze/bookings/${id}`, data);
+      if (response.ok) {
+        setAnchorEl(null);
+        setOpenCancel(false);
+        navigate(0);
+      } else {
+        console.log(response);
+        setIsFormError(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsFormError(true);
+    } finally {
+      setIsFormLoading(false);
+    }
   }
 
   return (
@@ -90,7 +115,7 @@ function ChangeBooking({ id, title, dateFrom, dateTo }) {
               <DialogContentText>This will cancel the booking. You cannot undo this action.</DialogContentText>
             </DialogContent>
             <DialogActions sx={{ mb: 2, mr: 2 }}>
-              <Button variant="contained" color="error" disableElevation onClick={handleCancel}>
+              <Button variant="contained" color="error" disableElevation onClick={handleDelete}>
                 Cancel
               </Button>
             </DialogActions>
