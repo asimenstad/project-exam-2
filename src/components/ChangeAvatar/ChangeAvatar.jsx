@@ -3,6 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { Button, Dialog, DialogContent, DialogTitle, Avatar, Box, TextField, IconButton } from "@mui/material";
 import { Close, EditRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 /**
  * Changes or deletes user avatar.
@@ -13,7 +14,7 @@ function ChangeAvatar({ avatar }) {
   const { user } = useAuth();
   const [newAvatar, setNewAvatar] = useState(avatar);
   const [open, setOpen] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(true);
+  const [isFormLoading, setIsFormLoading] = useState(false);
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
 
@@ -93,6 +94,7 @@ function ChangeAvatar({ avatar }) {
             </Box>
           </Box>
         </DialogContent>
+        {isFormLoading && <Loader />}
       </Dialog>
     </Box>
   );

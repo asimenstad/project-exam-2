@@ -4,13 +4,14 @@ import { Grid, Link, Typography, Skeleton, Stack, Box } from "@mui/material";
 import { format } from "date-fns";
 import { DateRangeRounded } from "@mui/icons-material";
 import ChangeBooking from "../ChangeBooking/ChangeBooking";
+import { useAuth } from "../../hooks/useAuth";
 
 /**
  * Displays all bookings by user on their profile.
  * @returns Grid with venues.
  */
 function BookingsProfile() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useAuth();
   const options = {
     headers: {
       Authorization: `Bearer ${user.accessToken}`,

@@ -1,6 +1,7 @@
 import { Grid, Link, Skeleton, CircularProgress, Box } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
+import Loader from "../Loader/Loader.jsx";
 
 /**
  * Displays venues.
@@ -24,9 +25,7 @@ function Venues({ searchInput }) {
   });
 
   return isLoading ? (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
-      <CircularProgress />
-    </Box>
+    <Loader />
   ) : (
     <Grid id="venues" container columns={6} rowGap={6} columnSpacing={3}>
       {filteredProducts.map(

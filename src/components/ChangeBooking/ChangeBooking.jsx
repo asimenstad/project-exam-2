@@ -16,6 +16,7 @@ import {
 import { format } from "date-fns";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 /**
  * Cancel booking.
@@ -28,7 +29,7 @@ import { useNavigate } from "react-router-dom";
 function ChangeBooking({ id, title, dateFrom, dateTo }) {
   const [openCancel, setOpenCancel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isFormLoading, setIsFormLoading] = useState(true);
+  const [isFormLoading, setIsFormLoading] = useState(false);
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -119,6 +120,7 @@ function ChangeBooking({ id, title, dateFrom, dateTo }) {
                 Cancel
               </Button>
             </DialogActions>
+            {isFormLoading && <Loader />}
           </Dialog>
         </MenuItem>
       </Menu>

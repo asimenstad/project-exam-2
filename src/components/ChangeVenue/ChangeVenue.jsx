@@ -48,7 +48,7 @@ function ChangeVenue({
   const { user } = useAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(true);
+  const [isFormLoading, setIsFormLoading] = useState(false);
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
 
@@ -174,7 +174,7 @@ function ChangeVenue({
           </IconButton>
         </Box>
         <DialogContent>
-          <EditVenue />
+          <EditVenue isLoading={isFormLoading} />
         </DialogContent>
       </Dialog>
       <Dialog open={openDelete} onClose={handleClose}>

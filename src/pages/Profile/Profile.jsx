@@ -7,6 +7,7 @@ import { withFormik } from "formik";
 import BookingsProfile from "../../components/BookingsProfile/BookingsProfile";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import Loader from "../../components/Loader/Loader";
 
 function Profile() {
   const { user } = useAuth();
@@ -93,12 +94,7 @@ function Profile() {
   })(VenueForm);
 
   return isLoading ? (
-    <Container
-      id="loader"
-      component="main"
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "90vh" }}>
-      <CircularProgress />
-    </Container>
+    <Loader />
   ) : (
     <Container component="main" sx={{ minHeight: "90vh" }}>
       {user && (
@@ -132,7 +128,7 @@ function Profile() {
                 bgcolor: "white",
                 borderRadius: 1,
               }}>
-              {isFormLoading ? <CircularProgress /> : <AddVenueForm />}
+              <AddVenueForm isLoading={isFormLoading} />
             </Grid>
           )}
           {venueManager && (
