@@ -14,7 +14,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 import { CheckCircleOutlineRounded, Close, ErrorOutlineRounded } from "@mui/icons-material";
-import BookingCalendar from "../BookingCalendar.jsx/BookingCalendar";
+import BookingCalendar from "../BookingCalendar/BookingCalendar";
 import { useAuth } from "../../hooks/useAuth";
 import { differenceInDays, isValid } from "date-fns";
 import { useNavigate } from "react-router-dom";

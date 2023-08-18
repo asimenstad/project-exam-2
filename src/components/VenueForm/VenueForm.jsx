@@ -94,7 +94,7 @@ function VenueForm({ values, handleSubmit, handleChange, isLoading }) {
                   <OutlinedInput
                     name="mediaString"
                     type="url"
-                    pattern="https://.*"
+                    pattern="^https://.*"
                     fullWidth
                     id="mediaArray"
                     label="Media (URL)"
@@ -106,9 +106,12 @@ function VenueForm({ values, handleSubmit, handleChange, isLoading }) {
                         <IconButton
                           id="addMedia"
                           edge="end"
+                          disabled={!/^https:\/\/.*/.test(values.mediaString)}
                           onClick={() => {
-                            push(values.mediaString);
-                            form.setFieldValue("mediaString", "");
+                            if (values.mediaString.startsWith("http")) {
+                              push(values.mediaString);
+                              form.setFieldValue("mediaString", "");
+                            }
                           }}>
                           <AddPhotoAlternate />
                         </IconButton>

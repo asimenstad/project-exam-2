@@ -1,4 +1,4 @@
-import { Grid, Link, Skeleton, CircularProgress, Box } from "@mui/material";
+import { Grid, Link, Skeleton, Typography } from "@mui/material";
 import VenueCard from "../VenueCard/VenueCard.jsx";
 import { useApi } from "../../hooks/useApi.jsx";
 import Loader from "../Loader/Loader.jsx";
@@ -18,10 +18,14 @@ function Venues({ searchInput }) {
   }
 
   const filteredProducts = [...data].filter((venue) => {
+    const {
+      location: { city, address, country, continent },
+      name,
+    } = venue;
+    const searchParams = [city, address, country, continent, name];
     return searchInput === ""
       ? venue
-      : venue.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-          (venue.location.city && venue.location.city.toLowerCase().includes(searchInput.toLowerCase()));
+      : searchParams.some((param) => param && param.toLowerCase().includes(searchInput.toLowerCase()));
   });
 
   return isLoading ? (
@@ -49,6 +53,11 @@ function Venues({ searchInput }) {
             )}
           </Grid>
         )
+      )}
+      {filteredProducts.length === 0 && (
+        <Typography mx="auto" my={6}>
+          Sorry, we could not find any results for your search on &quot;{searchInput}&quot;.
+        </Typography>
       )}
     </Grid>
   );
