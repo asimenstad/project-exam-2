@@ -1,4 +1,4 @@
-const credentials = { name: "Test1234512345", email: "test1234512345@stud.noroff.no", password: "Asdfghjkl12345" };
+const credentials = { name: "Anna", email: "test123@stud.noroff.no", password: "Test1234" };
 
 describe("Login", () => {
   it("can login user", () => {
