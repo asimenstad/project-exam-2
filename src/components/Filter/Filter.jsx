@@ -1,5 +1,6 @@
 import { EastRounded } from "@mui/icons-material";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 
 function Filter() {
@@ -23,7 +24,7 @@ function Filter() {
       <Box
         sx={{
           mb: 5,
-          mt: -5,
+          mt: -7,
           mx: 5,
           px: 4,
           py: 3,
@@ -31,24 +32,23 @@ function Filter() {
           borderRadius: 1,
         }}>
         <FormControl fullWidth sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 1 }}>
-          <InputLabel id="select-city-label" size="small">
-            City
-          </InputLabel>
+          <InputLabel id="select-city-label">City</InputLabel>
           <Select
             labelId="select-city-label"
             id="select-city"
             label="City"
             value={city}
-            size="small"
-            sx={{ flexGrow: 2, minWidth: "5rem" }}>
+            sx={{ flexGrow: 2, minWidth: "5.5rem" }}>
             {cities.map((city) => (
               <MenuItem key={city} value={city}>
                 {city}
               </MenuItem>
             ))}
           </Select>
-          <TextField id="guests" label="Guests" type="number" size="small" sx={{ flexGrow: 1 }} />
-          <Button variant="contained" disableElevation endIcon={<EastRounded />}>
+          <TextField id="guests" label="Guests" type="number" sx={{ flexGrow: 1 }} />
+          <DatePicker label="Check in" sx={{ flexGrow: 1 }} />
+          <DatePicker label="Check out" sx={{ flexGrow: 1 }} />
+          <Button variant="contained" disableElevation sx={{ flexGrow: 1 }} endIcon={<EastRounded />}>
             Find stays
           </Button>
         </FormControl>
