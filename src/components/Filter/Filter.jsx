@@ -3,9 +3,24 @@ import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } fro
 import { DatePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 
-function Filter() {
+function Filter({ handleFilter, cit, guests, startDate, endDate }) {
   const [city, setCity] = useState("");
-  const cities = ["All", "Oslo", "Rjukan", "Venice"];
+  const [guestCount, setGuestCount] = useState(1);
+
+  const cities = ["oslo", "rjukan"];
+
+  function handleCityChange(e) {
+    const selectedCity = e.target.value;
+    setCity(selectedCity);
+    handleFilter({ city: selectedCity, guests: guestCount, startDate, endDate });
+  }
+
+  function handleGuestCountChange(e) {
+    const count = e.target.value;
+    setGuestCount(count);
+    handleFilter({ city, guests: count, startDate, endDate });
+  }
+
   const heroImage =
     "https://images.unsplash.com/photo-1618064541372-289bdb6f5b7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2233&q=80";
 
@@ -38,7 +53,7 @@ function Filter() {
             id="select-city"
             label="City"
             value={city}
-            sx={{ flexGrow: 2, minWidth: "5.5rem" }}>
+            sx={{ flexGrow: 3, minWidth: "5.5rem" }}>
             {cities.map((city) => (
               <MenuItem key={city} value={city}>
                 {city}

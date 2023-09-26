@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import Venues from "../../components/Venues/Venues.jsx";
 import Search from "../../components/Search/Search.jsx";
 import Filter from "../../components/Filter/Filter.jsx";
 
 function Home() {
   const [searchInput, setSearchInput] = useState("");
+  const [city, setCity] = useState("");
 
   function handleChange(e) {
     e.preventDefault();
@@ -30,9 +31,9 @@ function Home() {
         }}>
         Venues
       </Typography>
-      <Filter />
+      <Filter onSelectCity={setCity} />
       <Search handleChange={handleChange} searchInput={searchInput} />
-      <Venues searchInput={searchInput} />
+      <Venues searchInput={searchInput} city={city} />
     </Container>
   );
 }
